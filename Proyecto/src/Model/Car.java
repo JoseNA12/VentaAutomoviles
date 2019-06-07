@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Car{
 
     private String model;
@@ -9,14 +11,16 @@ public class Car{
     private int year;
     //private file photo;
     private int passengers;
+    private ArrayList<Accesory> accesories;
 
-    public Car(String model, String brand, String motor, float price, int year, int passengers) {
+    public Car(String model, String brand, String motor, float price, int year, int passengers, ArrayList<Accesory> accesories) {
         this.model = model;
         this.brand = brand;
         this.motor = motor;
         this.price = price;
         this.year = year;
         this.passengers = passengers;
+        this.accesories = accesories;
     }
 
     public String getModel() {
@@ -65,5 +69,13 @@ public class Car{
 
     public void setPassengers(int passengers) {
         this.passengers = passengers;
+    }
+
+    public ArrayList<Accesory> getAccesories() {
+        return accesories;
+    }
+
+    public void setAccesories(ArrayList<Accesory> accesories) {
+        this.accesories = accesories;
     }
 }
