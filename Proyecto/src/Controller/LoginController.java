@@ -25,6 +25,6 @@ public class LoginController {
 
     @FXML
     public void checkUser() throws IOException {
-        System.out.println("Hola Mundo!!");
+        System.out.println("Jon El Guapo");
     }
 }
