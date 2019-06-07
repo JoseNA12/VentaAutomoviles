@@ -1,14 +1,16 @@
 package Model;
 
-public class Costumer {
+public class Customer {
 
     private String name;
+    private String id;
     private String phone;
     private String email;
     private int zip_code;
 
-    public Costumer(String name, String phone, String email, int zip_code) {
+    public Customer(String name, String phone, String id, String email, int zip_code) {
         this.name = name;
+        this.id = id;
         this.phone = phone;
         this.email = email;
         this.zip_code = zip_code;
@@ -20,6 +22,14 @@ public class Costumer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPhone() {
