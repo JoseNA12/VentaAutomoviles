@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="700.0" maxWidth="1280.0" minHeight="700.0" minWidth="1280.0" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.cliente.C_Sucursal">
+
+    <children>
+
+        <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #4e598c;">
+            <children>
+                <Text fill="WHITE" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Sucursales">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/play-button.png" />
+                    </image>
+                </ImageView>
+                <JFXButton fx:id="btn_atras" layoutX="994.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #ffffff;" text="Atras">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </AnchorPane>
+        <JFXListView fx:id="listView_sucursales" layoutX="92.0" layoutY="124.0" prefHeight="508.0" prefWidth="1100.0" />
+    </children>
+</AnchorPane>

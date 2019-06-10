@@ -20,17 +20,17 @@
             <Image url="@../images/office.png" />
          </image>
       </ImageView>
-      <JFXButton alignment="BOTTOM_CENTER" layoutX="185.0" layoutY="165.0" prefHeight="341.0" prefWidth="316.0" text="Catálogo">
+      <JFXButton fx:id="btn_catalogo" alignment="BOTTOM_CENTER" layoutX="185.0" layoutY="165.0" prefHeight="341.0" prefWidth="316.0" text="Catálogo">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales">
+      <JFXButton fx:id="btn_sucursales" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="92.0" layoutY="571.0" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #ff8c42;" text="Salir" textFill="WHITE">
+      <JFXButton fx:id="btn_salir" layoutX="92.0" layoutY="571.0" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #ff8c42;" text="Salir" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -39,7 +39,7 @@
 
         <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #ff8c42;">
             <children>
-                <Text fill="WHITE" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L">
+                <Text fill="WHITE" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Menú">
                     <font>
                         <Font name="System Bold" size="26.0" />
                     </font>
