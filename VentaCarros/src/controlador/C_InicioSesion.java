@@ -37,7 +37,11 @@ public class C_InicioSesion {
 
     private void handle_btn_ingresar(ActionEvent event) {
         if (!tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
-
+            try {
+                FXRouter.goTo("Menu_cliente", tf_correo.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             mostrarMensaje("Datos incompletos", "Por favor, ingrese un correo electrónico y una contraseña!");
