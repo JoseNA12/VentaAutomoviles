@@ -11,17 +11,15 @@ CREATE PROC [dbo].[usp_Car-StockSelect]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	IF EXISTS(SELECT branchOffice_id FROM BranchOffice WHERE branchOffice_id = @office_id)
-		SELECT cs.[car_stock_id], cs.[stock_id], cs.[quantity], c.car_id, c.carBrand_id, cb.name, c.carType_id, ct.name, c.model, c.engine, c.year, c.seats, c.doors, c.fuelType_id, cf.name, c.acceleration, c.maximum_speed, c.price, c.photo
-		FROM [Car-Stock] cs
-		inner join Stock s on s.stock_id = cs.stock_id
-		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cs.car_id
-		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarBrands cb on cb.carBrand_id = c.carBrand_id
-		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
-		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.FuelType cf on cf.fuelType_id = c.fuelType_id
-		WHERE (s.office_id = @office_id OR @office_id IS NULL) 
-	ELSE
-		SELECT 1 as exit_status, 'La sucursal ingresada no existe' as result
+
+	SELECT cs.[line_id], cs.[stock_id], cs.[quantity], c.[car_id], c.[model], c.[carBrand_id], cb.name, c.[motorType_id], mt.name, c.[price], c.[year], c.[photo], c.[passengers], c.[factory_id] 
+	FROM   [dbo].[Car-Stock] cs
+	inner join Stock s on s.stock_id = cs.stock_id
+	inner join BranchOffice bo on bo.branchOffice_id = s.office_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cs.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarBrands cb on cb.carBrand_id = c.carBrand_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.MotorType mt on mt.motorType_id = c.motorType_id
+	WHERE  (bo.branchOffice_id = @office_id OR @office_id IS NULL) 
 
 GO
 
@@ -37,7 +35,8 @@ CREATE PROC [dbo].[usp_Car-StockInsert]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-
+	
+	BEGIN TRAN
 	IF EXISTS(SELECT car_id FROM [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car WHERE car_id = @car_id)
 		BEGIN
 		BEGIN TRAN
@@ -45,9 +44,9 @@ AS
 		SELECT @car_id, @stock_id, @quantity
 	
 		-- Begin Return Select <- do not remove
-		SELECT 0 as exit_status, car_stock_id, [car_id], [stock_id], [quantity]
+		SELECT 0 as exit_status, [line_id], [car_id], [stock_id], [quantity]
 		FROM   [dbo].[Car-Stock]
-		WHERE  car_stock_id = SCOPE_IDENTITY()
+		WHERE  [line_id] = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove
                
 		COMMIT
@@ -64,7 +63,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_Car-StockUpdate] 
-    @line_id int,
+    @line_id bigint,
     @car_id int = NULL,
     @stock_id int = NULL,
     @quantity int = NULL
@@ -76,12 +75,12 @@ AS
 
 	UPDATE [dbo].[Car-Stock]
 	SET    [car_id] = @car_id, [stock_id] = @stock_id, [quantity] = @quantity
-	WHERE  car_stock_id = @line_id
+	WHERE  [line_id] = @line_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT car_stock_id, [car_id], [stock_id], [quantity]
+	SELECT [line_id], [car_id], [stock_id], [quantity]
 	FROM   [dbo].[Car-Stock]
-	WHERE  car_stock_id = @line_id	
+	WHERE  [line_id] = @line_id	
 	-- End Return Select <- do not remove
 
 	COMMIT
@@ -92,7 +91,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_Car-StockDelete] 
-    @line_id int
+    @line_id bigint
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -101,7 +100,7 @@ AS
 
 	DELETE
 	FROM   [dbo].[Car-Stock]
-	WHERE  car_stock_id = @line_id
+	WHERE  [line_id] = @line_id
 
 	COMMIT
 GO

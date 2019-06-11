@@ -15,6 +15,7 @@ AS
 	SELECT [factory_id], [name], [location] 
 	FROM   [dbo].[Factory] 
 	WHERE  ([factory_id] = @factory_id OR @factory_id IS NULL) 
+
 GO
 IF OBJECT_ID('[dbo].[usp_FactoryInsert]') IS NOT NULL
 BEGIN 

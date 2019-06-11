@@ -12,10 +12,9 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [carXAccessory_id], [car_id], [accessorie_id], [price] 
+	SELECT [carXAccessory_id], [car_id], [accessorie_id] 
 	FROM   [dbo].[CarXAccessory] 
 	WHERE  ([carXAccessory_id] = @carXAccessory_id OR @carXAccessory_id IS NULL) 
-
 GO
 IF OBJECT_ID('[dbo].[usp_CarXAccessoryInsert]') IS NOT NULL
 BEGIN 
@@ -24,19 +23,18 @@ END
 GO
 CREATE PROC [dbo].[usp_CarXAccessoryInsert] 
     @car_id int = NULL,
-    @accessorie_id int = NULL,
-    @price money = NULL
+    @accessorie_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[CarXAccessory] ([car_id], [accessorie_id], [price])
-	SELECT @car_id, @accessorie_id, @price
+	INSERT INTO [dbo].[CarXAccessory] ([car_id], [accessorie_id])
+	SELECT @car_id, @accessorie_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [carXAccessory_id], [car_id], [accessorie_id], [price]
+	SELECT [carXAccessory_id], [car_id], [accessorie_id]
 	FROM   [dbo].[CarXAccessory]
 	WHERE  [carXAccessory_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
@@ -51,8 +49,7 @@ GO
 CREATE PROC [dbo].[usp_CarXAccessoryUpdate] 
     @carXAccessory_id int,
     @car_id int = NULL,
-    @accessorie_id int = NULL,
-    @price money = NULL
+    @accessorie_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -60,11 +57,11 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[CarXAccessory]
-	SET    [car_id] = @car_id, [accessorie_id] = @accessorie_id, [price] = @price
+	SET    [car_id] = @car_id, [accessorie_id] = @accessorie_id
 	WHERE  [carXAccessory_id] = @carXAccessory_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [carXAccessory_id], [car_id], [accessorie_id], [price]
+	SELECT [carXAccessory_id], [car_id], [accessorie_id]
 	FROM   [dbo].[CarXAccessory]
 	WHERE  [carXAccessory_id] = @carXAccessory_id	
 	-- End Return Select <- do not remove
