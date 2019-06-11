@@ -12,10 +12,13 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [branchOffice_id], [name], [location] 
+	BEGIN TRAN
+
+	SELECT [branchOffice_id], [name], [location], [country_id] 
 	FROM   [dbo].[BranchOffice] 
 	WHERE  ([branchOffice_id] = @branchOffice_id OR @branchOffice_id IS NULL) 
 
+	COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_BranchOfficeInsert]') IS NOT NULL
 BEGIN 
@@ -24,26 +27,24 @@ END
 GO
 CREATE PROC [dbo].[usp_BranchOfficeInsert] 
     @name nvarchar(50) = NULL,
-    @location geography = NULL
+    @location geography = NULL,
+    @country_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
-	IF EXISTS(SELECT [branchOffice_id] FROM [dbo].[BranchOffice] WHERE name = @name)
-		BEGIN
-		SELECT 1 as exit_status, 'La sucursal ya existe' as result
-		END
-	ELSE
-		BEGIN TRAN
-		INSERT INTO [dbo].[BranchOffice] ([name], [location])
-		SELECT @name, @location
+	BEGIN TRAN
 	
-		-- Begin Return Select <- do not remove
-		SELECT 0 as exit_status, [branchOffice_id], [name], [location]
-		FROM   [dbo].[BranchOffice]
-		WHERE  [branchOffice_id] = SCOPE_IDENTITY()
-		-- End Return Select <- do not remove       
-		COMMIT
+	INSERT INTO [dbo].[BranchOffice] ([name], [location], [country_id])
+	SELECT @name, @location, @country_id
+	
+	-- Begin Return Select <- do not remove
+	SELECT [branchOffice_id], [name], [location], [country_id]
+	FROM   [dbo].[BranchOffice]
+	WHERE  [branchOffice_id] = SCOPE_IDENTITY()
+	-- End Return Select <- do not remove
+               
+	COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_BranchOfficeUpdate]') IS NOT NULL
 BEGIN 
@@ -53,7 +54,8 @@ GO
 CREATE PROC [dbo].[usp_BranchOfficeUpdate] 
     @branchOffice_id int,
     @name nvarchar(50) = NULL,
-    @location geography = NULL
+    @location geography = NULL,
+    @country_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -61,11 +63,11 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[BranchOffice]
-	SET    [name] = @name, [location] = @location
+	SET    [name] = @name, [location] = @location, [country_id] = @country_id
 	WHERE  [branchOffice_id] = @branchOffice_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [branchOffice_id], [name], [location]
+	SELECT [branchOffice_id], [name], [location], [country_id]
 	FROM   [dbo].[BranchOffice]
 	WHERE  [branchOffice_id] = @branchOffice_id	
 	-- End Return Select <- do not remove
