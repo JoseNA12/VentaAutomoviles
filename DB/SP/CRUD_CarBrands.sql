@@ -11,7 +11,6 @@ CREATE PROC [dbo].[usp_CarBrandsSelect]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-
 	SELECT [carBrand_id], [name] 
 	FROM   [dbo].[CarBrands] 
 	WHERE  ([carBrand_id] = @carBrand_id OR @carBrand_id IS NULL) 
