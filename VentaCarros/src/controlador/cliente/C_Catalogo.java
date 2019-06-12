@@ -38,7 +38,9 @@ public class C_Catalogo {
         //listView_catalogo.getItems().add(new Label("Item"));
         catalogoObservableList = FXCollections.observableArrayList();
 
-        //add some Students
+        // ---------------------------------------------------------------
+        // HACER LA CONSULTA A LAS BB's
+
         catalogoObservableList.addAll(
                 new Vehiculo("John Doe", "1997"),
                 new Vehiculo("Jane Doe", "1997"),
@@ -48,6 +50,7 @@ public class C_Catalogo {
                 new Vehiculo("Pura Petty", "1996"),
                 new Vehiculo("Herma Hines", "2019")
         );
+        // ---------------------------------------------------------------
 
         listView_catalogo.setItems(catalogoObservableList);
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell());

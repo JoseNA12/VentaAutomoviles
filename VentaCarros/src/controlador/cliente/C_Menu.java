@@ -5,14 +5,20 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
+
+import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Menu {
 
     @FXML JFXButton btn_catalogo;
     @FXML JFXButton btn_sucursales;
     @FXML JFXButton btn_salir;
+
+    @FXML Label lb_usuario_actual;
+
 
     public void initialize() throws Exception {
         initComponentes();
@@ -23,10 +29,12 @@ public class C_Menu {
         btn_catalogo.setOnAction(this::handle_btn_catalogo);
         btn_sucursales.setOnAction(this::handle_btn_sucursales);
         btn_salir.setOnAction(this::handle_btn_salir);
+
+        lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
     }
 
     private void handle_btn_catalogo(ActionEvent event) {
-        try {
+       try {
             FXRouter.goTo("Catalogo_cliente");
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,20 +1,30 @@
 package modelo;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListCell;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SucursalListViewCell extends JFXListCell<Sucursal> {
 
     @FXML GridPane gp_sucursales;
+
     @FXML Label lb_nombre;
     @FXML Label lb_no_empleados;
 
+    @FXML JFXButton btn_consultar;
+
     private FXMLLoader mLLoader;
+
 
     @Override
     protected void updateItem(Sucursal sucursal, boolean empty) {

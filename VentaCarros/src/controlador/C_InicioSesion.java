@@ -8,7 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
+import modelo.Usuario;
+
 import modelo.GroupDBConnection;
+
 
 import java.io.IOException;
 
@@ -23,6 +27,9 @@ public class C_InicioSesion {
 
     @FXML JFXTextField tf_correo;
     @FXML JFXPasswordField tf_contrasenia;
+
+    public static Usuario usuarioActual;
+
 
     public void initialize() throws Exception {
         initComponentes();
@@ -40,8 +47,14 @@ public class C_InicioSesion {
     private void handle_btn_ingresar(ActionEvent event) {
         if (!tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
             try {
-                FXRouter.goTo("Menu_cliente", tf_correo.getText());
-            } catch (IOException e) {
+                // ---------------- query de inicio de sesion
+                // if else ...
+                usuarioActual = new Usuario("nombre", "apellidos", "fechaNacimiento",
+                        "cedula", "telefono", "correo");
+
+                FXRouter.goTo("Menu_cliente");
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }

@@ -12,7 +12,7 @@
 
     <children>
 
-        <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #4e598c;">
+        <AnchorPane layoutX="92.0" layoutY="48.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #4e598c;">
             <children>
                 <Text fill="WHITE" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Catálogo">
                     <font>
@@ -31,6 +31,6 @@
             </JFXButton>
             </children>
         </AnchorPane>
-      <JFXListView fx:id="listView_catalogo" layoutX="92.0" layoutY="124.0" prefHeight="508.0" prefWidth="1100.0" />
+      <JFXListView fx:id="listView_catalogo" layoutX="92.0" layoutY="99.0" prefHeight="533.0" prefWidth="1100.0" />
     </children>
 </AnchorPane>
