@@ -5,7 +5,10 @@ import java.sql.*;
 public class FactoryDB_Connection extends DB_Connection{
 
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORYINSTANCE:1433;database=FactoryDB;user=sa;password=123";
+    // Path Josué
+    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORYINSTANCE:51024;database=FactoryDB;user=sa;password=123";
+    // Path Jose
+    // private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORYINSTANCE:51024;database=FactoryDB;user=sa;password=123";
     private static FactoryDB_Connection DBInstance;
 
     public static FactoryDB_Connection getFactoryDBInstance(){

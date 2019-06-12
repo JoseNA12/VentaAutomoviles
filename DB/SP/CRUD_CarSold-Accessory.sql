@@ -1,12 +1,12 @@
 USE [BranchOfficeDB];
 GO
 
-IF OBJECT_ID('[dbo].[usp_CarSold-AccesorySelect]') IS NOT NULL
+IF OBJECT_ID('[dbo].[usp_CarSold-AccessorySelect]') IS NOT NULL
 BEGIN 
-    DROP PROC [dbo].[usp_CarSold-AccesorySelect] 
+    DROP PROC [dbo].[usp_CarSold-AccessorySelect] 
 END 
 GO
-CREATE PROC [dbo].[usp_CarSold-AccesorySelect] 
+CREATE PROC [dbo].[usp_CarSold-AccessorySelect] 
     @line int
 AS 
 	SET NOCOUNT ON 
@@ -14,71 +14,70 @@ AS
 
 	BEGIN TRAN
 
-	SELECT [line], [car_sold_id], [accesory_id] 
-	FROM   [dbo].[CarSold-Accesory] 
+	SELECT [line], [car_sold_id], [accessory_id] 
+	FROM   [dbo].[CarSold-Accessory] 
 	WHERE  ([line] = @line OR @line IS NULL) 
 
 	COMMIT
 GO
-IF OBJECT_ID('[dbo].[usp_CarSold-AccesoryInsert]') IS NOT NULL
+IF OBJECT_ID('[dbo].[usp_CarSold-AccessoryInsert]') IS NOT NULL
 BEGIN 
-    DROP PROC [dbo].[usp_CarSold-AccesoryInsert] 
+    DROP PROC [dbo].[usp_CarSold-AccessoryInsert] 
 END 
 GO
-CREATE PROC [dbo].[usp_CarSold-AccesoryInsert] 
-    @line int,
+CREATE PROC [dbo].[usp_CarSold-AccessoryInsert] 
     @car_sold_id int = NULL,
-    @accesory_id int = NULL
+    @accessory_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[CarSold-Accesory] ([line], [car_sold_id], [accesory_id])
-	SELECT @line, @car_sold_id, @accesory_id
+	INSERT INTO [dbo].[CarSold-Accessory] ([car_sold_id], [accessory_id])
+	SELECT @car_sold_id, @accessory_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [line], [car_sold_id], [accesory_id]
-	FROM   [dbo].[CarSold-Accesory]
-	WHERE  [line] = @line
+	SELECT [line], [car_sold_id], [accessory_id]
+	FROM   [dbo].[CarSold-Accessory]
+	WHERE  [line] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
                
 	COMMIT
 GO
-IF OBJECT_ID('[dbo].[usp_CarSold-AccesoryUpdate]') IS NOT NULL
+IF OBJECT_ID('[dbo].[usp_CarSold-AccessoryUpdate]') IS NOT NULL
 BEGIN 
-    DROP PROC [dbo].[usp_CarSold-AccesoryUpdate] 
+    DROP PROC [dbo].[usp_CarSold-AccessoryUpdate] 
 END 
 GO
-CREATE PROC [dbo].[usp_CarSold-AccesoryUpdate] 
+CREATE PROC [dbo].[usp_CarSold-AccessoryUpdate] 
     @line int,
     @car_sold_id int = NULL,
-    @accesory_id int = NULL
+    @accessory_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
 
-	UPDATE [dbo].[CarSold-Accesory]
-	SET    [car_sold_id] = @car_sold_id, [accesory_id] = @accesory_id
+	UPDATE [dbo].[CarSold-Accessory]
+	SET    [car_sold_id] = @car_sold_id, [accessory_id] = @accessory_id
 	WHERE  [line] = @line
 	
 	-- Begin Return Select <- do not remove
-	SELECT [line], [car_sold_id], [accesory_id]
-	FROM   [dbo].[CarSold-Accesory]
+	SELECT [line], [car_sold_id], [accessory_id]
+	FROM   [dbo].[CarSold-Accessory]
 	WHERE  [line] = @line	
 	-- End Return Select <- do not remove
 
 	COMMIT
 GO
-IF OBJECT_ID('[dbo].[usp_CarSold-AccesoryDelete]') IS NOT NULL
+IF OBJECT_ID('[dbo].[usp_CarSold-AccessoryDelete]') IS NOT NULL
 BEGIN 
-    DROP PROC [dbo].[usp_CarSold-AccesoryDelete] 
+    DROP PROC [dbo].[usp_CarSold-AccessoryDelete] 
 END 
 GO
-CREATE PROC [dbo].[usp_CarSold-AccesoryDelete] 
+CREATE PROC [dbo].[usp_CarSold-AccessoryDelete] 
     @line int
 AS 
 	SET NOCOUNT ON 
@@ -87,7 +86,7 @@ AS
 	BEGIN TRAN
 
 	DELETE
-	FROM   [dbo].[CarSold-Accesory]
+	FROM   [dbo].[CarSold-Accessory]
 	WHERE  [line] = @line
 
 	COMMIT

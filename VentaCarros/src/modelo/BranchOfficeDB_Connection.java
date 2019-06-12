@@ -4,7 +4,10 @@ import java.sql.*;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:1433;database=BranchOfficeDB;user=sa;password=123";
+    // Path Josué
+    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+    // Path Jose ** Cambiar
+    //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
     private static BranchOfficeDB_Connection DBInstance;
 
     public static BranchOfficeDB_Connection getHSDBInstance(){
@@ -20,7 +23,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            ps = connection.prepareCall("SELECT name FROM FuelType");
+            ps = connection.prepareCall("SELECT name FROM Country");
             ps.execute();
             rs = ps.getResultSet();
             while (rs.next()) {
