@@ -12,10 +12,9 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [accessory_id], [name], [price] 
+	SELECT [accessory_id], [name] 
 	FROM   [dbo].[Accessory] 
 	WHERE  ([accessory_id] = @accessory_id OR @accessory_id IS NULL) 
-
 GO
 IF OBJECT_ID('[dbo].[usp_AccessoryInsert]') IS NOT NULL
 BEGIN 
@@ -23,24 +22,27 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_AccessoryInsert] 
-    @name nvarchar(50) = NULL,
-    @price money = NULL
+    @name nvarchar(50) = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
-	BEGIN TRAN
+	IF EXISTS(SELECT name FROM Accessory WHERE name = @name)
+		BEGIN 
+		SELECT 1 as exit_status, 'Error, el accesorio ya existe' as result
+		END
+	ELSE
+		BEGIN TRAN
+		INSERT INTO [dbo].[Accessory] ([name])
+		SELECT @name
 	
-	INSERT INTO [dbo].[Accessory] ([name], [price])
-	SELECT @name, @price
-	
-	-- Begin Return Select <- do not remove
-	SELECT [accessory_id], [name], [price]
-	FROM   [dbo].[Accessory]
-	WHERE  [accessory_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
+		-- Begin Return Select <- do not remove
+		SELECT [accessory_id], [name]
+		FROM   [dbo].[Accessory]
+		WHERE  [accessory_id] = SCOPE_IDENTITY()
+		-- End Return Select <- do not remove
                
-	COMMIT
+		COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_AccessoryUpdate]') IS NOT NULL
 BEGIN 
@@ -49,8 +51,7 @@ END
 GO
 CREATE PROC [dbo].[usp_AccessoryUpdate] 
     @accessory_id int,
-    @name nvarchar(50) = NULL,
-    @price money = NULL
+    @name nvarchar(50) = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -58,11 +59,11 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[Accessory]
-	SET    [name] = @name, [price] = @price
+	SET    [name] = @name
 	WHERE  [accessory_id] = @accessory_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [accessory_id], [name], [price]
+	SELECT [accessory_id], [name]
 	FROM   [dbo].[Accessory]
 	WHERE  [accessory_id] = @accessory_id	
 	-- End Return Select <- do not remove

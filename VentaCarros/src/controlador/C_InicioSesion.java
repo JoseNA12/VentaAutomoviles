@@ -5,12 +5,14 @@ import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
 import modelo.Usuario;
+
+import modelo.GroupDBConnection;
+
 
 import java.io.IOException;
 
@@ -37,6 +39,9 @@ public class C_InicioSesion {
     private void initComponentes() throws Exception {
         btn_ingresar.setOnAction(this::handle_btn_ingresar);
         btn_crear_cuenta.setOnAction(this::handle_btn_crear_cuenta);
+        GroupDBConnection.getDBInstance().prueba1();
+        GroupDBConnection.getDBInstance().prueba2();
+        GroupDBConnection.getDBInstance().prueba3();
     }
 
     private void handle_btn_ingresar(ActionEvent event) {
