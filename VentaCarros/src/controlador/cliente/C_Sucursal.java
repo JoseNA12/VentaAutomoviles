@@ -39,11 +39,14 @@ public class C_Sucursal {
         //listView_sucursales.getItems().add(new Label("Item"));
         sucursalesObservableList = FXCollections.observableArrayList();
 
-        //add some Students
+        // ---------------------------------------------------------------
+        // HACER LA CONSULTA A LAS BB's
+
         sucursalesObservableList.addAll(
                 new Sucursal("Josue se la come"),
                 new Sucursal("y entera")
         );
+        // ---------------------------------------------------------------
 
         listView_sucursales.setItems(sucursalesObservableList);
         listView_sucursales.setCellFactory(studentListView -> new SucursalListViewCell());

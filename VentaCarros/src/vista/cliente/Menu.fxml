@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -54,11 +55,11 @@
                   <Image url="@../images/user.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="787.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre usuario" textAlignment="RIGHT" wrappingWidth="239.13671875">
+            <Label fx:id="lb_usuario_actual" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="711.0" layoutY="10.0" prefHeight="27.0" prefWidth="316.0" text="Label" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
-            </Text>
+            </Label>
             </children>
         </AnchorPane>
       <Separator layoutX="638.0" layoutY="165.0" orientation="VERTICAL" prefHeight="350.0" />

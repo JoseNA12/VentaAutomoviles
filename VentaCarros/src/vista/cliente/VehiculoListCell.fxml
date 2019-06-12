@@ -15,9 +15,8 @@
       <GridPane fx:id="gp_catalogo" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="161.0" prefWidth="1052.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="338.0" minWidth="10.0" prefWidth="338.0" />
-          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
-            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="167.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="293.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
         </columnConstraints>
         <rowConstraints>
@@ -38,29 +37,24 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label text="Motor" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label text="Año" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label text="Año" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label text="Num. Pasajeros" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label text="Num. Pasajeros" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label text="Precio" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label text="Precio" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <ImageView fx:id="imgv_imagen" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../images/catalog.png" />
+                  <Image url="@../images/car.png" />
                </image>
             </ImageView>
             <Label fx:id="lb_marca" text="Label" GridPane.columnIndex="2">
@@ -73,27 +67,22 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_motor" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Label fx:id="lb_anio" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_anio" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="lb_num_pasajeros" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_num_pasajeros" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Label fx:id="lb_precio" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_precio" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <JFXButton fx:id="btn_consultar" prefHeight="37.0" prefWidth="128.0" style="-fx-background-color: #ff8c42;" text="Consultar" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <JFXButton fx:id="btn_consultar" prefHeight="37.0" prefWidth="128.0" style="-fx-background-color: #ff8c42;" text="Consultar" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
