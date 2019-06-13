@@ -2,20 +2,26 @@ package modelo;
 
 public class Usuario {
 
+    private int idUsuario;
     private String nombre;
     private String apellidos;
     private String fechaNacimiento;
     private String cedula;
     private String telefono;
     private String correo;
+    private int zipCode;
+    private TipoUsuario tipoUsuario;
 
-    public Usuario(String nombre, String apellidos, String fechaNacimiento, String cedula, String telefono, String correo) {
+    public Usuario(int idUsuario, String nombre, String apellidos, String fechaNacimiento, String cedula, String telefono, String correo, int zipCode, TipoUsuario tipoUsuario) {
+        this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.cedula = cedula;
         this.telefono = telefono;
         this.correo = correo;
+        this.zipCode = zipCode;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getNombre() {
@@ -64,5 +70,29 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

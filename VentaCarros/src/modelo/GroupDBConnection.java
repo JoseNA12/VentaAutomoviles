@@ -32,7 +32,7 @@ public class GroupDBConnection {
         BOfficeDBInstance.prueba();
     }
 
-
+    public Usuario loginDB(String user, String password){ return HSDBInstance.login(user, password);}
 
 
 }
