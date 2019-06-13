@@ -37,4 +37,49 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         }
     }
 
+    public Usuario login(String user, String password){
+        Connection connection = null;
+        CallableStatement  ps = null;
+        ResultSet rs = null;
+        Usuario result = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.usp_LoginUser(?, ?)}");
+            ps.setNString(1, user);
+            ps.setNString(2, password);
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                if (rs.getInt("exit_status") == 0) {
+                    String name = rs.getString("name");
+                    String lastName = rs.getString("lastName");
+                    String birthDate = rs.getString("birthDate");
+                    String identification_card = rs.getString("identification_card");
+                    String phone = rs.getString("phone");
+                    String email = rs.getString("email");
+                    int zip_code = rs.getInt("zip_code");
+                    int userID = rs.getInt("user_id");
+                    String userType_id = rs.getString("userType_id");
+                    String userTypeName = rs.getString("userTypeName");
+                    if(userTypeName.equals("Cliente")){
+                        result = new Usuario(userID, name, lastName, birthDate,identification_card, phone, email, zip_code, TipoUsuario.CLIENTE);
+                    }else {
+                        int office_id = rs.getInt("office_id");
+                        String position_id = rs.getString("position_id");
+                        String positionName = rs.getString("positionName");
+                        TipoUsuario tipo = null;
+                        if(userTypeName.equals("Administrador")){ tipo = TipoUsuario.ADMINISTRADOR;}
+                        else if(userTypeName.equals("Facturador")) { tipo = TipoUsuario.FACTURADOR;}
+                        result = new Empleado(userID, name, lastName, birthDate,identification_card, phone, email, zip_code, tipo, position_id, positionName, office_id);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+            return result;
+        }
+    }
+
 }

@@ -49,23 +49,22 @@ public class C_InicioSesion {
     private void handle_btn_ingresar(ActionEvent event) {
         if (!tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
             try {
-                // ---------------- query de inicio de sesion
-                // if else ...
-                usuarioActual = new Usuario("nombre", "apellidos", "fechaNacimiento",
-                        "cedula", "telefono", "correo");
+                GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
+                usuarioActual = GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
+                if(usuarioActual == null)
+                    System.out.println("Error");
+                else{
+                    switch (usuarioActual.getTipoUsuario()) {
+                        case ADMINISTRADOR:
 
-                tipoUsuarioActual = TipoUsuario.FACTURADOR;
-
-                switch (tipoUsuarioActual) {
-                    case ADMINISTRADOR:
-
-                        break;
-                    case FACTURADOR:
-                        FXRouter.goTo("Menu_facturador");
-                        break;
-                    case CLIENTE:
-                        FXRouter.goTo("Menu_cliente");
-                        break;
+                            break;
+                        case FACTURADOR:
+                            FXRouter.goTo("Menu_facturador");
+                            break;
+                        case CLIENTE:
+                            FXRouter.goTo("Menu_cliente");
+                            break;
+                    }
                 }
             }
             catch (IOException e) {
