@@ -7,14 +7,15 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CarXAccessorySelect] 
-    @carXAccessory_id int
+    @car_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [carXAccessory_id], [car_id], [accessorie_id], [price] 
-	FROM   [dbo].[CarXAccessory] 
-	WHERE  ([carXAccessory_id] = @carXAccessory_id OR @carXAccessory_id IS NULL) 
+	SELECT ca.[carXAccessory_id], ca.[accessorie_id], ca.[price], a.name
+	FROM   [dbo].[CarXAccessory] ca
+	inner join Accessory a on a.accessory_id = ca.accessorie_id
+	WHERE  [car_id] = @car_id
 
 GO
 IF OBJECT_ID('[dbo].[usp_CarXAccessoryInsert]') IS NOT NULL
