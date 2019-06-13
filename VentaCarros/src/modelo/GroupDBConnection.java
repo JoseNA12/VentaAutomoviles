@@ -2,7 +2,10 @@ package modelo;
 
 import javafx.collections.ObservableList;
 
+<<<<<<< HEAD
 import java.lang.reflect.Array;
+=======
+>>>>>>> b475db4a26f53456c0d733800bb91daebc5d916a
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class GroupDBConnection {
 
     public ObservableList<ExtraVehiculo> getCarAccessories(String idCar){ return FactoryDBInstance.getCarAccessories(Integer.parseInt(idCar));}
 
+    public ObservableList<Vehiculo> SelectAutosXSucursal(int idSucursal){ return BOfficeDBInstance.SelectAutosXSucursal(idSucursal);}
 
 
 }

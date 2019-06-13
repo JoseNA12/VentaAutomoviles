@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import modelo.BranchOfficeDB_Connection;
+import modelo.GroupDBConnection;
 import modelo.Vehiculo;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class C_Catalogo {
 
         catalogoObservableList = FXCollections.observableArrayList();
 
-        catalogoObservableList = BranchOfficeDB_Connection.getHSDBInstance().SelectAutosXSucursal(1);
+        catalogoObservableList = GroupDBConnection.getDBInstance().SelectAutosXSucursal(1);
         // ---------------------------------------------------------------
         // HACER LA CONSULTA A LAS BD's
 
