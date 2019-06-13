@@ -1,14 +1,8 @@
 package modelo;
 
 import javafx.collections.ObservableList;
-
-<<<<<<< HEAD
-import java.lang.reflect.Array;
-=======
->>>>>>> b475db4a26f53456c0d733800bb91daebc5d916a
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
