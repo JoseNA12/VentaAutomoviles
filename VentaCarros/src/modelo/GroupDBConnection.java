@@ -1,5 +1,8 @@
 package modelo;
 
+import javafx.collections.ObservableList;
+
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -39,7 +42,8 @@ public class GroupDBConnection {
     public Usuario loginDB(String user, String password){ return HSDBInstance.login(user, password);}
 
     public boolean signIn(String name, String lastname, LocalDate birthDate, String idCard, String phone, String zip_code, String email, String password){ return HSDBInstance.signIn(name, lastname,birthDate.format(DateTimeFormatter.ISO_DATE), idCard, phone, Integer.parseInt(zip_code), email, password);}
-    
+
+    public ObservableList<ExtraVehiculo> getCarAccessories(String idCar){ return FactoryDBInstance.getCarAccessories(Integer.parseInt(idCar));}
 
 
 

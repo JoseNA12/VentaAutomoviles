@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import modelo.ExtraVehiculo;
+import modelo.GroupDBConnection;
 import modelo.Vehiculo;
 
 import java.io.IOException;
@@ -91,12 +92,13 @@ public class C_ConsultarVehiculo {
         // HACER LA CONSULTA A LAS BB's
         // ->>>> vehiculo_seleccionado.getID();
 
-        extrasObservableList.addAll(
+        /*extrasObservableList.addAll(
                 new ExtraVehiculo("Extra 1", "600.000"),
                 new ExtraVehiculo("Extra 2", "210.000"),
                 new ExtraVehiculo("Extra 3", "10.000"),
                 new ExtraVehiculo("Extra 4", "50.000")
-        );
+        );*/
+        extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(vehiculo_seleccionado.getID());
         // ---------------------------------------------------------------
 
         lv_extras.setItems(extrasObservableList);

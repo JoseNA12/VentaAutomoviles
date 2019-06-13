@@ -1,6 +1,10 @@
 package modelo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class FactoryDB_Connection extends DB_Connection{
 
@@ -37,5 +41,33 @@ public class FactoryDB_Connection extends DB_Connection{
             closeJDBCResources(connection, ps, rs);
         }
     }
+
+    public ObservableList<ExtraVehiculo> getCarAccessories(int idCar){
+        ObservableList<ExtraVehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CarXAccessorySelect](?)}");
+            callableStatement.setInt(1, idCar);
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                //String id = rs.getString("carXAccessory_id");
+                int extraID = rs.getInt("accessorie_id");
+                float price = rs.getFloat("price");
+                String name = rs.getString("name");
+                ReturnList.add(new ExtraVehiculo(extraID, name, String.valueOf(price)));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
 
 }
