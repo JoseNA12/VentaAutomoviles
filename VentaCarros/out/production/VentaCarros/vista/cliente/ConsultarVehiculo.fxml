@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.cliente.C_ConsultarVehiculo">
+    <children>
+
+        <AnchorPane layoutX="92.0" layoutY="55.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #4e598c;">
+            <children>
+                <Label fx:id="lb_nombre_carro" layoutX="63.0" layoutY="4.0" text="[nombre carro]" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/play-button.png" />
+                    </image>
+                </ImageView>
+                <JFXButton fx:id="btn_atras" layoutX="994.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #ffffff;" text="Atras">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </AnchorPane>
+      <AnchorPane layoutX="92.0" layoutY="107.0" prefHeight="553.0" prefWidth="1097.0">
+         <children>
+            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/picture.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="310.0" layoutY="15.0" orientation="VERTICAL" prefHeight="271.0" prefWidth="7.0" />
+            <GridPane layoutX="339.0" layoutY="45.0" prefHeight="210.0" prefWidth="758.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="120.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Marca">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Modelo" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Año" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Num. Pasajeros" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Tipo" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Motor" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_marca" text="Label" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_modelo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_anio" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_num_pasajeros" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_tipo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_motor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Asientos" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Puertas" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Gasolina" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Acceleracion" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Vel. máxima" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_asientos" text="Label" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_puertas" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_gasolina" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_aceleracion" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_vel_maxima" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Precio" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_precio" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <JFXListView fx:id="lv_extras" layoutX="14.0" layoutY="344.0" prefHeight="195.0" prefWidth="300.0" />
+            <Label layoutX="14.0" layoutY="312.0" text="Extras">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <JFXListView fx:id="lv_extras_seleccionadas" layoutX="361.0" layoutY="346.0" prefHeight="195.0" prefWidth="300.0" />
+            <Separator layoutX="693.0" layoutY="344.0" orientation="VERTICAL" prefHeight="200.0" />
+            <Label layoutX="361.0" layoutY="315.0" text="Total:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_total_extras" layoutX="415.0" layoutY="315.0" prefHeight="27.0" prefWidth="163.0" text="[total extras]">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="732.0" layoutY="312.0" text="Precio total">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_precio_total" alignment="CENTER" contentDisplay="CENTER" layoutX="875.0" layoutY="316.0" prefHeight="27.0" prefWidth="222.0" text="\$$$$[precio total]$$$$" textAlignment="CENTER" textFill="#b90000">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btn_comprar" layoutX="827.0" layoutY="488.0" prefHeight="52.0" prefWidth="163.0" style="-fx-background-color: #ff8c42;" text="Comprar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <Separator layoutX="735.0" layoutY="355.0" prefHeight="2.0" prefWidth="347.0" />
+            <JFXComboBox fx:id="cb_metodo_pago" labelFloat="true" layoutX="735.0" layoutY="403.0" prefHeight="25.0" prefWidth="347.0" promptText="Método de pago" style="-fx-font: 16px System;" />
+            <ImageView fitHeight="44.0" fitWidth="79.0" layoutX="317.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/right-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="79.0" layoutX="317.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+               <image>
+                  <Image url="@../images/right-arrow.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btn_agregar_extra" layoutX="317.0" layoutY="393.0" prefHeight="44.0" prefWidth="44.0" text=" " />
+            <JFXButton fx:id="btn_quitar_extra" layoutX="317.0" layoutY="452.0" prefHeight="44.0" prefWidth="44.0" text=" " />
+         </children>
+      </AnchorPane>
+    </children>
+
+</AnchorPane>

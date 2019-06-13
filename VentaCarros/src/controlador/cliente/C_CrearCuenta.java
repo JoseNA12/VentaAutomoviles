@@ -14,10 +14,8 @@ import java.time.LocalDate;
 public class C_CrearCuenta {
 
     @FXML StackPane st_dialogs;
-
     @FXML JFXButton btn_proceder;
     @FXML JFXButton btn_regresar;
-
     @FXML JFXTextField tf_nombre;
     @FXML JFXTextField tf_apellidos;
     @FXML JFXDatePicker tf_fecha_nacimiento;
