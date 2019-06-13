@@ -1,3 +1,0 @@
-Algunas propiedades CSS no sirven en SceneBuilder.
-Por tanto, este paquete contiene aquellos estilos de componentes
-que no sirven en SceneBuilder.
