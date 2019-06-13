@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import modelo.GroupDBConnection;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -41,8 +42,16 @@ public class C_CrearCuenta {
             !tf_telefono.getText().trim().equals("") && !tf_zip_code.getText().trim().equals("") &&
             !tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
 
-            LocalDate localDate = tf_fecha_nacimiento.getValue();
-            System.out.println(localDate);
+
+            if(GroupDBConnection.getDBInstance().signIn(tf_nombre.getText(), tf_apellidos.getText(), tf_fecha_nacimiento.getValue(),
+                    tf_cedula.getText(), tf_telefono.getText(), tf_zip_code.getText(), tf_correo.getText(), tf_contrasenia.getText())) {
+                mostrarMensaje("Usuario registrado con éxito", "Usuario registrado correctamente");
+            }else{
+                mostrarMensaje("Error", "El correo indicado ya se encuentra registrado en el sistema");
+            }
+
+
+            //System.out.println(localDate);
         }
         else {
             mostrarMensaje("Datos incompletos", "Por favor, todos los campos son requeridos para el registro!");

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class HumanResourcesDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -73,6 +74,47 @@ public class HumanResourcesDB_Connection extends DB_Connection{
                         result = new Empleado(userID, name, lastName, birthDate,identification_card, phone, email, zip_code, tipo, position_id, positionName, office_id);
                     }
                 }
+            }
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+            return result;
+        }
+    }
+
+    /*
+
+        @name nvarchar(50),
+	@lastname nvarchar(50),
+	@birthDate date,
+    @phone nvarchar(50),
+    @email nvarchar(50),
+    @zip_code int,
+	@password nvarchar(50),
+	@identificationCard nvarchar(50)
+
+     */
+    public boolean signIn(String name, String lastname, String birthDate, String idCard, String phone, int zip_code, String email, String password){
+        Connection connection = null;
+        CallableStatement  ps = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.usp_CustomerInsert(?,?,?,?,?,?,?,?)}");
+            ps.setNString(1, name);
+            ps.setNString(2, lastname);
+            ps.setNString(3, birthDate);
+            ps.setNString(4, phone);
+            ps.setNString(5, email);
+            ps.setInt(6, zip_code);
+            ps.setNString(7, password);
+            ps.setNString(8, idCard);
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            if (rs.next()) {
+                result = true;
             }
         } catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();

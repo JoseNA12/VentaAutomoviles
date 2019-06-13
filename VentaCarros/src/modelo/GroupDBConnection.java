@@ -1,5 +1,8 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
     private static GroupDBConnection DBInstance;
@@ -33,6 +36,9 @@ public class GroupDBConnection {
     }
 
     public Usuario loginDB(String user, String password){ return HSDBInstance.login(user, password);}
+
+    public boolean signIn(String name, String lastname, LocalDate birthDate, String idCard, String phone, String zip_code, String email, String password){ return HSDBInstance.signIn(name, lastname,birthDate.format(DateTimeFormatter.ISO_DATE), idCard, phone, Integer.parseInt(zip_code), email, password);}
+
 
 
 }
