@@ -46,38 +46,36 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
     }
 
-    public ObservableList<Vehiculo> SelectAutosXSucursal(String idSucursal){
+    public ObservableList<Vehiculo> SelectAutosXSucursal(int idSucursal){
         ObservableList<Vehiculo> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        CallableStatement callableStatement = null;
+        CallableStatement callableStatement;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            callableStatement = connection.prepareCall("{call dbo.usp_Car-StockSelect(?)}");
-            callableStatement.setString(1, idSucursal);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockSelect](?)}");
+            callableStatement.setInt(1, idSucursal);
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
             while (rs.next()) {
-                if(rs.getInt("exit_status")==0) {
-                    String id = rs.getString("car_id");
-                    String marca = rs.getString("brand");
-                    String nombre = rs.getString("name");
-                    String modelo = rs.getString("model");
-                    String annio = rs.getString("year");
-                    String num_pasajeros = rs.getString("seats");
-                    String tipo = rs.getString("name");
-                    String motor = rs.getString("engine");
-                    String asientos = rs.getString("seats");
-                    String puertas = rs.getString("doors");
-                    String gasolina = rs.getString("fuel");
-                    String aceleracion = rs.getString("acceleration");
-                    String vel_maxima = rs.getString("maximum_speed");
-                    String precio = rs.getString("price");
-                    Vehiculo CarroAux = new Vehiculo(id, marca, modelo, annio, num_pasajeros, tipo, motor,
-                            asientos, puertas, gasolina, aceleracion, vel_maxima, precio);
-                    ReturnList.add(CarroAux);
-                }
+                String id = rs.getString("car_id");
+                String marca = rs.getString("brand");
+                String nombre = rs.getString("name");
+                String modelo = rs.getString("model");
+                String annio = rs.getString("year");
+                String num_pasajeros = rs.getString("seats");
+                String tipo = rs.getString("name");
+                String motor = rs.getString("engine");
+                String asientos = rs.getString("seats");
+                String puertas = rs.getString("doors");
+                String gasolina = rs.getString("fuel");
+                String aceleracion = rs.getString("acceleration");
+                String vel_maxima = rs.getString("maximum_speed");
+                String precio = rs.getString("price");
+                Vehiculo CarroAux = new Vehiculo(id, marca, modelo, annio, num_pasajeros, tipo, motor,
+                        asientos, puertas, gasolina, aceleracion, vel_maxima, precio);
+                ReturnList.add(CarroAux);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

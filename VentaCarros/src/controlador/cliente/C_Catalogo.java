@@ -36,7 +36,7 @@ public class C_Catalogo {
 
         catalogoObservableList = FXCollections.observableArrayList();
 
-        catalogoObservableList = BranchOfficeDB_Connection.getHSDBInstance().SelectAutosXSucursal("1");
+        catalogoObservableList = BranchOfficeDB_Connection.getHSDBInstance().SelectAutosXSucursal(1);
         // ---------------------------------------------------------------
         // HACER LA CONSULTA A LAS BD's
 

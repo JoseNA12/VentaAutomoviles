@@ -47,6 +47,11 @@ public class C_InicioSesion {
     }
 
     private void handle_btn_ingresar(ActionEvent event) {
+        /*try{
+            FXRouter.goTo("Menu_cliente");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }*/
         if (!tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
             try {
                 GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
@@ -56,7 +61,6 @@ public class C_InicioSesion {
                 else{
                     switch (usuarioActual.getTipoUsuario()) {
                         case ADMINISTRADOR:
-
                             break;
                         case FACTURADOR:
                             FXRouter.goTo("Menu_facturador");
