@@ -44,5 +44,6 @@ public class GroupDBConnection {
 
     public ObservableList<Vehiculo> SelectAutosXSucursal(int idSucursal){ return BOfficeDBInstance.SelectAutosXSucursal(idSucursal);}
 
+    public ObservableList<MetodoPago> getPaymentMethods(){return BOfficeDBInstance.getPaymentMethods();}
 
 }

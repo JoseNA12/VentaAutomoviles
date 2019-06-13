@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import modelo.ExtraVehiculo;
 import modelo.GroupDBConnection;
+import modelo.MetodoPago;
 import modelo.Vehiculo;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class C_ConsultarVehiculo {
     @FXML JFXButton btn_agregar_extra;
     @FXML JFXButton btn_quitar_extra;
 
-    @FXML JFXComboBox cb_metodo_pago;
+    @FXML JFXComboBox<MetodoPago> cb_metodo_pago;
 
     private Vehiculo vehiculo_seleccionado = null;
 
@@ -87,32 +88,15 @@ public class C_ConsultarVehiculo {
     private void init_listView_extras() {
         extrasObservableList = FXCollections.observableArrayList();
         extras_seleccionadasObservableList = FXCollections.observableArrayList();
-
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
-        // ->>>> vehiculo_seleccionado.getID();
-
-        /*extrasObservableList.addAll(
-                new ExtraVehiculo("Extra 1", "600.000"),
-                new ExtraVehiculo("Extra 2", "210.000"),
-                new ExtraVehiculo("Extra 3", "10.000"),
-                new ExtraVehiculo("Extra 4", "50.000")
-        );*/
         extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(vehiculo_seleccionado.getID());
-        // ---------------------------------------------------------------
-
         lv_extras.setItems(extrasObservableList);
-
         lv_extras.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());
         lv_extras_seleccionadas.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());
     }
 
     private void init_cb_metodo_pago() {
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
-        // meter en un for la inserciones de los tipos, tal vez ?
-
-        cb_metodo_pago.getItems().add("A");
+        cb_metodo_pago.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
+        cb_metodo_pago.getSelectionModel().selectFirst(); //select the first element
     }
 
     private void handle_btn_comprar(ActionEvent event) {

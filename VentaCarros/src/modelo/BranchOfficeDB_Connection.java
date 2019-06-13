@@ -1,15 +1,9 @@
 package modelo;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -76,6 +70,30 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                 Vehiculo CarroAux = new Vehiculo(id, marca, modelo, annio, num_pasajeros, tipo, motor,
                         asientos, puertas, gasolina, aceleracion, vel_maxima, precio);
                 ReturnList.add(CarroAux);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
+    public ObservableList<MetodoPago> getPaymentMethods(){
+        ObservableList<MetodoPago> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                int methodID = rs.getInt("paymentMethod_id");
+                String name = rs.getString("name");
+                ReturnList.add(new MetodoPago(methodID, name));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

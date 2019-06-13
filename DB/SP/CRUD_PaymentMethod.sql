@@ -1,13 +1,12 @@
 USE [BranchOfficeDB];
 GO
-
 IF OBJECT_ID('[dbo].[usp_PaymentMethodSelect]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_PaymentMethodSelect] 
 END 
 GO
 CREATE PROC [dbo].[usp_PaymentMethodSelect] 
-    @paymentMethod_id int
+    @paymentMethod_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
