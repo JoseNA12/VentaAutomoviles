@@ -13,6 +13,7 @@ import modelo.Vehiculo;
 import java.io.IOException;
 
 import static controlador.C_InicioSesion.tipoUsuarioActual;
+import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Catalogo {
 
@@ -56,7 +57,7 @@ public class C_Catalogo {
 
     private void handle_btn_atras(ActionEvent event) {
         try {
-            switch (tipoUsuarioActual) {
+            switch (usuarioActual.getTipoUsuario()) {
                 case ADMINISTRADOR:
 
                     break;
