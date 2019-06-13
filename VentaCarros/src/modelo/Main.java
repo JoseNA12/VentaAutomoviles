@@ -12,17 +12,26 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class InicioSesion extends Application {
+public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXRouter.bind(this, primaryStage, "Jx3-L Autos", 1280, 700);
         FXRouter.when("InicioSesion", "../vista/InicioSesion.fxml");
+
+        // Cliente
         FXRouter.when("Menu_cliente", "../vista/cliente/Menu.fxml");
         FXRouter.when("CrearCuenta_cliente", "../vista/cliente/CrearCuenta.fxml");
         FXRouter.when("Catalogo_cliente", "../vista/cliente/Catalogo.fxml");
         FXRouter.when("Sucursal_cliente", "../vista/cliente/Sucursal.fxml");
         FXRouter.when("ConsultarVehiculo_cliente", "../vista/cliente/ConsultarVehiculo.fxml");
+
+        // Facturador
+        FXRouter.when("Menu_facturador", "../vista/facturador/Menu.fxml");
+        FXRouter.when("Transacciones_facturador", "../vista/facturador/Transaccion.fxml");
+
+
+        // Administrador
 
         FXRouter.startFrom("InicioSesion");
     }

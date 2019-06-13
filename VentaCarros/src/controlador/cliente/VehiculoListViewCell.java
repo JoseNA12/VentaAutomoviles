@@ -1,4 +1,4 @@
-package modelo;
+package controlador.cliente;
 
 import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.JFXButton;
@@ -7,14 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import modelo.Vehiculo;
 
 import java.io.IOException;
 
@@ -45,7 +41,7 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
 
         } else {
             if (mLLoader == null) {
-                mLLoader = new FXMLLoader(getClass().getResource("../vista/cliente/VehiculoListCell.fxml"));
+                mLLoader = new FXMLLoader(getClass().getResource("../../vista/cliente/VehiculoListCell.fxml"));
                 mLLoader.setController(this);
 
                 try {
@@ -63,22 +59,6 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                     } catch (IOException e) {   // .. entonces al momento de cargar la pantalla sepa cuales datos mostrar
                         e.printStackTrace();
                     }
-                    //Parent root;
-                    /*try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/cliente/ConsultarVehiculo.fxml"));
-                        Parent root = loader.load();
-                        Label a = (Label)loader.getNamespace().get("lb_marca_2");
-                        System.out.println(a.getText());
-
-                        Stage stage = new Stage();
-                        stage.setTitle("El buga");
-                        stage.setScene(new Scene(root));
-                        stage.show();
-
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
                 }
             });
             lb_marca.setText(vehiculo.getMarca());
@@ -92,3 +72,20 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
         }
     }
 }
+
+//Parent root;
+/*try {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/cliente/ConsultarVehiculo.fxml"));
+    Parent root = loader.load();
+    Label a = (Label)loader.getNamespace().get("lb_marca_2");
+    System.out.println(a.getText());
+
+    Stage stage = new Stage();
+    stage.setTitle("El buga");
+    stage.setScene(new Scene(root));
+    stage.show();
+
+}
+catch (IOException e) {
+    e.printStackTrace();
+}*/

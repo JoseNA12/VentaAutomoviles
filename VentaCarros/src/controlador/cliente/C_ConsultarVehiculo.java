@@ -2,6 +2,7 @@ package controlador.cliente;
 
 import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,8 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import modelo.ExtraVehiculo;
-import modelo.Sucursal;
-import modelo.SucursalListViewCell;
 import modelo.Vehiculo;
 
 import java.io.IOException;
@@ -36,21 +35,35 @@ public class C_ConsultarVehiculo {
     @FXML JFXListView lv_extras;
     @FXML JFXListView lv_extras_seleccionadas;
 
-    private ObservableList<ExtraVehiculo> sucursalesObservableList;
+    private ObservableList<ExtraVehiculo> extrasObservableList;
+    private ObservableList<ExtraVehiculo> extras_seleccionadasObservableList;
 
     @FXML JFXButton btn_atras;
     @FXML JFXButton btn_comprar;
+    @FXML JFXButton btn_agregar_extra;
+    @FXML JFXButton btn_quitar_extra;
+
+    @FXML JFXComboBox cb_metodo_pago;
+
+    private Vehiculo vehiculo_seleccionado = null;
+
+    private double montoTotal = 0.0;
+    private double montoTotalExtras = 0.0;
 
 
     public void initialize() throws Exception {
         initComponentes();
-        //init_listView_extras();
+        init_listView_extras();
+        init_cb_metodo_pago();
     }
 
     private void initComponentes() throws Exception {
+        btn_comprar.setOnAction(this::handle_btn_comprar);
+        btn_agregar_extra.setOnAction(this::handle_btn_agregar_extra);
+        btn_quitar_extra.setOnAction(this::handle_btn_quitar_extra);
         btn_atras.setOnAction(this::handle_btn_atras);
 
-        Vehiculo vehiculo_seleccionado = (Vehiculo) FXRouter.getData(); // la pantalla previa a esta envia el objeto Vehiculo
+        vehiculo_seleccionado = (Vehiculo) FXRouter.getData(); // la pantalla previa a esta envia el objeto Vehiculo
         lb_nombre_carro.setText(vehiculo_seleccionado.getNombre_carro());
         lb_marca.setText(vehiculo_seleccionado.getMarca());
         lb_modelo.setText(vehiculo_seleccionado.getModelo());
@@ -65,25 +78,77 @@ public class C_ConsultarVehiculo {
         lb_vel_maxima.setText(vehiculo_seleccionado.getVel_maxima());
         lb_precio.setText(vehiculo_seleccionado.getPrecio());
 
+        montoTotal = Double.parseDouble(vehiculo_seleccionado.getPrecio());
+        lb_precio_total.setText(String.valueOf(montoTotal));
+        lb_total_extras.setText("0.0");
     }
 
-   /* private void init_listView_extras() {
-        //listView_catalogo.getStyleClass().add("mylistview");
-
-        //listView_sucursales.getItems().add(new Label("Item"));
-        sucursalesObservableList = FXCollections.observableArrayList();
+    private void init_listView_extras() {
+        extrasObservableList = FXCollections.observableArrayList();
+        extras_seleccionadasObservableList = FXCollections.observableArrayList();
 
         // ---------------------------------------------------------------
         // HACER LA CONSULTA A LAS BB's
+        // ->>>> vehiculo_seleccionado.getID();
 
-        sucursalesObservableList.addAll(
-                new ExtraVehiculo("Josue se la come", " y entera")
+        extrasObservableList.addAll(
+                new ExtraVehiculo("Extra 1", "600.000"),
+                new ExtraVehiculo("Extra 2", "210.000"),
+                new ExtraVehiculo("Extra 3", "10.000"),
+                new ExtraVehiculo("Extra 4", "50.000")
         );
         // ---------------------------------------------------------------
 
-        lv_extras.setItems(sucursalesObservableList);
-        lv_extras.setCellFactory(studentListView -> new SucursalListViewCell());
-    }*/
+        lv_extras.setItems(extrasObservableList);
+
+        lv_extras.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());
+        lv_extras_seleccionadas.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());
+    }
+
+    private void init_cb_metodo_pago() {
+        // ---------------------------------------------------------------
+        // HACER LA CONSULTA A LAS BB's
+        // meter en un for la inserciones de los tipos, tal vez ?
+
+        cb_metodo_pago.getItems().add("A");
+    }
+
+    private void handle_btn_comprar(ActionEvent event) {
+
+    }
+
+    private void handle_btn_agregar_extra(ActionEvent event) {
+        ExtraVehiculo seleccion = (ExtraVehiculo) lv_extras.getSelectionModel().getSelectedItem();
+        if (seleccion != null) {
+            extrasObservableList.remove(seleccion); // elimino el item de la lista observable
+            lv_extras.setItems(extrasObservableList); // actualizao la lista
+
+            extras_seleccionadasObservableList.add(seleccion);  // añado el item a la lista de seleccionados
+            lv_extras_seleccionadas.setItems(extras_seleccionadasObservableList); // actualizo la lista
+
+            // actualizar montos totales y sus labels
+            montoTotal += Double.parseDouble(seleccion.getPrecio());
+            montoTotalExtras += Double.parseDouble(seleccion.getPrecio());
+            lb_precio_total.setText(String.valueOf(montoTotal));
+            lb_total_extras.setText(String.valueOf(montoTotalExtras));
+        }
+    }
+
+    private void handle_btn_quitar_extra(ActionEvent event) {
+        ExtraVehiculo seleccion = (ExtraVehiculo) lv_extras_seleccionadas.getSelectionModel().getSelectedItem();
+        if (seleccion != null) {
+            extras_seleccionadasObservableList.remove(seleccion);
+            lv_extras_seleccionadas.setItems(extras_seleccionadasObservableList);
+
+            extrasObservableList.add(seleccion);
+            lv_extras.setItems(extrasObservableList);
+
+            montoTotal -= Double.parseDouble(seleccion.getPrecio());
+            montoTotalExtras -= Double.parseDouble(seleccion.getPrecio());
+            lb_precio_total.setText(String.valueOf(montoTotal));
+            lb_total_extras.setText(String.valueOf(montoTotalExtras));
+        }
+    }
 
     private void handle_btn_atras(ActionEvent event) {
         try {

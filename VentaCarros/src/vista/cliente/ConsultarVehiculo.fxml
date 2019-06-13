@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -180,45 +181,53 @@
                   </Label>
                </children>
             </GridPane>
-            <JFXListView fx:id="lv_extras" layoutX="14.0" layoutY="344.0" prefHeight="195.0" prefWidth="332.0" />
+            <JFXListView fx:id="lv_extras" layoutX="14.0" layoutY="344.0" prefHeight="195.0" prefWidth="300.0" />
             <Label layoutX="14.0" layoutY="312.0" text="Extras">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fitHeight="44.0" fitWidth="79.0" layoutX="359.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/right-arrow.png" />
-               </image>
-            </ImageView>
-            <JFXListView fx:id="lv_extras_seleccionadas" layoutX="410.0" layoutY="345.0" prefHeight="195.0" prefWidth="222.0" />
-            <Separator layoutX="679.0" layoutY="342.0" orientation="VERTICAL" prefHeight="200.0" />
-            <Label layoutX="410.0" layoutY="315.0" text="Total:">
+            <JFXListView fx:id="lv_extras_seleccionadas" layoutX="361.0" layoutY="346.0" prefHeight="195.0" prefWidth="300.0" />
+            <Separator layoutX="693.0" layoutY="344.0" orientation="VERTICAL" prefHeight="200.0" />
+            <Label layoutX="361.0" layoutY="315.0" text="Total:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_total_extras" layoutX="464.0" layoutY="315.0" prefHeight="27.0" prefWidth="163.0" text="[total extras]">
+            <Label fx:id="lb_total_extras" layoutX="415.0" layoutY="315.0" prefHeight="27.0" prefWidth="163.0" text="[total extras]">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="827.0" layoutY="311.0" text="Precio total" textFill="#4e598c">
+            <Label layoutX="732.0" layoutY="312.0" text="Precio total">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lb_precio_total" alignment="CENTER" contentDisplay="CENTER" layoutX="781.0" layoutY="346.0" prefHeight="27.0" prefWidth="222.0" text="\$$$$[precio total]$$$$" textAlignment="CENTER" textFill="#b90000">
+            <Label fx:id="lb_precio_total" alignment="CENTER" contentDisplay="CENTER" layoutX="875.0" layoutY="316.0" prefHeight="27.0" prefWidth="222.0" text="\$$$$[precio total]$$$$" textAlignment="CENTER" textFill="#b90000">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btn_comprar" layoutX="811.0" layoutY="426.0" prefHeight="76.0" prefWidth="163.0" style="-fx-background-color: #ff8c42;" text="Comprar" textFill="WHITE">
+            <JFXButton fx:id="btn_comprar" layoutX="827.0" layoutY="488.0" prefHeight="52.0" prefWidth="163.0" style="-fx-background-color: #ff8c42;" text="Comprar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </JFXButton>
-            <Separator layoutX="793.0" layoutY="391.0" prefWidth="200.0" />
+            <Separator layoutX="735.0" layoutY="355.0" prefHeight="2.0" prefWidth="347.0" />
+            <JFXComboBox fx:id="cb_metodo_pago" labelFloat="true" layoutX="735.0" layoutY="403.0" prefHeight="25.0" prefWidth="347.0" promptText="Método de pago" style="-fx-font: 16px System;" />
+            <ImageView fitHeight="44.0" fitWidth="79.0" layoutX="317.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/right-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="79.0" layoutX="317.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+               <image>
+                  <Image url="@../images/right-arrow.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btn_agregar_extra" layoutX="317.0" layoutY="393.0" prefHeight="44.0" prefWidth="44.0" text=" " />
+            <JFXButton fx:id="btn_quitar_extra" layoutX="317.0" layoutY="452.0" prefHeight="44.0" prefWidth="44.0" text=" " />
          </children>
       </AnchorPane>
     </children>

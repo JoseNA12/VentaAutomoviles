@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 
 public class Vehiculo {
 
+    private String ID;
     private String nombre_carro;
     private String marca;
     private String modelo;
@@ -21,9 +22,10 @@ public class Vehiculo {
     // falta la foto
 
 
-    public Vehiculo(String marca, String modelo, String anio, String num_pasajeros,
+    public Vehiculo(String ID, String marca, String modelo, String anio, String num_pasajeros,
                     String tipo, String motor, String asientos, String puertas, String gasolina,
                     String aceleracion, String vel_maxima, String precio) {
+        this.ID = ID;
         this.nombre_carro = marca + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
@@ -39,9 +41,12 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    public Vehiculo(String marca, String modelo) {
-        this.marca = marca;
-        this.modelo = modelo;
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getNombre_carro() {

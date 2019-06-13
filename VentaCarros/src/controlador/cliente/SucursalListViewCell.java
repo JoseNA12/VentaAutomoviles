@@ -1,16 +1,12 @@
-package modelo;
+package controlador.cliente;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListCell;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import modelo.Sucursal;
 
 import java.io.IOException;
 
@@ -19,7 +15,7 @@ public class SucursalListViewCell extends JFXListCell<Sucursal> {
     @FXML GridPane gp_sucursales;
 
     @FXML Label lb_nombre;
-    @FXML Label lb_no_empleados;
+    @FXML Label lb_ubicacion;
 
     @FXML JFXButton btn_consultar;
 
@@ -36,7 +32,7 @@ public class SucursalListViewCell extends JFXListCell<Sucursal> {
 
         } else {
             if (mLLoader == null) {
-                mLLoader = new FXMLLoader(getClass().getResource("../vista/cliente/SucursalListCell.fxml"));
+                mLLoader = new FXMLLoader(getClass().getResource("../../vista/cliente/SucursalListCell.fxml"));
                 mLLoader.setController(this);
 
                 try {
@@ -47,8 +43,8 @@ public class SucursalListViewCell extends JFXListCell<Sucursal> {
 
             }
 
-            //lb_marca.setText(vehiculo.getMarca());
-            //lb_modelo.setText(vehiculo.getAnio());
+            lb_nombre.setText(sucursal.getNombre());
+            lb_ubicacion.setText(sucursal.getUbicacion());
 
             setText(null);
             setGraphic(gp_sucursales);

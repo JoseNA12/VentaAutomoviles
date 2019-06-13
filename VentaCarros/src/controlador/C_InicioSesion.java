@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import modelo.TipoUsuario;
 import modelo.Usuario;
 
 import modelo.GroupDBConnection;
@@ -29,6 +30,7 @@ public class C_InicioSesion {
     @FXML JFXPasswordField tf_contrasenia;
 
     public static Usuario usuarioActual;
+    public static TipoUsuario tipoUsuarioActual;
 
 
     public void initialize() throws Exception {
@@ -39,9 +41,9 @@ public class C_InicioSesion {
     private void initComponentes() throws Exception {
         btn_ingresar.setOnAction(this::handle_btn_ingresar);
         btn_crear_cuenta.setOnAction(this::handle_btn_crear_cuenta);
-        GroupDBConnection.getDBInstance().prueba1();
-        GroupDBConnection.getDBInstance().prueba2();
-        GroupDBConnection.getDBInstance().prueba3();
+        //GroupDBConnection.getDBInstance().prueba1();
+        //GroupDBConnection.getDBInstance().prueba2();
+        //GroupDBConnection.getDBInstance().prueba3();
     }
 
     private void handle_btn_ingresar(ActionEvent event) {
@@ -52,7 +54,19 @@ public class C_InicioSesion {
                 usuarioActual = new Usuario("nombre", "apellidos", "fechaNacimiento",
                         "cedula", "telefono", "correo");
 
-                FXRouter.goTo("Menu_cliente");
+                tipoUsuarioActual = TipoUsuario.FACTURADOR;
+
+                switch (tipoUsuarioActual) {
+                    case ADMINISTRADOR:
+
+                        break;
+                    case FACTURADOR:
+                        FXRouter.goTo("Menu_facturador");
+                        break;
+                    case CLIENTE:
+                        FXRouter.goTo("Menu_cliente");
+                        break;
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();
