@@ -14,7 +14,7 @@ public class PedidoVehiculo {
     public PedidoVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
         this.precioTotal = Float.parseFloat(vehiculo.getPrecio());
-        extrasVehiculo = new ArrayList<ExtraVehiculo>();
+        this.extrasVehiculo = new ArrayList<ExtraVehiculo>();
     }
 
     public Vehiculo getVehiculo() {
