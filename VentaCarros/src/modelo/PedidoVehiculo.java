@@ -7,10 +7,18 @@ public class PedidoVehiculo {
 
     private Vehiculo vehiculo;
     private ArrayList<ExtraVehiculo> extrasVehiculo;
+    private Usuario usuario;
+
+    public PedidoVehiculo(Vehiculo vehiculo, ArrayList<ExtraVehiculo> extrasVehiculo, Usuario usuario) {
+        this.vehiculo = vehiculo;
+        this.extrasVehiculo = extrasVehiculo;
+        this.usuario = usuario;
+    }
 
     public PedidoVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-        this.extrasVehiculo = new ArrayList<>();
+        this.extrasVehiculo = extrasVehiculo;
+        this.usuario = usuario;
     }
 
     public Vehiculo getVehiculo() {
@@ -31,5 +39,13 @@ public class PedidoVehiculo {
 
     public void addExtra(ExtraVehiculo extraVehiculo) {
         this.extrasVehiculo.add(extraVehiculo);
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

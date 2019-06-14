@@ -23,6 +23,7 @@ import modelo.Vehiculo;
 import java.io.IOException;
 
 import static controlador.C_InicioSesion.tipoUsuarioActual;
+import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_ConsultarVehiculo {
 
@@ -129,15 +130,20 @@ public class C_ConsultarVehiculo {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
-        PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
-
         try {
             switch (tipoUsuarioActual) {
                 case FACTURADOR:
                     // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
-                    solicitarCedula("Atención", "Ingrese el número de cédula\n\n\n");
+                    solicitarCedula_compra_directa("Atención", "Ingrese el número de cédula\n\n\n");
                     break;
                 case CLIENTE:
+                    PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
+                    pedidoVehiculo.setUsuario(usuarioActual);
+
+                    // -------------------------------
+                    // registrar en la BD el pedido
+                    // -------------------------------
+
                     FXRouter.goTo("Abonos_cliente");
                     break;
             }
@@ -149,7 +155,19 @@ public class C_ConsultarVehiculo {
     private void handle_btn_solicitar_credito(ActionEvent event) {
         if (vehiculo_seleccionado != null) {
             try {
-                FXRouter.goTo("SolicitarCredito_cliente", GetPedidoVehiculo());
+                switch (tipoUsuarioActual) {
+                    case FACTURADOR:
+                        // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
+                        solicitarCedula_credito("Atención", "Ingrese el número de cédula\n\n\n");
+                        break;
+                    case CLIENTE:
+                        PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
+                        pedidoVehiculo.setUsuario(usuarioActual);
+
+                        FXRouter.goTo("SolicitarCredito_cliente", pedidoVehiculo);
+                        break;
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -197,7 +215,7 @@ public class C_ConsultarVehiculo {
         }
     }
 
-    private void solicitarCedula(String encabezado, String cuerpo) {
+    private void solicitarCedula_compra_directa(String encabezado, String cuerpo) {
         JFXDialogLayout content= new JFXDialogLayout();
         JFXTextField tf_cedula = new JFXTextField();
         content.setHeading(new Text(encabezado));
@@ -214,7 +232,52 @@ public class C_ConsultarVehiculo {
 
                     Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
 
+                    PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
+                    pedidoVehiculo.setUsuario(usuario);
+
+                    // -------------------------------
+                    // registrar en la BD el pedido
+                    // -------------------------------
+
                     FXRouter.goTo("Abonos_cliente", usuario);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        JFXButton btn_cancelar = new JFXButton("Cancelar");
+        btn_cancelar.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+            }
+        });
+
+        content.setActions(btn_ingresar, btn_cancelar);
+        dialog.show();
+    }
+
+    private void solicitarCedula_credito(String encabezado, String cuerpo) {
+        JFXDialogLayout content= new JFXDialogLayout();
+        JFXTextField tf_cedula = new JFXTextField();
+        content.setHeading(new Text(encabezado));
+        content.setBody(new Text(cuerpo), tf_cedula);
+        JFXDialog dialog =new JFXDialog(sp_dialogs, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton btn_ingresar = new JFXButton("Ingresar");
+        btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                try {
+                    // validar la cedula
+                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
+                    // ------------- Query
+
+                    Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
+
+                    PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
+                    pedidoVehiculo.setUsuario(usuario);
+
+                    FXRouter.goTo("SolicitarCredito_cliente", pedidoVehiculo);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

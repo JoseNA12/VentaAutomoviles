@@ -81,6 +81,8 @@ public class C_SolicitarCredito {
 
     private void handle_btn_comprar(ActionEvent event) {
 
+        // llegado a este punto se tiene el pedido del vehiculo: pedidoVehiculo
+        // pedidoVehiculo.getVehiculo(); pedidoVehiculo.getExtrasVehiculo(); pedidoVehiculo.getUsuario();
     }
 
     private void handle_btn_atras(ActionEvent event) {
