@@ -54,7 +54,7 @@ public class C_InicioSesion {
                 usuarioActual = new Usuario("nombre", "apellidos", "fechaNacimiento",
                         "cedula", "telefono", "correo");
 
-                tipoUsuarioActual = TipoUsuario.FACTURADOR;
+                tipoUsuarioActual = TipoUsuario.CLIENTE;
 
                 switch (tipoUsuarioActual) {
                     case ADMINISTRADOR:

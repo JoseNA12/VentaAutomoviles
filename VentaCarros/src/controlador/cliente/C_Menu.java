@@ -14,6 +14,7 @@ import static controlador.C_InicioSesion.usuarioActual;
 public class C_Menu {
 
     @FXML JFXButton btn_catalogo;
+    @FXML JFXButton btn_abonos;
     @FXML JFXButton btn_sucursales;
     @FXML JFXButton btn_salir;
 
@@ -27,6 +28,7 @@ public class C_Menu {
     // Inicializar las referecias de los handlers de los componentes de la UI
     private void initComponentes() throws Exception {
         btn_catalogo.setOnAction(this::handle_btn_catalogo);
+        btn_abonos.setOnAction(this::handle_btn_abonos);
         btn_sucursales.setOnAction(this::handle_btn_sucursales);
         btn_salir.setOnAction(this::handle_btn_salir);
 
@@ -34,8 +36,16 @@ public class C_Menu {
     }
 
     private void handle_btn_catalogo(ActionEvent event) {
-       try {
+        try {
             FXRouter.goTo("Catalogo_cliente");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handle_btn_abonos(ActionEvent event) {
+        try {
+            FXRouter.goTo("Abonos_cliente");
         } catch (IOException e) {
             e.printStackTrace();
         }

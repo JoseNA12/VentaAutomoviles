@@ -11,22 +11,32 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.cliente.C_Menu">
    <children>
-      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="185.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="295.0" fitWidth="294.0" layoutX="493.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bill_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="119.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/catalog.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="763.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="846.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/office.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btn_catalogo" alignment="BOTTOM_CENTER" layoutX="185.0" layoutY="165.0" prefHeight="341.0" prefWidth="316.0" text="Catálogo">
+      <JFXButton fx:id="btn_catalogo" alignment="BOTTOM_CENTER" layoutX="119.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Catálogo">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btn_sucursales" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales">
+      <JFXButton fx:id="btn_abonos" alignment="BOTTOM_CENTER" layoutX="494.0" layoutY="163.0" prefHeight="341.0" prefWidth="294.0" text="Abonos">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btn_sucursales" alignment="BOTTOM_CENTER" layoutX="846.0" layoutY="163.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales">
          <font>
             <Font size="22.0" />
          </font>
@@ -62,6 +72,7 @@
             </Label>
             </children>
         </AnchorPane>
-      <Separator layoutX="638.0" layoutY="165.0" orientation="VERTICAL" prefHeight="350.0" />
+      <Separator layoutX="475.0" layoutY="159.0" orientation="VERTICAL" prefHeight="350.0" />
+      <Separator layoutX="803.0" layoutY="159.0" orientation="VERTICAL" prefHeight="350.0" />
    </children>
 </AnchorPane>

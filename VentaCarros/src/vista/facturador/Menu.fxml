@@ -27,7 +27,7 @@
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btn_transacciones" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Transacciones">
+      <JFXButton fx:id="btn_abono" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Pagos">
          <font>
             <Font size="22.0" />
          </font>

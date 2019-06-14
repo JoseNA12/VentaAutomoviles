@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="700.0" maxWidth="1280.0" minHeight="700.0" minWidth="1280.0" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.cliente.C_Abono">
+
+    <children>
+      <Pane layoutX="836.0" layoutY="179.0" prefHeight="329.0" prefWidth="316.0" style="-fx-background-color: WHITE;">
+         <children>
+            <JFXTextField fx:id="tf_monto_a_pagar" focusColor="#ff8c42" labelFloat="true" layoutX="53.0" layoutY="47.0" prefHeight="25.0" prefWidth="211.0" promptText="Monto a pagar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXTextField>
+            <JFXComboBox fx:id="cb_metodo_pago" focusColor="#ff8c42" labelFloat="true" layoutX="53.0" layoutY="114.0" prefHeight="44.0" prefWidth="211.0" promptText="Método de pago" style="-fx-font: 16px System;" />
+            <JFXButton fx:id="btn_realizar_abono" layoutX="56.0" layoutY="228.0" prefHeight="54.0" prefWidth="204.0" style="-fx-background-color: #ff8c42;" text="Realizar abono" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
+        <AnchorPane layoutX="92.0" layoutY="45.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #ff8c42;">
+            <children>
+                <Text fill="WHITE" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Abonos">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/play-button.png" />
+                    </image>
+                </ImageView>
+              <JFXButton fx:id="btn_atras" layoutX="997.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #ffffff;" text="Atras">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </JFXButton>
+            <Label layoutX="704.0" layoutY="9.0" text="Próximo pago:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_fecha_pago" layoutX="841.0" layoutY="9.0" text="[fecha pago]" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="957.0" layoutY="4.0" orientation="VERTICAL" prefHeight="37.0" prefWidth="9.0" />
+            </children>
+        </AnchorPane>
+      <JFXListView fx:id="listView_abonos" layoutX="131.0" layoutY="117.0" prefHeight="391.0" prefWidth="617.0" />
+      <JFXListView fx:id="listView_plan_de_pago" layoutX="131.0" layoutY="530.0" prefHeight="109.0" prefWidth="1023.0" />
+      <Separator layoutX="789.0" layoutY="156.0" orientation="VERTICAL" prefHeight="329.0" prefWidth="9.0" />
+      <Label layoutX="131.0" layoutY="97.0" text="Historial de pagos">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="131.0" layoutY="508.0" text="Plan de compra">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lb_nombre_cliente" layoutX="893.0" layoutY="129.0" prefHeight="27.0" prefWidth="176.0" text="[nombre del cliente]" textFill="#4e598c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="54.0" fitWidth="51.0" layoutX="836.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

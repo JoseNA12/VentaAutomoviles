@@ -18,6 +18,8 @@ public class Usuario {
         this.correo = correo;
     }
 
+    public Usuario(){ }
+
     public String getNombre() {
         return nombre;
     }

@@ -25,10 +25,11 @@ public class Main extends Application {
         FXRouter.when("Catalogo_cliente", "../vista/cliente/Catalogo.fxml");
         FXRouter.when("Sucursal_cliente", "../vista/cliente/Sucursal.fxml");
         FXRouter.when("ConsultarVehiculo_cliente", "../vista/cliente/ConsultarVehiculo.fxml");
+        FXRouter.when("SolicitarCredito_cliente", "../vista/cliente/SolicitarCredito.fxml");
+        FXRouter.when("Abonos_cliente", "../vista/cliente/Abono.fxml");
 
         // Facturador
         FXRouter.when("Menu_facturador", "../vista/facturador/Menu.fxml");
-        FXRouter.when("Transacciones_facturador", "../vista/facturador/Transaccion.fxml");
 
 
         // Administrador

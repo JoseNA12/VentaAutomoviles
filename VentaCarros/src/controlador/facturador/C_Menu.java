@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import modelo.Usuario;
 
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ import static controlador.C_InicioSesion.usuarioActual;
 public class C_Menu {
 
     @FXML JFXButton btn_catalogo;
-    @FXML JFXButton btn_transacciones;
+    @FXML JFXButton btn_abono;
     @FXML JFXButton btn_salir;
 
     @FXML Label lb_usuario_actual;
@@ -31,13 +32,33 @@ public class C_Menu {
     // Inicializar las referecias de los handlers de los componentes de la UI
     private void initComponentes() throws Exception {
         btn_catalogo.setOnAction(this::handle_btn_catalogo);
-        btn_transacciones.setOnAction(this::handle_btn_transacciones);
+        btn_abono.setOnAction(this::handle_btn_abono);
         btn_salir.setOnAction(this::handle_btn_salir);
 
         lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
     }
 
-    private void mostrarMensaje(String encabezado, String cuerpo) {
+    private void handle_btn_catalogo(ActionEvent event) {
+       try {
+            FXRouter.goTo("Catalogo_cliente");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handle_btn_abono(ActionEvent event) {
+        solicitarCedula("Atención", "Ingrese el número de cédula\n\n\n");
+    }
+
+    private void handle_btn_salir(ActionEvent event) {
+        try {
+            FXRouter.goTo("InicioSesion");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void solicitarCedula(String encabezado, String cuerpo) {
         JFXDialogLayout content= new JFXDialogLayout();
         JFXTextField tf_cedula = new JFXTextField();
         content.setHeading(new Text(encabezado));
@@ -49,8 +70,13 @@ public class C_Menu {
             public void handle(ActionEvent event){
                 try {
                     // validar la cedula
+                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
+                    // ------------- Query
 
-                    FXRouter.goTo("Transacciones_facturador");
+                    Usuario usuario = new Usuario("soy cliente", "apellidos", "fechaNacimiento",
+                            "cedula", "telefono", "correo");
+
+                    FXRouter.goTo("Abonos_cliente", usuario);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -66,25 +92,5 @@ public class C_Menu {
 
         content.setActions(btn_ingresar, btn_cancelar);
         dialog.show();
-    }
-
-    private void handle_btn_catalogo(ActionEvent event) {
-       try {
-            FXRouter.goTo("Catalogo_cliente");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handle_btn_transacciones(ActionEvent event) {
-        mostrarMensaje("Atención", "Ingrese el número de cédula\n\n\n");
-    }
-
-    private void handle_btn_salir(ActionEvent event) {
-        try {
-            FXRouter.goTo("InicioSesion");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

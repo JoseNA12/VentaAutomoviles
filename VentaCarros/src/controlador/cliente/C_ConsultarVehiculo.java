@@ -1,18 +1,23 @@
 package controlador.cliente;
 
 import com.github.fxrouter.FXRouter;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import modelo.ExtraVehiculo;
+import modelo.PedidoVehiculo;
+import modelo.Usuario;
 import modelo.Vehiculo;
 
 import java.io.IOException;
+
+import static controlador.C_InicioSesion.tipoUsuarioActual;
 
 public class C_ConsultarVehiculo {
 
@@ -42,8 +47,11 @@ public class C_ConsultarVehiculo {
     @FXML JFXButton btn_comprar;
     @FXML JFXButton btn_agregar_extra;
     @FXML JFXButton btn_quitar_extra;
+    @FXML JFXButton btn_solicitar_credito;
 
     @FXML JFXComboBox cb_metodo_pago;
+
+    @FXML StackPane sp_dialogs;
 
     private Vehiculo vehiculo_seleccionado = null;
 
@@ -59,6 +67,7 @@ public class C_ConsultarVehiculo {
 
     private void initComponentes() throws Exception {
         btn_comprar.setOnAction(this::handle_btn_comprar);
+        btn_solicitar_credito.setOnAction(this::handle_btn_solicitar_credito);
         btn_agregar_extra.setOnAction(this::handle_btn_agregar_extra);
         btn_quitar_extra.setOnAction(this::handle_btn_quitar_extra);
         btn_atras.setOnAction(this::handle_btn_atras);
@@ -88,7 +97,7 @@ public class C_ConsultarVehiculo {
         extras_seleccionadasObservableList = FXCollections.observableArrayList();
 
         // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
+        // HACER LA CONSULTA A LAS BD's
         // ->>>> vehiculo_seleccionado.getID();
 
         extrasObservableList.addAll(
@@ -113,8 +122,47 @@ public class C_ConsultarVehiculo {
         cb_metodo_pago.getItems().add("A");
     }
 
-    private void handle_btn_comprar(ActionEvent event) {
+    /**
+     * Se encarga de construir el pedido del cliente, toma el vehiculo y los extras seleccionados
+     * Se construye cuando se solicita credito o se hace la compra directamente
+     * @return
+     */
+    private PedidoVehiculo GetPedidoVehiculo() {
+        PedidoVehiculo pedidoVehiculo = new PedidoVehiculo(vehiculo_seleccionado);
+        ObservableList<ExtraVehiculo> extras_seleccionadas = lv_extras_seleccionadas.getItems();
 
+        for (ExtraVehiculo extra: extras_seleccionadas) {
+            pedidoVehiculo.addExtra(extra);
+        }
+        return pedidoVehiculo;
+    }
+
+    private void handle_btn_comprar(ActionEvent event) {
+        PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
+
+        try {
+            switch (tipoUsuarioActual) {
+                case FACTURADOR:
+                    // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
+                    solicitarCedula("Atención", "Ingrese el número de cédula\n\n\n");
+                    break;
+                case CLIENTE:
+                    FXRouter.goTo("Abonos_cliente");
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handle_btn_solicitar_credito(ActionEvent event) {
+        if (vehiculo_seleccionado != null) {
+            try {
+                FXRouter.goTo("SolicitarCredito_cliente", GetPedidoVehiculo());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void handle_btn_agregar_extra(ActionEvent event) {
@@ -156,5 +204,41 @@ public class C_ConsultarVehiculo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void solicitarCedula(String encabezado, String cuerpo) {
+        JFXDialogLayout content= new JFXDialogLayout();
+        JFXTextField tf_cedula = new JFXTextField();
+        content.setHeading(new Text(encabezado));
+        content.setBody(new Text(cuerpo), tf_cedula);
+        JFXDialog dialog =new JFXDialog(sp_dialogs, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton btn_ingresar = new JFXButton("Ingresar");
+        btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                try {
+                    // validar la cedula
+                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
+                    // ------------- Query
+
+                    Usuario usuario = new Usuario("nombre", "apellidos", "fechaNacimiento",
+                            "cedula", "telefono", "correo");
+
+                    FXRouter.goTo("Abonos_cliente", usuario);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        JFXButton btn_cancelar = new JFXButton("Cancelar");
+        btn_cancelar.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+            }
+        });
+
+        content.setActions(btn_ingresar, btn_cancelar);
+        dialog.show();
     }
 }
