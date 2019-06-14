@@ -16,7 +16,7 @@ import modelo.Usuario;
 
 import java.io.IOException;
 
-import static controlador.C_InicioSesion.tipoUsuarioActual;
+
 import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Abono {

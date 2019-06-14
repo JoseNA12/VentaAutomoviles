@@ -22,7 +22,6 @@ import modelo.Vehiculo;
 
 import java.io.IOException;
 
-import static controlador.C_InicioSesion.tipoUsuarioActual;
 import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_ConsultarVehiculo {
@@ -233,6 +232,8 @@ public class C_ConsultarVehiculo {
                     PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
                     pedidoVehiculo.setUsuario(usuario);
 
+                    // añadir al objeto PedidoVehiculo el tipo de pago
+
                     // -------------------------------
                     // registrar en la BD el pedido
                     // -------------------------------
@@ -271,6 +272,8 @@ public class C_ConsultarVehiculo {
                     // ------------- Query
 
                     Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
+
+                    // añadir al objeto PedidoVehiculo el tipo de pago
 
                     PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
                     pedidoVehiculo.setUsuario(usuario);

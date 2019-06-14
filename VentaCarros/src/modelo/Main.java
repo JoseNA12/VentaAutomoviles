@@ -31,9 +31,10 @@ public class Main extends Application {
         // Facturador
         FXRouter.when("Menu_facturador", "../vista/facturador/Menu.fxml");
 
-
         // Administrador
+        FXRouter.when("Menu_administrador", "../vista/administrador/Menu.fxml");
 
+        // -> Pantalla inicial
         FXRouter.startFrom("InicioSesion");
     }
 

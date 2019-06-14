@@ -30,7 +30,7 @@ public class C_InicioSesion {
     @FXML JFXPasswordField tf_contrasenia;
 
     public static Usuario usuarioActual;
-    public static TipoUsuario tipoUsuarioActual;
+    //public static TipoUsuario tipoUsuarioActual;
 
 
     public void initialize() throws Exception {
@@ -61,6 +61,7 @@ public class C_InicioSesion {
                 else{
                     switch (usuarioActual.getTipoUsuario()) {
                         case ADMINISTRADOR:
+                            FXRouter.goTo("Menu_administrador");
                             break;
                         case FACTURADOR:
                             FXRouter.goTo("Menu_facturador");

@@ -30,6 +30,14 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
 
     private FXMLLoader mLLoader;
 
+    private Boolean esAdministrador = false;
+
+
+    public VehiculoListViewCell(Boolean esAdministrador) {
+        this.esAdministrador = esAdministrador;
+    }
+
+    public VehiculoListViewCell() { }
 
     @Override
     protected void updateItem(Vehiculo vehiculo, boolean empty) {
@@ -51,16 +59,22 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                 }
             }
 
-            btn_consultar.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    try {
-                        FXRouter.goTo("ConsultarVehiculo_cliente", vehiculo); // le paso el objeto vehiculo
-                    } catch (IOException e) {   // .. entonces al momento de cargar la pantalla sepa cuales datos mostrar
-                        e.printStackTrace();
+            if (!esAdministrador) {
+                btn_consultar.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+                            FXRouter.goTo("ConsultarVehiculo_cliente", vehiculo); // le paso el objeto vehiculo
+                        } catch (IOException e) {   // .. entonces al momento de cargar la pantalla sepa cuales datos mostrar
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            }
+            else { // si es admin se oculta el boton de consultar
+                btn_consultar.setVisible(false);
+            }
+
             lb_marca.setText(vehiculo.getMarca());
             lb_modelo.setText(vehiculo.getModelo());
             lb_anio.setText(vehiculo.getAnio());
@@ -70,6 +84,14 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
             setText(null);
             setGraphic(gp_catalogo);
         }
+    }
+
+    public Boolean getEsAdministrador() {
+        return esAdministrador;
+    }
+
+    public void setEsAdministrador(Boolean esAdministrador) {
+        this.esAdministrador = esAdministrador;
     }
 }
 

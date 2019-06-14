@@ -43,7 +43,7 @@
                         <Image url="@../images/play-button.png" />
                     </image>
                 </ImageView>
-              <JFXButton fx:id="btn_atras" layoutX="997.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #ffffff;" text="Atras">
+              <JFXButton fx:id="btn_atras" layoutX="997.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #ffffff;" text="Atrás">
                   <font>
                       <Font size="16.0" />
                   </font>
