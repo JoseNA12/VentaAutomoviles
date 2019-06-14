@@ -73,8 +73,8 @@ public class C_Menu {
                     // obtener el usuario de la cedula y meter dentro del objeto Usuario
                     // ------------- Query
 
-                    Usuario usuario = new Usuario("soy cliente", "apellidos", "fechaNacimiento",
-                            "cedula", "telefono", "correo");
+                    Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
+
 
                     FXRouter.goTo("Abonos_cliente", usuario);
                 } catch (IOException e) {
