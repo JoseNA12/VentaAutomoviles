@@ -14,7 +14,7 @@ AS
 
 	BEGIN TRAN
 
-	SELECT [credit_id], [order_id], [date], [creditPlan_id], [balance], [mensualPayment], [creditStatus] 
+	SELECT [credit_id], [order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus] 
 	FROM   [dbo].[CreditGiven] 
 	WHERE  ([credit_id] = @credit_id OR @credit_id IS NULL) 
 
@@ -36,11 +36,11 @@ AS
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[CreditGiven] ([order_id], [date], [creditPlan_id], [balance], [mensualPayment], [creditStatus])
-	SELECT @order_id, GETDATE(), @creditPlan_id, @balance, @mensualPayment, 1
+	INSERT INTO [dbo].[CreditGiven] ([order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus])
+	SELECT @order_id, dateadd(m, 1, getdate()), @creditPlan_id, @balance, @mensualPayment, 1
 	
 	-- Begin Return Select <- do not remove
-	SELECT [credit_id], [order_id], [date], [creditPlan_id], [balance], [mensualPayment], [creditStatus]
+	SELECT [credit_id], [order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus]
 	FROM   [dbo].[CreditGiven]
 	WHERE  [credit_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
@@ -55,7 +55,7 @@ GO
 CREATE PROC [dbo].[usp_CreditGivenUpdate] 
     @credit_id int,
     @order_id bigint = NULL,
-    @date date = NULL,
+    @nextPayment_date date = NULL,
     @creditPlan_id int = NULL,
     @balance money = NULL,
     @mensualPayment float = NULL,
@@ -67,11 +67,11 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[CreditGiven]
-	SET    [order_id] = @order_id, [date] = @date, [creditPlan_id] = @creditPlan_id, [balance] = @balance, [mensualPayment] = @mensualPayment, [creditStatus] = @creditStatus
+	SET    [order_id] = ISNULL(@order_id, [order_id]), nextPayment_date = ISNULL(@nextPayment_date, nextPayment_date), [creditPlan_id] = ISNULL(@creditPlan_id, [creditPlan_id]), [balance] = ISNULL(@balance, [balance]), [mensualPayment] = ISNULL(@mensualPayment,[mensualPayment]), [creditStatus] = ISNULL(@creditStatus, [creditStatus])
 	WHERE  [credit_id] = @credit_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [credit_id], [order_id], [date], [creditPlan_id], [balance], [mensualPayment], [creditStatus]
+	SELECT [credit_id], [order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus]
 	FROM   [dbo].[CreditGiven]
 	WHERE  [credit_id] = @credit_id	
 	-- End Return Select <- do not remove
