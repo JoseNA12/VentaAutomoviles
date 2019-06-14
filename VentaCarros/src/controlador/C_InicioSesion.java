@@ -47,25 +47,28 @@ public class C_InicioSesion {
     }
 
     private void handle_btn_ingresar(ActionEvent event) {
+        /*try{
+            FXRouter.goTo("Menu_cliente");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }*/
         if (!tf_correo.getText().trim().equals("") && !tf_contrasenia.getText().trim().equals("")) {
             try {
-                // ---------------- query de inicio de sesion
-                // if else ...
-                usuarioActual = new Usuario("nombre", "apellidos", "fechaNacimiento",
-                        "cedula", "telefono", "correo");
-
-                tipoUsuarioActual = TipoUsuario.CLIENTE;
-
-                switch (tipoUsuarioActual) {
-                    case ADMINISTRADOR:
-
-                        break;
-                    case FACTURADOR:
-                        FXRouter.goTo("Menu_facturador");
-                        break;
-                    case CLIENTE:
-                        FXRouter.goTo("Menu_cliente");
-                        break;
+                GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
+                usuarioActual = GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
+                if(usuarioActual == null)
+                    System.out.println("Error");
+                else{
+                    switch (usuarioActual.getTipoUsuario()) {
+                        case ADMINISTRADOR:
+                            break;
+                        case FACTURADOR:
+                            FXRouter.goTo("Menu_facturador");
+                            break;
+                        case CLIENTE:
+                            FXRouter.goTo("Menu_cliente");
+                            break;
+                    }
                 }
             }
             catch (IOException e) {

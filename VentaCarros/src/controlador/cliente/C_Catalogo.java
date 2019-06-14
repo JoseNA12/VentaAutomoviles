@@ -3,15 +3,19 @@ package controlador.cliente;
 import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.sun.xml.internal.bind.v2.TODO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import modelo.BranchOfficeDB_Connection;
+import modelo.GroupDBConnection;
 import modelo.Vehiculo;
 
 import java.io.IOException;
 
 import static controlador.C_InicioSesion.tipoUsuarioActual;
+import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Catalogo {
 
@@ -32,29 +36,16 @@ public class C_Catalogo {
     }
 
     private void init_listView() {
-
+        //TODO: CAMBIAR IDSUCURSAL POR VARIABLE
         catalogoObservableList = FXCollections.observableArrayList();
-
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BD's
-
-        catalogoObservableList.addAll(
-                new Vehiculo("1", "Nissan", "370z", "2012", "2", "deportivo",
-                        "v8", "cuero", "2", "regular", "100", "290",
-                        "9500000.00"),
-                new Vehiculo("2", "Lamborghini", "Aventador Roadster. S", "2014", "2",
-                        "deportivo", "v9", "tela y cuero", "2", "regular", "120",
-                        "370", "270814559.98")
-        );
-        // ---------------------------------------------------------------
-
+        catalogoObservableList = GroupDBConnection.getDBInstance().SelectAutosXSucursal(1);
         listView_catalogo.setItems(catalogoObservableList);
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell());
     }
 
     private void handle_btn_atras(ActionEvent event) {
         try {
-            switch (tipoUsuarioActual) {
+            switch (usuarioActual.getTipoUsuario()) {
                 case ADMINISTRADOR:
 
                     break;
