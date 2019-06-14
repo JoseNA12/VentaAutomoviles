@@ -59,12 +59,14 @@ public class HumanResourcesDB_Connection extends DB_Connection{
                     String phone = rs.getString("phone");
                     String email = rs.getString("email");
                     int zip_code = rs.getInt("zip_code");
-                    int userID = rs.getInt("user_id");
+//                    int userID = rs.getInt("user_id");
                     String userType_id = rs.getString("userType_id");
                     String userTypeName = rs.getString("userTypeName");
                     if(userTypeName.equals("Cliente")){
+                        int userID = rs.getInt("customer_id");
                         result = new Usuario(userID, name, lastName, birthDate,identification_card, phone, email, zip_code, TipoUsuario.CLIENTE);
                     }else {
+                        int userID = rs.getInt("employee_id");
                         int office_id = rs.getInt("office_id");
                         String position_id = rs.getString("position_id");
                         String positionName = rs.getString("positionName");

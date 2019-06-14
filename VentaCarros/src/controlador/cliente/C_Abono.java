@@ -45,7 +45,7 @@ public class C_Abono {
         initComponentes();
         init_cb_metodo_pago();
 
-        switch (tipoUsuarioActual) {
+        switch (usuarioActual.getTipoUsuario()) {
             case CLIENTE:
                 usuarioActual_ = usuarioActual;
                 break;
@@ -85,10 +85,10 @@ public class C_Abono {
         // -> planDePago = ...
         // -> plan_seleccionadoObservableList.add(planDePago);
 
-        plan_seleccionadoObservableList.add(
+        /*plan_seleccionadoObservableList.add(
                 new PlanDePago("Porcentaje 1", "600.000", "3 años", "8%",
                         "xxxxxxxxxxx")
-        );
+        );*/
         // ---------------------------------------------------------------
 
         listView_plan_de_pago.setItems(plan_seleccionadoObservableList);
@@ -117,7 +117,7 @@ public class C_Abono {
 
     private void handle_btn_atras(ActionEvent event) {
         try {
-            switch (tipoUsuarioActual) {
+            switch (usuarioActual.getTipoUsuario()) {
                 case CLIENTE:
                     FXRouter.goTo("Menu_cliente");
                     break;

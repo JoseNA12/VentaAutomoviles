@@ -46,4 +46,19 @@ public class GroupDBConnection {
 
     public ObservableList<MetodoPago> getPaymentMethods(){return BOfficeDBInstance.getPaymentMethods();}
 
+    public ObservableList<PlanDePago> getCreditPlan(PedidoVehiculo pedidoVehiculo){return BOfficeDBInstance.getCreditPlan(pedidoVehiculo);}
+
+    public void comprarPorCredito(PedidoVehiculo pedidoVehiculo, int idSucursal, PlanDePago planDePago){
+        int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), planDePago.getPrima(), 1);
+        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
+        BOfficeDBInstance.generarCredito(idCompra, planDePago);
+    }
+
+    public void comprarVehiculo(PedidoVehiculo pedidoVehiculo, int idSucursal){
+        int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), (int)pedidoVehiculo.getPrecioTotal(), 2);
+        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
+    }
+
 }

@@ -26,21 +26,20 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CarSoldInsert] 
-    @car_sold_id int,
-    @car_id int = NULL
+    @car_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[CarSold] ([car_sold_id], [car_id])
-	SELECT @car_sold_id, @car_id
+	INSERT INTO [dbo].[CarSold] ([car_id])
+	SELECT @car_id
 	
 	-- Begin Return Select <- do not remove
 	SELECT [car_sold_id], [car_id]
 	FROM   [dbo].[CarSold]
-	WHERE  [car_sold_id] = @car_sold_id
+	WHERE  [car_sold_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
                
 	COMMIT
@@ -52,7 +51,7 @@ END
 GO
 CREATE PROC [dbo].[usp_CarSoldUpdate] 
     @car_sold_id int,
-    @car_id int = NULL
+    @car_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  

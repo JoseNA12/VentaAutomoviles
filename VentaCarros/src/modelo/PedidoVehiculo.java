@@ -8,17 +8,13 @@ public class PedidoVehiculo {
     private Vehiculo vehiculo;
     private ArrayList<ExtraVehiculo> extrasVehiculo;
     private Usuario usuario;
-
-    public PedidoVehiculo(Vehiculo vehiculo, ArrayList<ExtraVehiculo> extrasVehiculo, Usuario usuario) {
-        this.vehiculo = vehiculo;
-        this.extrasVehiculo = extrasVehiculo;
-        this.usuario = usuario;
-    }
+    private float precioTotal;
+    private MetodoPago metodoPago;
 
     public PedidoVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-        this.extrasVehiculo = extrasVehiculo;
-        this.usuario = usuario;
+        this.precioTotal = Float.parseFloat(vehiculo.getPrecio());
+        extrasVehiculo = new ArrayList<ExtraVehiculo>();
     }
 
     public Vehiculo getVehiculo() {
@@ -38,6 +34,8 @@ public class PedidoVehiculo {
     }
 
     public void addExtra(ExtraVehiculo extraVehiculo) {
+        this.precioTotal += Float.parseFloat(extraVehiculo.getPrecio());
+        System.out.println(extraVehiculo.getPrecio());
         this.extrasVehiculo.add(extraVehiculo);
     }
 
@@ -47,5 +45,21 @@ public class PedidoVehiculo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public float getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(float precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public MetodoPago getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
     }
 }

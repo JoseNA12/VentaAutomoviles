@@ -131,19 +131,17 @@ public class C_ConsultarVehiculo {
 
     private void handle_btn_comprar(ActionEvent event) {
         try {
-            switch (tipoUsuarioActual) {
+            switch (usuarioActual.getTipoUsuario()) {
                 case FACTURADOR:
                     // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
                     solicitarCedula_compra_directa("Atención", "Ingrese el número de cédula\n\n\n");
                     break;
                 case CLIENTE:
                     PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
-                    pedidoVehiculo.setUsuario(usuarioActual);
-
-                    // -------------------------------
-                    // registrar en la BD el pedido
-                    // -------------------------------
-
+                    pedidoVehiculo.setUsuario(usuarioActual);//
+                    pedidoVehiculo.setMetodoPago(cb_metodo_pago.getSelectionModel().getSelectedItem());
+                    // TODO: Cambiar ID Sucursal
+                    GroupDBConnection.getDBInstance().comprarVehiculo(pedidoVehiculo,1);
                     FXRouter.goTo("Abonos_cliente");
                     break;
             }
@@ -155,7 +153,7 @@ public class C_ConsultarVehiculo {
     private void handle_btn_solicitar_credito(ActionEvent event) {
         if (vehiculo_seleccionado != null) {
             try {
-                switch (tipoUsuarioActual) {
+                switch (usuarioActual.getTipoUsuario()) {
                     case FACTURADOR:
                         // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
                         solicitarCedula_credito("Atención", "Ingrese el número de cédula\n\n\n");
@@ -163,7 +161,7 @@ public class C_ConsultarVehiculo {
                     case CLIENTE:
                         PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
                         pedidoVehiculo.setUsuario(usuarioActual);
-
+                        pedidoVehiculo.setMetodoPago(cb_metodo_pago.getSelectionModel().getSelectedItem());
                         FXRouter.goTo("SolicitarCredito_cliente", pedidoVehiculo);
                         break;
                 }

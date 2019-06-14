@@ -9,11 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import modelo.GroupDBConnection;
 import modelo.PedidoVehiculo;
 import modelo.PlanDePago;
 import modelo.Vehiculo;
 
 import java.io.IOException;
+import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_SolicitarCredito {
 
@@ -49,19 +51,8 @@ public class C_SolicitarCredito {
         planesObservableList = FXCollections.observableArrayList();
         plan_seleccionadoObservableList = FXCollections.observableArrayList();
 
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BD's
-        // cuando se añaden agarrar el monto del carro junto los extras -> mendiate: pedidoVehiculo
-        // .. para hacerle += a cada plan de pago y mostrar el respectivo total_a_pagar
-
-        planesObservableList.addAll(
-                new PlanDePago("Porcentaje 1", "600.000", "3 años", "8%",
-                        "xxxxxxxxxxx"),
-                new PlanDePago("Porcentaje 2", "200.000", "1.5 años", "8%",
-                        "xxxxxxxxxxx"),
-                new PlanDePago("Porcentaje 3", "500.000", "2.8 años", "8%",
-                        "xxxxxxxxxxx")
-        );
+        plan_seleccionadoObservableList = GroupDBConnection.getDBInstance().getCreditPlan(pedidoVehiculo);
+        planesObservableList.addAll(plan_seleccionadoObservableList);
         // ---------------------------------------------------------------
 
         listView_planes.setItems(planesObservableList);
@@ -80,9 +71,7 @@ public class C_SolicitarCredito {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
-
-        // llegado a este punto se tiene el pedido del vehiculo: pedidoVehiculo
-        // pedidoVehiculo.getVehiculo(); pedidoVehiculo.getExtrasVehiculo(); pedidoVehiculo.getUsuario();
+        GroupDBConnection.getDBInstance().comprarPorCredito(pedidoVehiculo, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
     }
 
     private void handle_btn_atras(ActionEvent event) {
