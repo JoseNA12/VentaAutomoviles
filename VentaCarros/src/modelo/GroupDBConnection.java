@@ -51,6 +51,12 @@ public class GroupDBConnection {
 
     public ArrayList<Marca> getCarBrands() {return FactoryDBInstance.getCarBrands();}
 
+    public ArrayList<TipoVehiculo> getCarType() {return FactoryDBInstance.getCarType();}
+
+    public ArrayList<TipoGasolina> getFuelType() {return FactoryDBInstance.getFuelType();}
+
+    public ArrayList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
+
     public void comprarPorCredito(PedidoVehiculo pedidoVehiculo, int idSucursal, PlanDePago planDePago){
         int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), planDePago.getPrima(), 1);
         int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);

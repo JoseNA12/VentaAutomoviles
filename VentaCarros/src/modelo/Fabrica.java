@@ -2,19 +2,19 @@ package modelo;
 
 public class Fabrica {
 
-    private String ID;
+    private int ID;
     private String nombre;
 
-    public Fabrica(String ID, String nombre) {
+    public Fabrica(int ID, String nombre) {
         this.ID = ID;
         this.nombre = nombre;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

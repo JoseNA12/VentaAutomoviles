@@ -7,14 +7,14 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_FuelTypeSelect] 
-    @fuelType_id int
+    @fuelType_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [fuelType_id], [name] 
-	FROM   [dbo].[FuelType] 
-	WHERE  ([fuelType_id] = @fuelType_id OR @fuelType_id IS NULL) 
+	SELECT ft.[fuelType_id], ft.[name]
+	FROM   [LEOROMÁN\FACTORY_2].FactoryDB.dbo.FuelType ft 
+	WHERE  (ft.fuelType_id = @fuelType_id OR @fuelType_id IS NULL) 
 
 GO
 IF OBJECT_ID('[dbo].[usp_FuelTypeInsert]') IS NOT NULL

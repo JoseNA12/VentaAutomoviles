@@ -15,11 +15,9 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import modelo.ExtraVehiculo;
+import modelo.*;
 
 import javafx.scene.image.Image;
-import modelo.GroupDBConnection;
-import modelo.Marca;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,6 +108,11 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+
+        ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
+        for (int i=0;i<fabricas.size();i++){
+            cb_fabrica.getItems().add(fabricas.get(i).getNombre());
+        }
     }
 
     private void init_cb_marca() {
@@ -136,6 +139,10 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+        ArrayList<TipoVehiculo> tipos = GroupDBConnection.getDBInstance().getCarType();
+        for (int i=0;i<tipos.size();i++){
+            cb_tipo.getItems().add(tipos.get(i).getTipo());
+        }
     }
 
     private void init_cb_gasolina() {
@@ -146,6 +153,11 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+
+        ArrayList<TipoGasolina> tipos = GroupDBConnection.getDBInstance().getFuelType();
+        for (int i=0;i<tipos.size();i++){
+            cb_gasolina.getItems().add(tipos.get(i).getTipo());
+        }
     }
 
     private void init_listView_extras() {
