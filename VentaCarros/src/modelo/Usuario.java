@@ -11,6 +11,7 @@ public class Usuario {
     private String correo;
     private int zipCode;
     private TipoUsuario tipoUsuario;
+    private String password;
 
     public Usuario(int idUsuario, String nombre, String apellidos, String fechaNacimiento, String cedula, String telefono, String correo, int zipCode, TipoUsuario tipoUsuario) {
         this.idUsuario = idUsuario;
@@ -22,6 +23,18 @@ public class Usuario {
         this.correo = correo;
         this.zipCode = zipCode;
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Usuario(String nombre, String apellidos, String cedula, String telefono, String correo,
+                   TipoUsuario tipoUsuario, String fechaEntrada, String password){
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaEntrada;
+        this.cedula = cedula;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.tipoUsuario = tipoUsuario;
+        this.password = password;
     }
 
     public Usuario(){ }
@@ -97,4 +110,8 @@ public class Usuario {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public String getPassword() { return password;}
+
+    public void setPassword(String password) { this.password = password;}
 }

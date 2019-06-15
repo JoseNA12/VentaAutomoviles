@@ -43,7 +43,6 @@ public class C_Abono {
     public void initialize() throws Exception {
         initComponentes();
         init_cb_metodo_pago();
-
         switch (usuarioActual.getTipoUsuario()) {
             case CLIENTE:
                 usuarioActual_ = usuarioActual;
@@ -57,7 +56,6 @@ public class C_Abono {
         init_listView_abonos(usuarioActual_);
         init_listView_plan_selecccionado(usuarioActual_);
         lb_nombre_cliente.setText(usuarioActual_.getNombre() + " " + usuarioActual_.getApellidos());
-
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI

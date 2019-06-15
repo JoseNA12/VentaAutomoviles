@@ -40,6 +40,8 @@ public class Main extends Application {
         FXRouter.when("PlanesCredito_administrador", "../vista/administrador/PlanesCredito.fxml");
         FXRouter.when("NuevoCredito_administrador", "../vista/administrador/NuevoCredito.fxml");
         FXRouter.when("Empleados_administrador", "../vista/administrador/GestionEmpleados.fxml");
+        FXRouter.when("Empleados_Actualizar", "../vista/administrador/ActualizarEmpleado.fxml");
+        FXRouter.when("Empleados_Agregar", "../vista/administrador/AgregarEmpleado.fxml");
 
 
         // -> Pantalla inicial

@@ -63,13 +63,25 @@ public class C_GestionarEmpleados {
 
 
     private void handle_btn_InsertEmpleado(ActionEvent event){
-
+        try{
+            FXRouter.goTo("Empleados_Agregar");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void handle_btn_DeleteEmpleado(ActionEvent event){
-
+        /*try{
+            FXRouter.goTo("Menu_administrador");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
-
+        try{
+            FXRouter.goTo("Empleados_Actualizar");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void handle_btn_Atras(ActionEvent event) {
         try{
