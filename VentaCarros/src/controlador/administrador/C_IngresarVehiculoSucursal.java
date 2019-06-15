@@ -47,9 +47,7 @@ public class C_IngresarVehiculoSucursal {
 
         // ->>>>> borrar cuando se tenga la conexion
         cb_sucursal.setItems(FXCollections.observableArrayList(
-                new Sucursal("Dog"),
-                new Sucursal("Cat" ),
-                new Sucursal("Bird")));
+                new Sucursal(1, "nombre", "pais", 1, "hora", "hora")));
         // ->>>>>
         // --------------------------------------------
 
