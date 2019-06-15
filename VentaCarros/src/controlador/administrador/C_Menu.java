@@ -19,12 +19,9 @@ public class C_Menu {
 
     @FXML Label lb_usuario_actual;
 
-    @FXML JFXComboBox cb_filtrar_por_sucursal;
-
 
     public void initialize() throws Exception {
         initComponentes();
-        init_cb_metodo_pago();
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
@@ -38,7 +35,7 @@ public class C_Menu {
 
     private void handle_btn_vehiculos(ActionEvent event) {
         try {
-            FXRouter.goTo("Catalogo_cliente");
+            FXRouter.goTo("Vehiculos_administrador");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +43,7 @@ public class C_Menu {
 
     private void handle_btn_ventas(ActionEvent event) {
         try {
-            FXRouter.goTo("Catalogo_cliente");
+            FXRouter.goTo("Ventas_administrador");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,17 +51,9 @@ public class C_Menu {
 
     private void handle_btn_salir(ActionEvent event) {
         try {
-            FXRouter.goTo("Catalogo_cliente");
+            FXRouter.goTo("InicioSesion");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void init_cb_metodo_pago() {
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
-        // meter en un for la inserciones de los tipos, tal vez ?
-
-        cb_filtrar_por_sucursal.getItems().add("A");
     }
 }

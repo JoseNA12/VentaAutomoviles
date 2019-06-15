@@ -33,6 +33,9 @@ public class Main extends Application {
 
         // Administrador
         FXRouter.when("Menu_administrador", "../vista/administrador/Menu.fxml");
+        FXRouter.when("Vehiculos_administrador", "../vista/administrador/VehiculosFabricas.fxml");
+        FXRouter.when("Ventas_administrador", "../vista/administrador/Ventas.fxml");
+        FXRouter.when("IngresarVehiculo_administrador", "../vista/administrador/IngresarVehiculoFabrica.fxml");
 
         // -> Pantalla inicial
         FXRouter.startFrom("InicioSesion");
