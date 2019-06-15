@@ -1,5 +1,6 @@
 package controlador.administrador;
 
+import com.github.fxrouter.FXRouter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,8 @@ import javafx.scene.control.ListView;
 import modelo.Empleado;
 import modelo.GroupDBConnection;
 import modelo.Sucursal;
+
+import java.io.IOException;
 
 import static modelo.TipoUsuario.FACTURADOR;
 
@@ -38,9 +41,11 @@ public class C_GestionarEmpleados {
 
     private void init_ListView_Empleados() {
         empleadosObservableList = FXCollections.observableArrayList();
-        Empleado emp1 = new Empleado(1,"Jon","Calvo","Mañana","305060175","87139703",
+
+        empleadosObservableList = GroupDBConnection.getDBInstance().SelectEmpleados();
+        /*Empleado emp1 = new Empleado(1,"Jon","Calvo","Mañana","305060175","87139703",
                 "jon@correo.com",30105,FACTURADOR,"2","Facturador",1);
-        empleadosObservableList.add(emp1);
+        empleadosObservableList.add(emp1);*/
         ListView_Empleados.setItems(empleadosObservableList);
         ListView_Empleados.setCellFactory(empleadosListView -> new EmpleadoListViewCell());
     }
@@ -55,16 +60,32 @@ public class C_GestionarEmpleados {
 
 
     private void handle_btn_InsertEmpleado(ActionEvent event){
-
+        try{
+            FXRouter.goTo("Empleados_Agregar");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void handle_btn_DeleteEmpleado(ActionEvent event){
-
+        /*try{
+            FXRouter.goTo("Menu_administrador");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
-
+        try{
+            FXRouter.goTo("Empleados_Actualizar");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    private void handle_btn_Atras(ActionEvent event){
-
+    private void handle_btn_Atras(ActionEvent event) {
+        try{
+            FXRouter.goTo("Menu_administrador");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

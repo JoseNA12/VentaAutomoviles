@@ -74,5 +74,17 @@
         </AnchorPane>
       <Separator layoutX="475.0" layoutY="159.0" orientation="VERTICAL" prefHeight="350.0" />
       <Separator layoutX="803.0" layoutY="159.0" orientation="VERTICAL" prefHeight="350.0" />
+      <JFXButton fx:id="btn_mi_pedido" layoutX="1026.0" layoutY="571.0" prefHeight="39.0" prefWidth="163.0" style="-fx-background-color: #ff8c42;" text="Mi pedido" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <Label fx:id="lb_msg_atencion" layoutX="975.0" layoutY="610.0" prefHeight="35.0" prefWidth="214.0" text="* Solo en caso de haber realizado una solicitud de un vehículo a una sucursal" textAlignment="JUSTIFY" textFill="#000000d6" wrapText="true" />
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="991.0" layoutY="577.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/warning.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btn_atencion" layoutX="991.0" layoutY="577.0" prefHeight="27.0" prefWidth="27.0" text=" " />
    </children>
 </AnchorPane>

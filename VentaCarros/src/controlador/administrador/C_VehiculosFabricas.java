@@ -10,10 +10,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import modelo.Fabrica;
+import modelo.GroupDBConnection;
 import modelo.TipoUsuario;
 import modelo.Vehiculo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class C_VehiculosFabricas {
 
@@ -45,14 +48,10 @@ public class C_VehiculosFabricas {
     }
 
     private void init_cb_filtrar_por_fabrica() {
-        // -------------------- query a la BD
-
-        //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
-        //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
-
-        cb_filtrar_por_fabrica.getItems().add("A");
-
-        //-----------------------------------
+        ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
+        for (int i=0;i<fabricas.size();i++){
+            cb_filtrar_por_fabrica.getItems().add(fabricas.get(i));
+        }
 
         // listener del combo box, cuando se selecciona un elemento hacer un trigger con una accion
         cb_filtrar_por_fabrica.setOnAction(this::handle_cb_filtrar_por_fabrica);
@@ -98,10 +97,12 @@ public class C_VehiculosFabricas {
     }
 
     private void handle_btn_ingresar_a_sucursales(ActionEvent event) {
-        try {
-            FXRouter.goTo("IngresarVehiculoSucursal_administrador");
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (vehiculoSeleccionado != null) {
+            try {
+                FXRouter.goTo("IngresarVehiculoSucursal_administrador", vehiculoSeleccionado);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

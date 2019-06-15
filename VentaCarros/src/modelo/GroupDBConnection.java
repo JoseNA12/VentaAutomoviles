@@ -87,4 +87,9 @@ public class GroupDBConnection {
 
     public void cambiarTazaInteres(float tazaInteres, int idPlan){BOfficeDBInstance.cambiarTazaInteres(tazaInteres, idPlan);}
 
+    public ObservableList<Empleado> SelectEmpleados(){return HSDBInstance.SelectEmpleados();}
+
+    public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}
+
+
 }
