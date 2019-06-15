@@ -257,4 +257,31 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return result;
     }
 
+    public ObservableList<Sucursal> getSucursales(){
+        ObservableList<Sucursal> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_BranchOfficeSelectAll]}");
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                int branchOffice_id = rs.getInt("branchOffice_id");
+                String branchoffice_name = rs.getString("name");
+                int country_id = rs.getInt("country_id");
+                String countryName = rs.getString("countryName");
+                String horaApertura = rs.getString("horaApertura");
+                String horaCierre = rs.getString("horaCierre");
+                ReturnList.add(new Sucursal(branchOffice_id, branchoffice_name, countryName, country_id, horaApertura, horaCierre));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
 }

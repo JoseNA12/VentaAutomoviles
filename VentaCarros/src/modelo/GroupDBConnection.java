@@ -61,4 +61,6 @@ public class GroupDBConnection {
         BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
     }
 
+    public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}
+
 }
