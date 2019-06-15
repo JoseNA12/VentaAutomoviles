@@ -1,11 +1,11 @@
 package modelo;
 
-public class Marca {
+public class Fabrica {
 
     private int ID;
     private String nombre;
 
-    public Marca(int ID, String nombre) {
+    public Fabrica(int ID, String nombre) {
         this.ID = ID;
         this.nombre = nombre;
     }

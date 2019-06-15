@@ -1,18 +1,16 @@
 package controlador.cliente;
 
 import com.github.fxrouter.FXRouter;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Abono;
-import modelo.PlanDePago;
-import modelo.Usuario;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import modelo.*;
 
 import java.io.IOException;
 
@@ -26,16 +24,17 @@ public class C_Abono {
 
     private ObservableList<PlanDePago> plan_seleccionadoObservableList;
     private ObservableList<Abono> abonosObservableList;
+    private ObservableList<MetodoPago> metodoPagoObservableList;
 
     @FXML JFXComboBox cb_metodo_pago;
 
     @FXML JFXButton btn_realizar_abono;
     @FXML JFXButton btn_atras;
     @FXML JFXTextField tf_monto_a_pagar;
-
     @FXML Label lb_fecha_pago;
     @FXML Label lb_nombre_cliente;
 
+    private int IdCreditoActual;
     private PlanDePago planDePago;
 
     Usuario usuarioActual_ = null;
@@ -55,9 +54,8 @@ public class C_Abono {
             default:
                 usuarioActual_ = new Usuario(); // evitar errores, solo para prevenir
         }
-
-        init_listView_plan_selecccionado(usuarioActual_);
         init_listView_abonos(usuarioActual_);
+        init_listView_plan_selecccionado(usuarioActual_);
         lb_nombre_cliente.setText(usuarioActual_.getNombre() + " " + usuarioActual_.getApellidos());
 
     }
@@ -69,50 +67,44 @@ public class C_Abono {
     }
 
     private void init_cb_metodo_pago() {
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
-        // meter en un for la inserciones de los tipos, tal vez ?
-
-        cb_metodo_pago.getItems().add("A");
+        metodoPagoObservableList = FXCollections.observableArrayList();
+        metodoPagoObservableList = GroupDBConnection.getDBInstance().SelectMetodosDePago();
+        cb_metodo_pago.setItems(metodoPagoObservableList);
     }
 
     private void init_listView_plan_selecccionado(Usuario usuarioActual) {
         plan_seleccionadoObservableList = FXCollections.observableArrayList();
 
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BD's
-        // Obtener el plan seleccionado por el usuario para pagar el carro actual
-        // -> planDePago = ...
-        // -> plan_seleccionadoObservableList.add(planDePago);
-
-        /*plan_seleccionadoObservableList.add(
-                new PlanDePago("Porcentaje 1", "600.000", "3 años", "8%",
-                        "xxxxxxxxxxx")
-        );*/
-        // ---------------------------------------------------------------
-
+        plan_seleccionadoObservableList = GroupDBConnection.getDBInstance().SelectPlanActual(IdCreditoActual);
+        if(!plan_seleccionadoObservableList.isEmpty()){
+            planDePago = plan_seleccionadoObservableList.get(plan_seleccionadoObservableList.size()-1);
+        }
         listView_plan_de_pago.setItems(plan_seleccionadoObservableList);
         listView_plan_de_pago.setCellFactory(planesListView -> new PlanDePagoListViewCell());
     }
 
     private void init_listView_abonos(Usuario usuarioActual) {
         abonosObservableList = FXCollections.observableArrayList();
-
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BD's
-        // Obtener los bonos realizados por el usuario
-
-        abonosObservableList.add(
-                new Abono("Porcentaje 1", "600.000", "3 años")
-        );
-        // ---------------------------------------------------------------
-
+        abonosObservableList = GroupDBConnection.getDBInstance().SelectAbonoXUsuario(usuarioActual);
+        if(abonosObservableList.isEmpty()){
+            lb_fecha_pago.setText("No posee deudas");
+        }
+        else {
+            lb_fecha_pago.setText(abonosObservableList.get(abonosObservableList.size() - 1).getfechaProximoPago());
+            IdCreditoActual = Integer.parseInt(abonosObservableList.get(abonosObservableList.size() - 1).getIdPlan());
+        }
         listView_abonos.setItems(abonosObservableList);
         listView_abonos.setCellFactory(planesListView -> new AbonoListViewCell());
     }
 
     private void handle_btn_realizar_abono(ActionEvent event) {
+        if (!tf_monto_a_pagar.getText().trim().equals("")){
+            MetodoPago MetodoPagoAux = (MetodoPago) cb_metodo_pago.getSelectionModel().getSelectedItem();
+            GroupDBConnection.getDBInstance().InsertAbono(IdCreditoActual,Float.parseFloat(tf_monto_a_pagar.getText()),MetodoPagoAux.getIdMethod());
+        }
+        else{
 
+        }
     }
 
     private void handle_btn_atras(ActionEvent event) {
@@ -130,4 +122,5 @@ public class C_Abono {
             e.printStackTrace();
         }
     }
+
 }

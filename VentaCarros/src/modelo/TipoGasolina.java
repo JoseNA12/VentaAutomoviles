@@ -2,19 +2,19 @@ package modelo;
 
 public class TipoGasolina {
 
-    private String ID;
+    private int ID;
     private String tipo;
 
-    public TipoGasolina(String ID, String tipo) {
+    public TipoGasolina(int ID, String tipo) {
         this.ID = ID;
         this.tipo = tipo;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

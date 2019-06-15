@@ -10,6 +10,7 @@ public class PlanDePago {
     private int total_a_pagar;
     private String nombrePlan;
     private int planID;
+
     public PlanDePago(int planID, String nombrePlan, float porcentaje_prima, float plazo, float interes, int total_a_pagar) {
         this.planID = planID;
         this.nombrePlan = nombrePlan;

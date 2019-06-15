@@ -11,12 +11,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_Vehiculos">
+<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_VehiculosFabricas">
     <children>
 
         <AnchorPane layoutX="92.0" layoutY="45.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #d81e5b;">
             <children>
-                <Text fill="#fdf0d5" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Vehículos">
+                <Text fill="#fdf0d5" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Vehículos en fábrica">
                     <font>
                         <Font name="System Bold" size="26.0" />
                     </font>
@@ -41,13 +41,18 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="bnt_editar_caracteristicas" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Editar caracteristicas" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_editar_caracteristicas" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Editar caracteristicas" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <Separator prefHeight="44.0" prefWidth="457.0" />
-            <JFXComboBox fx:id="cb_filtrar_por_sucursal" focusColor="#f0544f" labelFloat="true" prefHeight="37.0" prefWidth="228.0" promptText="Filtrar por sucursal" style="-fx-font: 16px System;" />
+            <JFXButton fx:id="btn_ingresar_a_sucursales" layoutX="208.0" layoutY="10.0" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Ingresar a sucursales" textFill="#fdf0d5">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <Separator prefHeight="44.0" prefWidth="256.0" />
+            <JFXComboBox fx:id="cb_filtrar_por_fabrica" focusColor="#f0544f" labelFloat="true" prefHeight="37.0" prefWidth="228.0" promptText="Filtrar por fabrica" style="-fx-font: 16px System;" />
         </items>
       </ToolBar>
     </children>

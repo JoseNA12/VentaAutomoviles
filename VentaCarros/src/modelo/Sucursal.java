@@ -9,6 +9,7 @@ public class Sucursal {
     private String horaApertura;
     private String horaCierre;
 
+
     public Sucursal(int idSucursal, String nombreSucursal, String nombrePais, int idPais, String horaApertura, String horaCierre) {
         this.idSucursal = idSucursal;
         this.nombreSucursal = nombreSucursal;
@@ -16,14 +17,6 @@ public class Sucursal {
         this.idPais = idPais;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
-    }
-
-    public int getIdSucursal() {
-        return idSucursal;
-    }
-
-    public void setIdSucursal(int idSucursal) {
-        this.idSucursal = idSucursal;
     }
 
     public String getNombreSucursal() {
@@ -64,5 +57,18 @@ public class Sucursal {
 
     public void setHoraCierre(String horaCierre) {
         this.horaCierre = horaCierre;
+    }
+
+    public int getIdSucursal() {
+        return this.idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombreSucursal;
     }
 }

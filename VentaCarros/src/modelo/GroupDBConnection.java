@@ -3,6 +3,7 @@ package modelo;
 import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
@@ -48,6 +49,14 @@ public class GroupDBConnection {
 
     public ObservableList<PlanDePago> getCreditPlan(PedidoVehiculo pedidoVehiculo){return BOfficeDBInstance.getCreditPlan(pedidoVehiculo);}
 
+    public ArrayList<Marca> getCarBrands() {return FactoryDBInstance.getCarBrands();}
+
+    public ArrayList<TipoVehiculo> getCarType() {return FactoryDBInstance.getCarType();}
+
+    public ArrayList<TipoGasolina> getFuelType() {return FactoryDBInstance.getFuelType();}
+
+    public ArrayList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
+
     public void comprarPorCredito(PedidoVehiculo pedidoVehiculo, int idSucursal, PlanDePago planDePago){
         int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), planDePago.getPrima(), 1);
         int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);
@@ -61,6 +70,16 @@ public class GroupDBConnection {
         BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
     }
 
+
     public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}
+
+    public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){return BOfficeDBInstance.SelectAbonoXUsuario(usuario);}
+
+    public ObservableList<PlanDePago> SelectPlanActual(int credit_id) {return BOfficeDBInstance.SelectPlanActual(credit_id);}
+
+    public ObservableList<MetodoPago> SelectMetodosDePago(){return BOfficeDBInstance.SelectMetodosDePago();}
+
+    public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
+
 
 }
