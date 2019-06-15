@@ -59,7 +59,6 @@ public class C_SolicitarCredito {
 
         listView_planes.setCellFactory(planesListView -> new PlanDePagoListViewCell());
         listView_planSeleccionado.setCellFactory(planesListView -> new PlanDePagoListViewCell());
-
         // listener del listview de los planes
         listView_planes.getSelectionModel().selectedItemProperty().addListener((ov, old_val, new_val) -> {
             PlanDePago selectedItem = (PlanDePago) listView_planes.getSelectionModel().getSelectedItem();

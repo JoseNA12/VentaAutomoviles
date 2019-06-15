@@ -40,6 +40,90 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
     }
 
+    public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){
+        ObservableList<Abono> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGiven-PaymentSelect](?)}");
+            callableStatement.setInt(1, usuario.getIdUsuario());
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                String fecha = rs.getString("date");
+                String metodoPago = rs.getString("name");
+                String monto = rs.getString("payment");
+                String proximoPago = rs.getString("nextPayment_date");
+                String idPlan = rs.getString("credit_id");
+                Abono abonoAux = new Abono(fecha, metodoPago, monto, proximoPago,idPlan);
+                ReturnList.add(abonoAux);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
+    public ObservableList<PlanDePago> SelectPlanActual(int credit_id){
+        ObservableList<PlanDePago> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGivenPlanInfo](?)}");
+            callableStatement.setInt(1, credit_id);
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                int PlanId = rs.getInt("creditPlan_id");
+                String NombrePlan = rs.getString("planName");
+                float porcentajePrima = rs.getFloat("prima");
+                float plazo = rs.getFloat("anualTerm");
+                float interes = rs.getFloat("interest");
+                int totalAPagar = rs.getInt("balance");
+                PlanDePago PlanAux = new PlanDePago(PlanId, NombrePlan, porcentajePrima, plazo, interes, totalAPagar);
+                ReturnList.add(PlanAux);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
+    public ObservableList<MetodoPago> SelectMetodosDePago(){
+        ObservableList<MetodoPago> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                int MetodoPagoId = rs.getInt("paymentMethod_id");
+                String NombreMetodoPago = rs.getString("name");
+                MetodoPago PlanAux = new MetodoPago(MetodoPagoId, NombreMetodoPago);
+                ReturnList.add(PlanAux);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+        return ReturnList;
+    }
+
     public ObservableList<Vehiculo> SelectAutosXSucursal(int idSucursal){
         ObservableList<Vehiculo> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -257,4 +341,22 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return result;
     }
 
+    public void InsertAbono(int credit_id, float payment, int paymentMethod_id){
+        Connection connection = null;
+        ResultSet rs = null;
+        int result = 0;
+        CallableStatement ps = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.[usp_CreditGiven-PaymentInsert](?,?,?)}");
+            ps.setInt(1, credit_id);
+            ps.setFloat(2, payment);
+            ps.setInt(3, paymentMethod_id);
+            ps.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+    }
 }
