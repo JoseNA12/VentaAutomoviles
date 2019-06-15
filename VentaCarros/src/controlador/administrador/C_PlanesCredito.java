@@ -39,12 +39,7 @@ public class C_PlanesCredito {
     }
 
     private void init_listView_planes() {
-        planesObservableList = FXCollections.observableArrayList();
-
-        // -------------------------- query con todos los planes
-        planesObservableList.add(new PlanDePago(1, "Plan 1", 25, 12, 23, 300000));
-        // ---------------------------------------------------------------
-
+        planesObservableList = GroupDBConnection.getDBInstance().getPlanesDePago();
         listView_planes_pago.setItems(planesObservableList);
         listView_planes_pago.setCellFactory(planListView -> new PlanDePagoListViewCell(TipoUsuario.ADMINISTRADOR));
     }

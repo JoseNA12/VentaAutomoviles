@@ -80,6 +80,12 @@ public class GroupDBConnection {
 
     public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
 
+    public int crearNuevoVehiculo(Vehiculo vehiculo, Fabrica fabrica){return FactoryDBInstance.insertVehiculo(vehiculo, fabrica.getID());}
+
+    public ObservableList<PlanDePago> getPlanesDePago() {return BOfficeDBInstance.getPlanesDePagos();}
+
+    public void cambiarTazaInteres(float tazaInteres, int idPlan){BOfficeDBInstance.cambiarTazaInteres(tazaInteres, idPlan);}
+
     public ObservableList<Empleado> SelectEmpleados(){return HSDBInstance.SelectEmpleados();}
 
     public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}

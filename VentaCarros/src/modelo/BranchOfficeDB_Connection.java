@@ -96,6 +96,33 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return ReturnList;
     }
 
+    public ObservableList<PlanDePago> getPlanesDePagos(){
+        ObservableList<PlanDePago> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanSelect]}");
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                int PlanId = rs.getInt("creditPlan_id");
+                String NombrePlan = rs.getString("planName");
+                float porcentajePrima = rs.getFloat("prima");
+                float plazo = rs.getFloat("anualTerm");
+                float interes = rs.getFloat("interest");
+                PlanDePago PlanAux = new PlanDePago(PlanId, NombrePlan, porcentajePrima, plazo, interes);
+                ReturnList.add(PlanAux);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
+    }
+
     public ObservableList<MetodoPago> SelectMetodosDePago(){
         ObservableList<MetodoPago> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -323,7 +350,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenInsert](?,?,?,?)}");
             ps.setInt(1, idCompra);
             ps.setInt(2, planDePago.getPlanID());
-            ps.setInt(3, planDePago.getTotal_a_pagar());
+            ps.setFloat(3, planDePago.getTotal_a_pagar());
             ps.setFloat(4, planDePago.getPago_por_mes());
             ps.executeQuery();
             rs = ps.getResultSet();
@@ -375,6 +402,67 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             ps.setInt(1, credit_id);
             ps.setFloat(2, payment);
             ps.setInt(3, paymentMethod_id);
+            ps.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+    }
+
+    public void cambiarTazaInteres(float tazaInteres, int idPlanDeCredito){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.[usp_CreditPlanUpdate](?,?)}");
+            ps.setInt(1, idPlanDeCredito);
+            ps.setFloat(2, tazaInteres);
+            ps.executeQuery();
+            recalcularCuota(tazaInteres, idPlanDeCredito);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+    }
+
+    public void recalcularCuota(float tazaInteres, int idPlanDeCredito){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        PlanDePago p;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.[usp_CreditGivenSelectByPlan](?)}");
+            ps.setInt(1, idPlanDeCredito);
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                int credit_id = rs.getInt("credit_id");
+                float saldo = rs.getFloat("balance");
+                float mesesRestantes = rs.getFloat("remainingMonths");
+                p = new PlanDePago(credit_id, saldo, mesesRestantes, tazaInteres);
+                System.out.print(p.getPago_por_mes());
+                updateCuota(p.getPago_por_mes(), credit_id);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+    }
+
+    public void updateCuota(float cuotaMensual, int idCreditoOtorgado){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call dbo.[usp_CreditGivenUpdateMensualPayment](?,?)}");
+            ps.setInt(1, idCreditoOtorgado);
+            ps.setFloat(2, cuotaMensual);
             ps.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

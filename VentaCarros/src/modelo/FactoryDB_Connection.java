@@ -169,4 +169,38 @@ public class FactoryDB_Connection extends DB_Connection{
         return fabricas;
     }
 
+    public int insertVehiculo(Vehiculo vehiculo, int idFabrica){
+        int result = 0;
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CarInsert](?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            callableStatement.setInt(1, vehiculo.getMarcaTipo().getID());
+            callableStatement.setInt(2, vehiculo.getTipoVehiculo().getID());
+            callableStatement.setNString(3, vehiculo.getModelo());
+            callableStatement.setNString(4, vehiculo.getMotor());
+            callableStatement.setInt(5, Integer.parseInt(vehiculo.getAnio()));
+            callableStatement.setInt(6, Integer.parseInt(vehiculo.getAsientos()));
+            callableStatement.setInt(7, Integer.parseInt(vehiculo.getPuertas()));
+            callableStatement.setInt(8, vehiculo.getTipoGasolina().getID());
+            callableStatement.setFloat(9, Float.parseFloat(vehiculo.getAceleracion()));
+            callableStatement.setFloat(10, Float.parseFloat(vehiculo.getVel_maxima()));
+            callableStatement.setInt(11, Integer.parseInt(vehiculo.getPrecio()));
+            callableStatement.setNull(12, Types.NULL);
+            callableStatement.setInt(13, idFabrica);
+            callableStatement.setInt(14, Integer.parseInt(vehiculo.getCantidad_en_fabrica()));
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                result = rs.getInt("car_id");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return result;
+    }
 }
