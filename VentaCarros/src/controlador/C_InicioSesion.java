@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import modelo.BranchOfficeDB_Connection;
 import modelo.TipoUsuario;
 import modelo.Usuario;
 
@@ -44,6 +45,7 @@ public class C_InicioSesion {
         //GroupDBConnection.getDBInstance().prueba1();
         //GroupDBConnection.getDBInstance().prueba2();
         //GroupDBConnection.getDBInstance().prueba3();
+        //BranchOfficeDB_Connection.getHSDBInstance().updateCuota(666,1);
     }
 
     private void handle_btn_ingresar(ActionEvent event) {

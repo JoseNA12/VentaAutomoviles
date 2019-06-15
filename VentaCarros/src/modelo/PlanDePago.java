@@ -7,7 +7,7 @@ public class PlanDePago {
     private float pago_por_mes;
     private float plazo;
     private float interes;
-    private int total_a_pagar;
+    private float total_a_pagar;
     private String nombrePlan;
     private int planID;
 
@@ -19,6 +19,21 @@ public class PlanDePago {
         this.interes = interes;
         this.total_a_pagar = total_a_pagar;
         calcularPrima();
+        calcularCuotaMensual();
+    }
+
+    public PlanDePago(int planID, String nombrePlan, float porcentaje_prima, float plazo, float interes) {
+        this.porcentaje_prima = porcentaje_prima;
+        this.plazo = plazo;
+        this.interes = interes;
+        this.nombrePlan = nombrePlan;
+        this.planID = planID;
+    }
+    public PlanDePago(int credit_id, float saldo, float mesesRestantes, float interes) {
+        this.planID = credit_id;
+        this.total_a_pagar = saldo;
+        this.plazo = mesesRestantes/12;
+        this.interes = interes;
         calcularCuotaMensual();
     }
 
@@ -63,11 +78,11 @@ public class PlanDePago {
         this.interes = interes;
     }
 
-    public int getTotal_a_pagar() {
+    public float getTotal_a_pagar() {
         return total_a_pagar;
     }
 
-    public void setTotal_a_pagar(int total_a_pagar) {
+    public void setTotal_a_pagar(float total_a_pagar) {
         this.total_a_pagar = total_a_pagar;
     }
 

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import modelo.Empleado;
+import modelo.GroupDBConnection;
 import modelo.Sucursal;
 
 import static modelo.TipoUsuario.FACTURADOR;
@@ -31,10 +32,7 @@ public class C_GestionarEmpleados {
     }
 
     private void init_cbx_Sucursal() {
-        sucursalesObservablelist = FXCollections.observableArrayList();
-        sucursalesObservablelist.addAll(new Sucursal("Autos Jx3-L Cieneguita", 1),
-                new Sucursal("Autos Jx3-L Río de Janeiro", 2),
-                new Sucursal("Autos Jx3-L Detroit", 3));
+        sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
         cbx_Sucursal.setItems(sucursalesObservablelist);
     }
 

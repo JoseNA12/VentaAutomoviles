@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import modelo.GroupDBConnection;
 import modelo.PlanDePago;
 
 import java.io.IOException;
@@ -40,11 +41,8 @@ public class C_NuevoCredito {
     }
 
     private void handle_btn_registrar_credito(ActionEvent event) {
-        if (planDePago != null) { // mandar a registrar el plan
-            // --------------------------------------------------
-            // tener cuidado de solo actualizar la taza de interés
-            // query
-            // --------------------------------------------------
+        if (planDePago != null) {
+            GroupDBConnection.getDBInstance().cambiarTazaInteres(Float.parseFloat(tf_interes.getText()), planDePago.getPlanID());
         }
         else { // crear plan de credito
             if (!tf_porcentaje_prima.getText().trim().equals("") && !tf_interes.getText().trim().equals("") &&

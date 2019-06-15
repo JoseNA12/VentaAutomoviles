@@ -7,8 +7,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CreditPlanSelect] 
-    @creditPlan_id int = NULL,
-	@order_id int = NULL
+    @creditPlan_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -17,7 +16,7 @@ AS
 
 	SELECT [creditPlan_id], [prima], [interest], [anualTerm], [planName] 
 	FROM   [dbo].[CreditPlan] 
-	WHERE  ([creditPlan_id] = @creditPlan_id OR @creditPlan_id IS NULL) OR 
+	WHERE  ([creditPlan_id] = @creditPlan_id OR @creditPlan_id IS NULL) 
 
 	COMMIT
 GO
@@ -53,10 +52,11 @@ BEGIN
     DROP PROC [dbo].[usp_CreditPlanUpdate] 
 END 
 GO
+
 CREATE PROC [dbo].[usp_CreditPlanUpdate] 
     @creditPlan_id int,
+	@interest float = NULL,
     @prima float = NULL,
-    @interest float = NULL,
     @anualTerm float = NULL,
     @planName nvarchar(50) = NULL
 AS 
@@ -66,7 +66,7 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[CreditPlan]
-	SET    [prima] = @prima, [interest] = @interest, [anualTerm] = @anualTerm, [planName] = @planName
+	SET    [prima] = ISNULL(@prima, [prima]), [interest] = ISNULL(@interest, [interest]), [anualTerm] = ISNULL(@anualTerm,[anualTerm]), [planName] = ISNULL(@planName,[planName])
 	WHERE  [creditPlan_id] = @creditPlan_id
 	
 	-- Begin Return Select <- do not remove
