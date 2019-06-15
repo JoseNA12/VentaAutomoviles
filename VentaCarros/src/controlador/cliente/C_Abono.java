@@ -85,10 +85,10 @@ public class C_Abono {
         // -> planDePago = ...
         // -> plan_seleccionadoObservableList.add(planDePago);
 
-        plan_seleccionadoObservableList.add(
+        /*plan_seleccionadoObservableList.add(
                 new PlanDePago("Porcentaje 1", "600.000", "3 años", "8%",
                         "xxxxxxxxxxx")
-        );
+        );*/
         // ---------------------------------------------------------------
 
         listView_plan_de_pago.setItems(plan_seleccionadoObservableList);

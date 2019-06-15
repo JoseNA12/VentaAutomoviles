@@ -137,14 +137,10 @@ public class C_ConsultarVehiculo {
                     break;
                 case CLIENTE:
                     PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
-                    pedidoVehiculo.setUsuario(usuarioActual);
-
-                    // añadir al objeto PedidoVehiculo el tipo de pago
-
-                    // -------------------------------
-                    // registrar en la BD el pedido
-                    // -------------------------------
-
+                    pedidoVehiculo.setUsuario(usuarioActual);//
+                    pedidoVehiculo.setMetodoPago(cb_metodo_pago.getSelectionModel().getSelectedItem());
+                    // TODO: Cambiar ID Sucursal
+                    GroupDBConnection.getDBInstance().comprarVehiculo(pedidoVehiculo,1);
                     FXRouter.goTo("Abonos_cliente");
                     break;
             }
@@ -164,7 +160,7 @@ public class C_ConsultarVehiculo {
                     case CLIENTE:
                         PedidoVehiculo pedidoVehiculo = GetPedidoVehiculo();
                         pedidoVehiculo.setUsuario(usuarioActual);
-
+                        pedidoVehiculo.setMetodoPago(cb_metodo_pago.getSelectionModel().getSelectedItem());
                         FXRouter.goTo("SolicitarCredito_cliente", pedidoVehiculo);
                         break;
                 }

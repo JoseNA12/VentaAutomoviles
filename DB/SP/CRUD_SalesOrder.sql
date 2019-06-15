@@ -48,70 +48,53 @@ Un usuario facturador es el encargado de realizar la factura a cada cliente. Un 
  no se puede vender un automóvil a personas menores de 18 años.
 
 */
-/*IF OBJECT_ID('[dbo].[usp_SalesOrderInsert]') IS NOT NULL
+IF OBJECT_ID('[dbo].[usp_SalesOrderInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_SalesOrderInsert] 
 END 
 GO
 CREATE PROC [dbo].[usp_SalesOrderInsert] 
     @customer_id bigint,
-    @seller_id int,
     @paymentMethod_id int,
     @office_id int,
 	@totalPrice money,
-	@creditBoolean tinyint,
-	@discount float
+	@payment money,
+	@orderStatus int
 AS 
+	BEGIN
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	
-	IF (@creditBoolean = 1)
-		BEGIN
+
+	DECLARE @amountPurchases int
+	SET @amountPurchases = (SELECT SUM(salesOrder_id) FROM SalesOrder WHERE customer_id = @customer_id AND (year(getdate()) - 5 <= year(order_date)))
+	IF(@amountPurchases > 3 AND @orderStatus = 2) -- Discount and without credit
+		BEGIN 
 		BEGIN TRAN
-		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], [discount])
-		SELECT @customer_id, 2, @seller_id, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @discount
+		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount)
+		SELECT @customer_id, 1, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment - (@payment * 0.10), 0.10
 	
 		-- Begin Return Select <- do not remove
-		SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id]
+		SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
 		FROM   [dbo].[SalesOrder]
 		WHERE  [salesOrder_id] = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove
 		COMMIT
 		END
 	ELSE
-		BEGIN
-		DECLARE @amountPurchases int
-		SET @amountPurchases = (SELECT SUM(salesOrder_id) FROM SalesOrder WHERE customer_id = 1 AND (year(getdate()) - 5 <= year(order_date)))
-		IF(@amountPurchases > 3) -- Discount
-			BEGIN 
-			BEGIN TRAN
-			INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],[order_date], [paymentMethod_id], [office_id], [totalPrice], [discount])
-			SELECT @customer_id, 1, @seller_id, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @discount
+		BEGIN -- Credit or Without discount
+		BEGIN TRAN
+		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount)
+		SELECT @customer_id, @orderStatus, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment, 0
 	
-			-- Begin Return Select <- do not remove
-			SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id]
-			FROM   [dbo].[SalesOrder]
-			WHERE  [salesOrder_id] = SCOPE_IDENTITY()
-			-- End Return Select <- do not remove
-			COMMIT
-			END
-		ELSE
-			BEGIN
-			BEGIN TRAN
-			
-			INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], [discount])
-			SELECT @customer_id, 1, @seller_id, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, 0
-	
-			-- Begin Return Select <- do not remove
-			SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id]
-			FROM   [dbo].[SalesOrder]
-			WHERE  [salesOrder_id] = SCOPE_IDENTITY()
-			-- End Return Select <- do not remove
-               
-			COMMIT
-			END		
-		END
-GO*/
+		-- Begin Return Select <- do not remove
+		SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
+		FROM   [dbo].[SalesOrder]
+		WHERE  [salesOrder_id] = SCOPE_IDENTITY()
+		-- End Return Select <- do not remove      
+		COMMIT
+		END		
+	END
+GO
 
 IF OBJECT_ID('[dbo].[usp_SalesOrderUpdate]') IS NOT NULL
 BEGIN 

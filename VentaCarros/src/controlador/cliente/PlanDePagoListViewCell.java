@@ -46,11 +46,11 @@ public class PlanDePagoListViewCell extends JFXListCell<PlanDePago> {
                 }
             }
 
-            lb_prima.setText(planDePago.getPorcentaje_prima());
-            lb_pago_por_mes.setText(planDePago.getPago_por_mes());
-            lb_plazo.setText(planDePago.getPlazo());
-            lb_interes.setText(planDePago.getInteres());
-            lb_monto_total.setText(planDePago.getTotal_a_pagar());
+            lb_prima.setText(String.valueOf(planDePago.getPorcentaje_prima()));
+            lb_pago_por_mes.setText(String.valueOf(planDePago.getPago_por_mes()));
+            lb_plazo.setText(String.valueOf(planDePago.getPlazo()));
+            lb_interes.setText(String.valueOf(planDePago.getInteres()));
+            lb_monto_total.setText(String.valueOf(planDePago.getTotal_a_pagar()));
 
             setText(null);
             setGraphic(gp_planes_de_pago);
