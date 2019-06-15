@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_IngresarVehiculo">
+<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_IngresarVehiculoFabrica">
 
     <children>
         <AnchorPane layoutX="92.0" layoutY="48.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #c6d8d3;">
@@ -163,7 +163,7 @@
             </Tab>
          </tabs>
       </JFXTabPane>
-      <JFXComboBox fx:id="cb_sucursal" focusColor="#d81e5b" layoutX="92.0" layoutY="530.0" prefHeight="37.0" prefWidth="300.0" promptText="Sucursal" style="-fx-font: 16px System;" />
+      <JFXComboBox fx:id="cb_fabrica" focusColor="#d81e5b" layoutX="92.0" layoutY="530.0" prefHeight="37.0" prefWidth="300.0" promptText="Fabrica" style="-fx-font: 16px System;" />
       <JFXButton fx:id="btn_registrar" layoutX="464.0" layoutY="603.0" prefHeight="44.0" prefWidth="725.0" style="-fx-background-color: #d81e5b;" text="Registrar" textFill="#fdf0d5">
          <font>
             <Font name="System Bold" size="16.0" />

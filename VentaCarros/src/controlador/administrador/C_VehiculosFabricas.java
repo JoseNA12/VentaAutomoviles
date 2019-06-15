@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static controlador.C_InicioSesion.usuarioActual;
 
-public class C_Vehiculos {
+public class C_VehiculosFabricas {
 
     @FXML JFXButton btn_nuevo_ingreso;
     @FXML JFXButton bnt_editar_caracteristicas;

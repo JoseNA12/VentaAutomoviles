@@ -25,11 +25,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class C_IngresarVehiculo {
+public class C_IngresarVehiculoFabrica {
 
     @FXML ImageView iv_imagen_vehiculo;
 
-    @FXML JFXComboBox cb_sucursal;
+    @FXML JFXComboBox cb_fabrica;
     @FXML JFXComboBox cb_marca;
     @FXML JFXComboBox cb_tipo;
     @FXML JFXComboBox cb_gasolina;
@@ -60,7 +60,7 @@ public class C_IngresarVehiculo {
     public void initialize() throws Exception {
         initComponentes();
         init_listView_extras();
-        init_cb_sucursall();
+        init_cb_fabrica();
         init_cb_marca();
         init_cb_tipo();
         init_cb_gasolina();
@@ -100,9 +100,8 @@ public class C_IngresarVehiculo {
         );
     }
 
-    private void init_cb_sucursall() {
+    private void init_cb_fabrica() {
         // -------------------- query a la BD
-        // objeto: Sucursal
 
         //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
