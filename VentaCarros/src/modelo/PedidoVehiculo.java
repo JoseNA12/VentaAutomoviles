@@ -17,7 +17,7 @@ public class PedidoVehiculo {
 
     public PedidoVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-        this.extrasVehiculo = extrasVehiculo;
+        this.extrasVehiculo = new ArrayList<>();
         this.usuario = usuario;
     }
 
