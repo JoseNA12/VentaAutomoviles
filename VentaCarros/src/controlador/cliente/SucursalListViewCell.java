@@ -43,8 +43,8 @@ public class SucursalListViewCell extends JFXListCell<Sucursal> {
 
             }
 
-            lb_nombre.setText(sucursal.getNombre());
-            lb_ubicacion.setText(sucursal.getUbicacion());
+            lb_nombre.setText(sucursal.getNombreSucursal());
+            lb_ubicacion.setText(sucursal.getNombrePais());
 
             setText(null);
             setGraphic(gp_sucursales);

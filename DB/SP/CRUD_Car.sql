@@ -7,16 +7,19 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CarSelect] 
-    @car_id int
+    @car_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	SELECT [car_id], [carBrand_id], [carType_id], [model], [engine], [year], [seats], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo] 
-	FROM   [dbo].[Car] 
-	WHERE  ([car_id] = @car_id OR @car_id IS NULL) 
+	SELECT c.[car_id], c.[carBrand_id], c.[carType_id], c.[model], c.[engine], c.[year], c.[seats], 
+	c2.[doors], c2.[fuelType_id], c2.[acceleration], c2.[maximum_speed], c2.[price], c2.[photo], c2.production_date
+	FROM   [dbo].[Car] c
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car c2 on c2.car_id = c.car_id
+	WHERE  (c.[car_id] = @car_id OR @car_id IS NULL) 
 
 GO
+
 IF OBJECT_ID('[dbo].[usp_CarInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarInsert] 
@@ -41,17 +44,28 @@ AS
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[Car] ([carBrand_id], [carType_id], [model], [engine], [year], [seats], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo])
-	SELECT @carBrand_id, @carType_id, @model, @engine, @year, @seats, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo
-	
-	-- Begin Return Select <- do not remove
-	SELECT [car_id], [carBrand_id], [carType_id], [model], [engine], [year], [seats], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo]
-	FROM   [dbo].[Car]
-	WHERE  [car_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
-               
+	INSERT INTO [dbo].[Car] ([carBrand_id], [carType_id], [model], [engine], [year], [seats])
+	SELECT @carBrand_id, @carType_id, @model, @engine, @year, @seats
+
+	DECLARE @lastCar_id int
+	SET @lastCar_id = (SELECT [car_id] FROM [dbo].[Car] WHERE [car_id] = SCOPE_IDENTITY());
+
+	DECLARE @currentDate date
+	SET @currentDate = (SELECT GETDATE());		
+														
+	EXEC ('EXECUTE FactoryDB.dbo.[usp_CarInsert] 
+		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
+		@lastCar_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @currentDate) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
+
+    SELECT c.[car_id], c.[carBrand_id], c.[carType_id], c.[model], c.[engine], c.[year], c.[seats], 
+	c2.[doors], c2.[fuelType_id], c2.[acceleration], c2.[maximum_speed], c2.[price], c2.[photo], c2.production_date
+	FROM   [dbo].[Car] c
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car c2 on c2.[car_id] = c.[car_id]
+	WHERE  c.[car_id] = @lastCar_id
+	        
 	COMMIT
 GO
+
 IF OBJECT_ID('[dbo].[usp_CarUpdate]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarUpdate] 
@@ -70,7 +84,8 @@ CREATE PROC [dbo].[usp_CarUpdate]
     @acceleration float = NULL,
     @maximum_speed float = NULL,
     @price money = NULL,
-    @photo image = NULL
+    @photo image = NULL,
+	@productionDate date = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -78,14 +93,18 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[Car]
-	SET    [carBrand_id] = @carBrand_id, [carType_id] = @carType_id, [model] = @model, [engine] = @engine, [year] = @year, [seats] = @seats, [doors] = @doors, [fuelType_id] = @fuelType_id, [acceleration] = @acceleration, [maximum_speed] = @maximum_speed, [price] = @price, [photo] = @photo
+	SET    [carBrand_id] = ISNULL(@carBrand_id, [carBrand_id]), [carType_id] = ISNULL(@carType_id,[carType_id]), [model] = ISNULL(@model,[model]), [engine] = ISNULL(@engine,[engine]), [year] = ISNULL(@year,[year]), [seats] = ISNULL(@seats,[seats])
 	WHERE  [car_id] = @car_id
-	
-	-- Begin Return Select <- do not remove
-	SELECT [car_id], [carBrand_id], [carType_id], [model], [engine], [year], [seats], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo]
-	FROM   [dbo].[Car]
-	WHERE  [car_id] = @car_id	
-	-- End Return Select <- do not remove
+												
+	EXEC ('EXECUTE FactoryDB.dbo.[usp_CarUpdate] 
+		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
+		@car_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @productionDate) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
+
+	SELECT c.[car_id], c.[carBrand_id], c.[carType_id], c.[model], c.[engine], c.[year], c.[seats], 
+	c2.[doors], c2.[fuelType_id], c2.[acceleration], c2.[maximum_speed], c2.[price], c2.[photo], c2.production_date
+	FROM   [dbo].[Car] c
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car c2 on c2.car_id = c.car_id
+	WHERE  (c.[car_id] = @car_id OR @car_id IS NULL) 
 
 	COMMIT
 GO

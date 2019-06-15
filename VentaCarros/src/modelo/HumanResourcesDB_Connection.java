@@ -1,5 +1,8 @@
 package modelo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -124,6 +127,56 @@ public class HumanResourcesDB_Connection extends DB_Connection{
             closeJDBCResources(connection, ps, rs);
             return result;
         }
+    }
+
+    public ObservableList<Empleado> SelectEmpleados(){
+        ObservableList<Empleado> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try{
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_EmployeeSelect]}");
+            //ps.setNString(1, "");
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                int employee_id = rs.getInt("employee_id");
+                String name = rs.getString("name");
+                String lastname = rs.getString("lastname");
+                int position_id = rs.getInt("position_id");
+                String position = rs.getString("position");
+                int office_id = rs.getInt("office_id");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String entryDate = rs.getString("entryDate");
+                int user_id = rs.getInt("user_id");
+                String identification_card = rs.getString("identification_card");
+                String birthDate = rs.getString("birthDate");
+                String zip_code = rs.getString("zip_code");
+                String userType = rs.getString("userType");
+                Empleado EmpAux;
+                switch (userType){
+                    case "Administrador":
+                        EmpAux = new Empleado(user_id,name,lastname,birthDate,identification_card,
+                                phone,email,Integer.parseInt(zip_code),TipoUsuario.ADMINISTRADOR,Integer.toString(position_id),position,office_id);
+                        ReturnList.add(EmpAux);
+                        break;
+                    case "Facturador":
+                        EmpAux = new Empleado(user_id,name,lastname,birthDate,identification_card,
+                                phone,email,Integer.parseInt(zip_code),TipoUsuario.FACTURADOR,Integer.toString(position_id),position,office_id);
+                        ReturnList.add(EmpAux);
+                        break;
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+
+        return ReturnList;
     }
 
 }
