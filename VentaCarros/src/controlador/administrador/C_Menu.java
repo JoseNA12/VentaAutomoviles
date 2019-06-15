@@ -64,7 +64,11 @@ public class C_Menu {
     }
 
     private void handle_btn_pedidos_clientes(ActionEvent event) {
-
+        try {
+            FXRouter.goTo("PedidosClientes_administrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handle_btn_planes_de_credito(ActionEvent event) {
