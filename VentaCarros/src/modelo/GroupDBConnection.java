@@ -81,5 +81,7 @@ public class GroupDBConnection {
 
     public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
 
+    public ObservableList<Empleado> SelectEmpleados(){return HSDBInstance.SelectEmpleados();}
+
 
 }
