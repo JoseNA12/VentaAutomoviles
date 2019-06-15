@@ -2,19 +2,19 @@ package modelo;
 
 public class Marca {
 
-    private String ID;
+    private int ID;
     private String nombre;
 
-    public Marca(String ID, String nombre) {
+    public Marca(int ID, String nombre) {
         this.ID = ID;
         this.nombre = nombre;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

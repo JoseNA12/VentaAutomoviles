@@ -64,5 +64,6 @@
             </children>
         </AnchorPane>
       <Separator layoutX="637.0" layoutY="188.0" orientation="VERTICAL" prefHeight="294.0" prefWidth="5.0" />
+       <JFXButton fx:id="btn_empleados" layoutX="614.0" layoutY="559.0" text="Empleados" />
    </children>
 </AnchorPane>

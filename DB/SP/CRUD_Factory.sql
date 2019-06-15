@@ -7,7 +7,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_FactorySelect] 
-    @factory_id int
+    @factory_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  

@@ -3,6 +3,7 @@ package modelo;
 import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
@@ -47,6 +48,14 @@ public class GroupDBConnection {
     public ObservableList<MetodoPago> getPaymentMethods(){return BOfficeDBInstance.getPaymentMethods();}
 
     public ObservableList<PlanDePago> getCreditPlan(PedidoVehiculo pedidoVehiculo){return BOfficeDBInstance.getCreditPlan(pedidoVehiculo);}
+
+    public ArrayList<Marca> getCarBrands() {return FactoryDBInstance.getCarBrands();}
+
+    public ArrayList<TipoVehiculo> getCarType() {return FactoryDBInstance.getCarType();}
+
+    public ArrayList<TipoGasolina> getFuelType() {return FactoryDBInstance.getFuelType();}
+
+    public ArrayList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
 
     public void comprarPorCredito(PedidoVehiculo pedidoVehiculo, int idSucursal, PlanDePago planDePago){
         int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), planDePago.getPrima(), 1);

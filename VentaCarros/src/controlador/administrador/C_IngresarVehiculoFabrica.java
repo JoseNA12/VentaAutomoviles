@@ -21,8 +21,10 @@ import modelo.*;
 
 import javafx.scene.image.Image;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,11 +53,11 @@ public class C_IngresarVehiculoFabrica {
     @FXML JFXTextField tf_precio_extra; // extras
     @FXML JFXTextField tf_cantidad_vehiculos;
 
+    @FXML JFXButton btn_atras;
     @FXML JFXButton btn_subir_imagen;
     @FXML JFXButton btn_registrar;
     @FXML JFXButton btn_aniadir_extra; // extras
     @FXML JFXButton btn_remover_extra; // extras
-    @FXML JFXButton btn_atras;
 
     @FXML JFXListView listView_extras; // extras
     private ObservableList<ExtraVehiculo> extrasVehiculoObservableList;
@@ -89,7 +91,9 @@ public class C_IngresarVehiculoFabrica {
         btn_aniadir_extra.setOnAction(this::handle_btn_aniadir_extra);
         btn_remover_extra.setOnAction(this::handle_btn_remover_extra);
         btn_atras.setOnAction(this::handle_btn_atras);
+
     }
+
 
     /**
      *  Cuando se va a modificar hay que inicializar con valores los componentes de la UI
@@ -154,6 +158,11 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+
+        ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
+        for (int i=0;i<fabricas.size();i++){
+            cb_fabrica.getItems().add(fabricas.get(i));
+        }
     }
 
     private void init_cb_marca() {
@@ -164,6 +173,12 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+        ArrayList<Marca> marcas = GroupDBConnection.getDBInstance().getCarBrands();
+        for (int i=0;i<marcas.size();i++){
+            cb_marca.getItems().add(marcas.get(i));
+        }
+
+
     }
 
     private void init_cb_tipo() {
@@ -174,6 +189,10 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+        ArrayList<TipoVehiculo> tipos = GroupDBConnection.getDBInstance().getCarType();
+        for (int i=0;i<tipos.size();i++){
+            cb_tipo.getItems().add(tipos.get(i));
+        }
     }
 
     private void init_cb_gasolina() {
@@ -184,6 +203,11 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+
+        ArrayList<TipoGasolina> tipos = GroupDBConnection.getDBInstance().getFuelType();
+        for (int i=0;i<tipos.size();i++){
+            cb_gasolina.getItems().add(tipos.get(i));
+        }
     }
 
     private void init_listView_extras() {
