@@ -158,12 +158,12 @@ public class HumanResourcesDB_Connection extends DB_Connection{
                 Empleado EmpAux;
                 switch (userType){
                     case "Administrador":
-                        EmpAux = new Empleado(user_id,name,lastname,birthDate,identification_card,
+                        EmpAux = new Empleado(employee_id,user_id,name,lastname,birthDate,identification_card,
                                 phone,email,Integer.parseInt(zip_code),TipoUsuario.ADMINISTRADOR,Integer.toString(position_id),position,office_id);
                         ReturnList.add(EmpAux);
                         break;
                     case "Facturador":
-                        EmpAux = new Empleado(user_id,name,lastname,birthDate,identification_card,
+                        EmpAux = new Empleado(employee_id,user_id,name,lastname,birthDate,identification_card,
                                 phone,email,Integer.parseInt(zip_code),TipoUsuario.FACTURADOR,Integer.toString(position_id),position,office_id);
                         ReturnList.add(EmpAux);
                         break;
@@ -197,10 +197,10 @@ public class HumanResourcesDB_Connection extends DB_Connection{
             ps.setNString(8, empleado.getPassword());
             switch(empleado.getTipoUsuario()){
                 case ADMINISTRADOR:
-                    ps.setInt(9, 3);
+                    ps.setInt(9, 2);
                     break;
                 case FACTURADOR:
-                    ps.setInt(9, 4);
+                    ps.setInt(9, 3);
             }
             ps.setNString(10, empleado.getCedula());
             ps.executeQuery();
@@ -217,6 +217,47 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         }
 
         return ReturnInt;
+    }
+
+    public void DeleteEmpleado (Empleado empleado){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try{
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_EmployeeDelete](?)}");
+            ps.setNString(1, empleado.getCorreo());
+            ps.executeQuery();
+            rs = ps.getResultSet();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+    }
+
+    public void UpdateEmpleado(Empleado empleado){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try{
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_EmployeeUpdate](?,?,?,?,?,?,?)}");
+            ps.setInt(1, empleado.getIdEmpleado());
+            ps.setNString(2, empleado.getNombre());
+            ps.setNString(3, empleado.getApellidos());
+            ps.setInt(4, Integer.parseInt(empleado.getIdPuesto()));
+            ps.setInt(5, empleado.getIdSucursal());
+            ps.setNString(6, empleado.getCorreo());
+            ps.setInt(7, Integer.parseInt(empleado.getTelefono()));
+            ps.execute();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
     }
 
 }
