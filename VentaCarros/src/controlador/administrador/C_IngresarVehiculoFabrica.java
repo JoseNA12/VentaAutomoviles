@@ -94,7 +94,6 @@ public class C_IngresarVehiculoFabrica {
 
     }
 
-
     /**
      *  Cuando se va a modificar hay que inicializar con valores los componentes de la UI
      *  segun el vehiculo seleccionado
