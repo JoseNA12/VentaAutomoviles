@@ -16,6 +16,7 @@ public class C_Menu {
     @FXML JFXButton btn_vehiculos;
     @FXML JFXButton btn_ventas;
     @FXML JFXButton btn_salir;
+    @FXML JFXButton btn_empleados;
 
     @FXML Label lb_usuario_actual;
 
@@ -29,8 +30,17 @@ public class C_Menu {
         btn_vehiculos.setOnAction(this::handle_btn_vehiculos);
         btn_ventas.setOnAction(this::handle_btn_ventas);
         btn_salir.setOnAction(this::handle_btn_salir);
+        btn_empleados.setOnAction(this::handle_btn_empleados);
 
         lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
+    }
+
+    private void handle_btn_empleados(ActionEvent event) {
+        try {
+            FXRouter.goTo("Empleados_administrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handle_btn_vehiculos(ActionEvent event) {
