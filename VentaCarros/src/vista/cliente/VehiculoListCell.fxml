@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
@@ -87,6 +88,20 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
+            <HBox fx:id="hbox_cantidad" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <children>
+                  <Label text="Cantidad:  ">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_cantidad_en_fabrica" text="Label">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_NuevoCredito">
+    <children>
+        <AnchorPane layoutX="92.0" layoutY="60.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #c6d8d3;">
+            <children>
+                <Label fx:id="lb_titulo_ventana" layoutX="61.0" layoutY="4.0" text="Planes de crédito">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/play-button.png" />
+                    </image>
+                </ImageView>
+                <JFXButton fx:id="btn_atras" layoutX="993.0" layoutY="3.0" prefHeight="39.0" prefWidth="84.0" style="-fx-background-color: #d81e5b;" text="Atrás" textFill="#fdf0d5">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </AnchorPane>
+        <JFXButton fx:id="btn_registrar_credito" layoutX="461.0" layoutY="566.0" prefHeight="42.0" prefWidth="360.0" style="-fx-background-color: #d81e5b;" text="Registrar crédito" textFill="#fdf0d5">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </JFXButton>
+      <Pane layoutX="389.0" layoutY="177.0" prefHeight="319.0" prefWidth="502.0" style="-fx-background-color: WHITE;">
+         <children>
+                <ImageView fx:id="imgv_imagen" fitHeight="175.0" fitWidth="169.0" layoutX="14.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/bill.png" />
+                    </image>
+                </ImageView>
+            <JFXTextField fx:id="tf_porcentaje_prima" focusColor="#d81e5b" labelFloat="true" layoutX="243.0" layoutY="75.0" promptText="Porcentaje de prima">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="tf_interes" focusColor="#d81e5b" labelFloat="true" layoutX="243.0" layoutY="140.0" promptText="Interes">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="tf_plazo" focusColor="#d81e5b" labelFloat="true" layoutX="243.0" layoutY="205.0" promptText="Plazo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>

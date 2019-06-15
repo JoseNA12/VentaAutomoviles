@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.image.Image?>
@@ -16,18 +17,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_IngresarVehiculoFabrica">
 
     <children>
         <AnchorPane layoutX="92.0" layoutY="48.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #c6d8d3;">
             <children>
-                <Text fill="#3a3335" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo ingreso de vehículo">
+                <Label fx:id="lb_titulo_ventana" layoutX="61.0" layoutY="4.0" text="Nuevo ingreso de vehículo">
                     <font>
                         <Font name="System Bold" size="26.0" />
                     </font>
-                </Text>
+                </Label>
                 <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/play-button.png" />
@@ -164,11 +164,17 @@
          </tabs>
       </JFXTabPane>
       <JFXComboBox fx:id="cb_fabrica" focusColor="#d81e5b" layoutX="92.0" layoutY="530.0" prefHeight="37.0" prefWidth="300.0" promptText="Fabrica" style="-fx-font: 16px System;" />
-      <JFXButton fx:id="btn_registrar" layoutX="464.0" layoutY="603.0" prefHeight="44.0" prefWidth="725.0" style="-fx-background-color: #d81e5b;" text="Registrar" textFill="#fdf0d5">
+      <JFXButton fx:id="btn_registrar" layoutX="772.0" layoutY="603.0" prefHeight="44.0" prefWidth="417.0" style="-fx-background-color: #d81e5b;" text="Registrar" textFill="#fdf0d5">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXButton>
       <Separator layoutX="142.0" layoutY="508.0" prefHeight="11.0" prefWidth="200.0" />
+      <JFXTextField fx:id="tf_cantidad_vehiculos" focusColor="#d81e5b" labelFloat="true" layoutX="464.0" layoutY="607.0" promptText="Cantidad">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <Separator layoutX="706.0" layoutY="601.0" orientation="VERTICAL" prefHeight="44.0" prefWidth="14.0" />
     </children>
 </AnchorPane>

@@ -19,6 +19,7 @@ public class Vehiculo {
     private String aceleracion;
     private String vel_maxima;
     private String precio;
+    private String cantidad_en_fabrica;
     // falta la foto
 
 
@@ -39,6 +40,26 @@ public class Vehiculo {
         this.aceleracion = aceleracion;
         this.vel_maxima = vel_maxima;
         this.precio = precio;
+    }
+
+    public Vehiculo(String ID, String marca, String modelo, String anio, String num_pasajeros,
+                    String tipo, String motor, String asientos, String puertas, String gasolina,
+                    String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica) {
+        this.ID = ID;
+        this.nombre_carro = marca + " " + modelo;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.num_pasajeros = num_pasajeros;
+        this.tipo = tipo;
+        this.motor = motor;
+        this.asientos = asientos;
+        this.puertas = puertas;
+        this.gasolina = gasolina;
+        this.aceleracion = aceleracion;
+        this.vel_maxima = vel_maxima;
+        this.precio = precio;
+        this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
     public String getID() {
@@ -151,5 +172,13 @@ public class Vehiculo {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public String getCantidad_en_fabrica() {
+        return cantidad_en_fabrica;
+    }
+
+    public void setCantidad_en_fabrica(String cantidad_en_fabrica) {
+        this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 }

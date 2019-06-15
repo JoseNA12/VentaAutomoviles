@@ -15,6 +15,7 @@ public class C_Menu {
 
     @FXML JFXButton btn_vehiculos;
     @FXML JFXButton btn_ventas;
+    @FXML JFXButton btn_planes_de_credito;
     @FXML JFXButton btn_salir;
 
     @FXML Label lb_usuario_actual;
@@ -29,13 +30,13 @@ public class C_Menu {
         btn_vehiculos.setOnAction(this::handle_btn_vehiculos);
         btn_ventas.setOnAction(this::handle_btn_ventas);
         btn_salir.setOnAction(this::handle_btn_salir);
-
+        btn_planes_de_credito.setOnAction(this::handle_btn_planes_de_credito);
         lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
     }
 
     private void handle_btn_vehiculos(ActionEvent event) {
         try {
-            FXRouter.goTo("Vehiculos_administrador");
+            FXRouter.goTo("VehiculosFabricas_administrador");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,6 +45,14 @@ public class C_Menu {
     private void handle_btn_ventas(ActionEvent event) {
         try {
             FXRouter.goTo("Ventas_administrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handle_btn_planes_de_credito(ActionEvent event) {
+        try {
+            FXRouter.goTo("PlanesCredito_administrador");
         } catch (IOException e) {
             e.printStackTrace();
         }

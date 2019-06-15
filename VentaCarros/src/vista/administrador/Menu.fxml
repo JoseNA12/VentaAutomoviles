@@ -26,6 +26,7 @@
             <Font size="22.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="btn_planes_de_credito" layoutX="576.0" layoutY="529.0" text="Planes de credito" />
       <JFXButton fx:id="btn_ventas" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Ventas">
          <font>
             <Font size="22.0" />
@@ -63,6 +64,5 @@
             </children>
         </AnchorPane>
       <Separator layoutX="637.0" layoutY="188.0" orientation="VERTICAL" prefHeight="294.0" prefWidth="5.0" />
-      <JFXButton fx:id="btn_empleados" layoutX="614.0" layoutY="559.0" text="Empleados" />
    </children>
 </AnchorPane>
