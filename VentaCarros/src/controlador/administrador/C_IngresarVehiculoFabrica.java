@@ -1,5 +1,6 @@
 package controlador.administrador;
 
+import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -19,6 +20,7 @@ import modelo.*;
 
 import javafx.scene.image.Image;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class C_IngresarVehiculoFabrica {
     @FXML JFXTextField tf_nombre_extra; // extras
     @FXML JFXTextField tf_precio_extra; // extras
 
+    @FXML JFXButton btn_atras;
     @FXML JFXButton btn_subir_imagen;
     @FXML JFXButton btn_registrar;
     @FXML JFXButton btn_aniadir_extra; // extras
@@ -73,6 +76,7 @@ public class C_IngresarVehiculoFabrica {
         btn_registrar.setOnAction(this::handle_btn_registrar);
         btn_aniadir_extra.setOnAction(this::handle_btn_aniadir_extra);
         btn_remover_extra.setOnAction(this::handle_btn_remover_extra);
+        btn_atras.setOnAction(this::handle_btn_atras);
 
         btn_subir_imagen.setOnAction(
                 new EventHandler<ActionEvent>() {
@@ -173,6 +177,14 @@ public class C_IngresarVehiculoFabrica {
 
     private void handle_btn_registrar(ActionEvent event) {
 
+    }
+
+    private void handle_btn_atras(ActionEvent event){
+        try {
+            FXRouter.goTo("Vehiculos_administrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handle_btn_aniadir_extra(ActionEvent event) {
