@@ -2,45 +2,27 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_Menu">
    <children>
-      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="185.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/car_2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="276.0" fitWidth="316.0" layoutX="780.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/folder_2.png" />
-         </image>
-      </ImageView>
-      <JFXButton fx:id="btn_vehiculos" alignment="BOTTOM_CENTER" layoutX="185.0" layoutY="165.0" prefHeight="341.0" prefWidth="316.0" text="Vehículos">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </JFXButton>
-      <JFXButton fx:id="btn_ventas" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Ventas">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </JFXButton>
-      <JFXButton fx:id="btn_salir" layoutX="92.0" layoutY="571.0" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #3a3335;" text="Salir" textFill="WHITE">
+      <JFXButton fx:id="btn_salir" layoutX="92.0" layoutY="571.0" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #f0544f;" text="Salir" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
 
 
-        <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #d81e5b;">
+        <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #3a3335;">
             <children>
-                <Text fill="#fdf0d5" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Menú">
+                <Text fill="#fdf0d5" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Menú de administración">
                     <font>
                         <Font name="System Bold" size="26.0" />
                     </font>
@@ -62,6 +44,70 @@
             </Label>
             </children>
         </AnchorPane>
-      <Separator layoutX="637.0" layoutY="188.0" orientation="VERTICAL" prefHeight="294.0" prefWidth="5.0" />
+      <GridPane layoutX="164.0" layoutY="154.0" prefHeight="374.0" prefWidth="902.0">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="882.0" minWidth="10.0" prefWidth="882.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXButton fx:id="btn_ingresar_vehiculos_fabricas" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="930.0" style="-fx-background-color: #d81e5b;" text="Ingresar vehículos en fabricas" textFill="#fdf0d5" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_ventas" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="930.0" style="-fx-background-color: #d81e5b;" text="Ventas" textFill="#fdf0d5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_pedidos_clientes" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="930.0" style="-fx-background-color: #d81e5b;" text="Pedidos de clientes" textFill="#fdf0d5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_planes_de_credito" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="930.0" style="-fx-background-color: #d81e5b;" text="Planes de credito" textFill="#fdf0d5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </JFXButton>
+             <JFXButton fx:id="btn_empleados" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="930.0" style="-fx-background-color: #d81e5b;" text="Empleados" textFill="#fdf0d5" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/factory.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="18.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/bank.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="18.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/bill.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="18.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../images/folder_2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="18.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../images/officer.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

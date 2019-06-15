@@ -7,7 +7,8 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CreditPlanSelect] 
-    @creditPlan_id int = NULL
+    @creditPlan_id int = NULL,
+	@order_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -16,7 +17,7 @@ AS
 
 	SELECT [creditPlan_id], [prima], [interest], [anualTerm], [planName] 
 	FROM   [dbo].[CreditPlan] 
-	WHERE  ([creditPlan_id] = @creditPlan_id OR @creditPlan_id IS NULL) 
+	WHERE  ([creditPlan_id] = @creditPlan_id OR @creditPlan_id IS NULL) OR 
 
 	COMMIT
 GO

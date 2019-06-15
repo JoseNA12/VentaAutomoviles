@@ -50,12 +50,12 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-            <Label layoutX="202.0" layoutY="12.0" text="Pago por mes" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label layoutX="202.0" layoutY="12.0" text="Pago por mes" GridPane.columnIndex="3">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="202.0" layoutY="72.0" text="Interes" GridPane.columnIndex="3">
+            <Label layoutX="202.0" layoutY="72.0" text="Interes" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -65,12 +65,12 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lb_pago_por_mes" layoutX="409.0" layoutY="11.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label fx:id="lb_pago_por_mes" layoutX="409.0" layoutY="11.0" text="Label" GridPane.columnIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_interes" layoutX="409.0" layoutY="71.0" text="Label" GridPane.columnIndex="4">
+            <Label fx:id="lb_interes" layoutX="409.0" layoutY="71.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>

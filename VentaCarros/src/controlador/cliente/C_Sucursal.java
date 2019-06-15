@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import modelo.GroupDBConnection;
 import modelo.Sucursal;
 
 import java.io.IOException;
@@ -30,20 +31,7 @@ public class C_Sucursal {
     }
 
     private void init_listView() {
-        //listView_catalogo.getStyleClass().add("mylistview");
-
-        //listView_sucursales.getItems().add(new Label("Item"));
-        sucursalesObservableList = FXCollections.observableArrayList();
-
-        // ---------------------------------------------------------------
-        // HACER LA CONSULTA A LAS BB's
-
-        sucursalesObservableList.addAll(
-                new Sucursal("Josue se la come"),
-                new Sucursal("y entera")
-        );
-        // ---------------------------------------------------------------
-
+        sucursalesObservableList = GroupDBConnection.getDBInstance().getSucursales();
         listView_sucursales.setItems(sucursalesObservableList);
         listView_sucursales.setCellFactory(studentListView -> new SucursalListViewCell());
     }

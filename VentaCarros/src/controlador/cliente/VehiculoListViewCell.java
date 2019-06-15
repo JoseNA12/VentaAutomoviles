@@ -10,9 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import modelo.TipoUsuario;
 import modelo.Vehiculo;
 
 import java.io.IOException;
+
 
 public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
 
@@ -24,20 +27,26 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
     @FXML Label lb_num_pasajeros;
     @FXML Label lb_precio;
 
+    @FXML Label lb_cantidad_en_fabrica; // solo cuando estoy en fabrica se pone visible
+
     @FXML JFXButton btn_consultar;
 
     @FXML GridPane gp_catalogo;
 
+    @FXML HBox hbox_cantidad;
+
     private FXMLLoader mLLoader;
 
-    private Boolean esAdministrador = false;
+    private TipoUsuario bandera;
 
 
-    public VehiculoListViewCell(Boolean esAdministrador) {
-        this.esAdministrador = esAdministrador;
+    public VehiculoListViewCell(TipoUsuario bandera) {
+        this.bandera = bandera;
     }
 
-    public VehiculoListViewCell() { }
+    public VehiculoListViewCell() {
+        this.bandera = TipoUsuario.CLIENTE;
+    }
 
     @Override
     protected void updateItem(Vehiculo vehiculo, boolean empty) {
@@ -59,20 +68,25 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                 }
             }
 
-            if (!esAdministrador) {
-                btn_consultar.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        try {
-                            FXRouter.goTo("ConsultarVehiculo_cliente", vehiculo); // le paso el objeto vehiculo
-                        } catch (IOException e) {   // .. entonces al momento de cargar la pantalla sepa cuales datos mostrar
-                            e.printStackTrace();
+            switch (bandera) {
+                case ADMINISTRADOR:
+                    btn_consultar.setVisible(false);
+                    hbox_cantidad.setVisible(true);
+                    lb_cantidad_en_fabrica.setText(vehiculo.getCantidad_en_fabrica());
+                    break;
+
+                default:
+                    btn_consultar.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                FXRouter.goTo("ConsultarVehiculo_cliente", vehiculo); // le paso el objeto vehiculo
+                            } catch (IOException e) {   // .. entonces al momento de cargar la pantalla sepa cuales datos mostrar
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-            }
-            else { // si es admin se oculta el boton de consultar
-                btn_consultar.setVisible(false);
+                    });
+                    break;
             }
 
             lb_marca.setText(vehiculo.getMarca());
@@ -84,14 +98,6 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
             setText(null);
             setGraphic(gp_catalogo);
         }
-    }
-
-    public Boolean getEsAdministrador() {
-        return esAdministrador;
-    }
-
-    public void setEsAdministrador(Boolean esAdministrador) {
-        this.esAdministrador = esAdministrador;
     }
 }
 

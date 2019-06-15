@@ -59,15 +59,15 @@ CREATE PROC [dbo].[usp_CreditGivenUpdate]
     @creditPlan_id int = NULL,
     @balance money = NULL,
     @mensualPayment float = NULL,
-    @creditStatus int = NULL
+    @creditStatus int = NULL,
+	@mensualPayment float = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-
 	UPDATE [dbo].[CreditGiven]
-	SET    [order_id] = ISNULL(@order_id, [order_id]), nextPayment_date = ISNULL(@nextPayment_date, nextPayment_date), [creditPlan_id] = ISNULL(@creditPlan_id, [creditPlan_id]), [balance] = ISNULL(@balance, [balance]), [mensualPayment] = ISNULL(@mensualPayment,[mensualPayment]), [creditStatus] = ISNULL(@creditStatus, [creditStatus])
+	SET    [order_id] = ISNULL(@order_id, [order_id]), nextPayment_date = ISNULL(@nextPayment_date, nextPayment_date), [creditPlan_id] = ISNULL(@creditPlan_id, [creditPlan_id]), [balance] = ([balance] - @mensualPayment), [mensualPayment] = ISNULL(@mensualPayment,[mensualPayment]), [creditStatus] = ISNULL(@creditStatus, [creditStatus])
 	WHERE  [credit_id] = @credit_id
 	
 	-- Begin Return Select <- do not remove

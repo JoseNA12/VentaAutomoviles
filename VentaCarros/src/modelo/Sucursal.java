@@ -2,31 +2,73 @@ package modelo;
 
 public class Sucursal {
 
-    private String nombre;
-    private String ubicacion;
+    private int idSucursal;
+    private String nombreSucursal;
+    private String nombrePais;
+    private int idPais;
+    private String horaApertura;
+    private String horaCierre;
 
-    public Sucursal(String nombre) {
-        this.nombre = nombre;
+
+    public Sucursal(int idSucursal, String nombreSucursal, String nombrePais, int idPais, String horaApertura, String horaCierre) {
+        this.idSucursal = idSucursal;
+        this.nombreSucursal = nombreSucursal;
+        this.nombrePais = nombrePais;
+        this.idPais = idPais;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
     }
 
-    public Sucursal(String nombre, String ubicacion) {
-        this.nombre = nombre;
-        this.ubicacion = ubicacion;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombrePais() {
+        return nombrePais;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public void setNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public int getIdPais() {
+        return idPais;
+    }
+
+    public void setIdPais(int idPais) {
+        this.idPais = idPais;
+    }
+
+    public String getHoraApertura() {
+        return horaApertura;
+    }
+
+    public void setHoraApertura(String horaApertura) {
+        this.horaApertura = horaApertura;
+    }
+
+    public String getHoraCierre() {
+        return horaCierre;
+    }
+
+    public void setHoraCierre(String horaCierre) {
+        this.horaCierre = horaCierre;
+    }
+
+    public int getIdSucursal() {
+        return this.idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombreSucursal;
     }
 }

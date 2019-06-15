@@ -70,6 +70,9 @@ public class GroupDBConnection {
         BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
     }
 
+
+    public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}
+
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){return BOfficeDBInstance.SelectAbonoXUsuario(usuario);}
 
     public ObservableList<PlanDePago> SelectPlanActual(int credit_id) {return BOfficeDBInstance.SelectPlanActual(credit_id);}
@@ -77,5 +80,10 @@ public class GroupDBConnection {
     public ObservableList<MetodoPago> SelectMetodosDePago(){return BOfficeDBInstance.SelectMetodosDePago();}
 
     public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
+
+    public ObservableList<Empleado> SelectEmpleados(){return HSDBInstance.SelectEmpleados();}
+
+    public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}
+
 
 }
