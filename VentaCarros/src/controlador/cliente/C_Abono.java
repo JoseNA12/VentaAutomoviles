@@ -16,7 +16,7 @@ import modelo.Usuario;
 
 import java.io.IOException;
 
-import static controlador.C_InicioSesion.tipoUsuarioActual;
+
 import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Abono {
@@ -45,7 +45,7 @@ public class C_Abono {
         initComponentes();
         init_cb_metodo_pago();
 
-        switch (tipoUsuarioActual) {
+        switch (usuarioActual.getTipoUsuario()) {
             case CLIENTE:
                 usuarioActual_ = usuarioActual;
                 break;
@@ -117,7 +117,7 @@ public class C_Abono {
 
     private void handle_btn_atras(ActionEvent event) {
         try {
-            switch (tipoUsuarioActual) {
+            switch (usuarioActual.getTipoUsuario()) {
                 case CLIENTE:
                     FXRouter.goTo("Menu_cliente");
                     break;

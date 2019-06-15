@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.administrador.C_Menu">
+   <children>
+      <ImageView fitHeight="329.0" fitWidth="316.0" layoutX="185.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/car_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="276.0" fitWidth="316.0" layoutX="780.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/folder_2.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btn_vehiculos" alignment="BOTTOM_CENTER" layoutX="185.0" layoutY="165.0" prefHeight="341.0" prefWidth="316.0" text="Vehículos">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btn_ventas" alignment="BOTTOM_CENTER" layoutX="763.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Ventas">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btn_salir" layoutX="92.0" layoutY="571.0" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #3a3335;" text="Salir" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+
+
+        <AnchorPane layoutX="92.0" layoutY="66.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #d81e5b;">
+            <children>
+                <Text fill="#fdf0d5" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autos Jx3-L - Menú">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="43.0" fitWidth="90.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/play-button.png" />
+                    </image>
+                </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="40.0" layoutX="1043.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boss.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lb_usuario_actual" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="711.0" layoutY="10.0" prefHeight="27.0" prefWidth="316.0" text="[nombre apellidos]" textAlignment="RIGHT" textFill="#fdf0d5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+      <Separator layoutX="637.0" layoutY="188.0" orientation="VERTICAL" prefHeight="294.0" prefWidth="5.0" />
+   </children>
+</AnchorPane>
