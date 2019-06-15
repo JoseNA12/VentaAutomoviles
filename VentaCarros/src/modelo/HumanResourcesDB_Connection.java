@@ -179,4 +179,44 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         return ReturnList;
     }
 
+    public int InsertEmpleado(Empleado empleado){
+        int ReturnInt = 1;//
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try{
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_EmployeeInsert](?,?,?,?,?,?,?,?,?,?)}");
+            ps.setNString(1, empleado.getNombre());
+            ps.setNString(2, empleado.getApellidos());
+            ps.setInt(3, Integer.parseInt(empleado.getIdPuesto()));
+            ps.setInt(4, empleado.getIdSucursal());
+            ps.setNString(5, empleado.getCorreo());
+            ps.setInt(6, Integer.parseInt(empleado.getTelefono()));
+            ps.setNString(7, empleado.getFechaNacimiento());
+            ps.setNString(8, empleado.getPassword());
+            switch(empleado.getTipoUsuario()){
+                case ADMINISTRADOR:
+                    ps.setInt(9, 3);
+                    break;
+                case FACTURADOR:
+                    ps.setInt(9, 4);
+            }
+            ps.setNString(10, empleado.getCedula());
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                int result = rs.getInt("exit_status");
+                ReturnInt = result;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+        }
+
+        return ReturnInt;
+    }
+
 }

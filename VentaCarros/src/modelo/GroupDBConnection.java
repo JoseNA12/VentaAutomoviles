@@ -83,5 +83,7 @@ public class GroupDBConnection {
 
     public ObservableList<Empleado> SelectEmpleados(){return HSDBInstance.SelectEmpleados();}
 
+    public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}
+
 
 }
