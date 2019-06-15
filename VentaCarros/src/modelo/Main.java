@@ -27,6 +27,7 @@ public class Main extends Application {
         FXRouter.when("ConsultarVehiculo_cliente", "../vista/cliente/ConsultarVehiculo.fxml");
         FXRouter.when("SolicitarCredito_cliente", "../vista/cliente/SolicitarCredito.fxml");
         FXRouter.when("Abonos_cliente", "../vista/cliente/Abono.fxml");
+        FXRouter.when("PedidoActual_cliente", "../vista/cliente/PedidoActual.fxml");
 
         // Facturador
         FXRouter.when("Menu_facturador", "../vista/facturador/Menu.fxml");
