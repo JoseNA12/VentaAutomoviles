@@ -13,7 +13,8 @@ public class Usuario {
     private TipoUsuario tipoUsuario;
     private String password;
 
-    public Usuario(int idUsuario, String nombre, String apellidos, String fechaNacimiento, String cedula, String telefono, String correo, int zipCode, TipoUsuario tipoUsuario) {
+    public Usuario(int idUsuario, String nombre, String apellidos, String fechaNacimiento, String cedula, String telefono,
+                   String correo, int zipCode, TipoUsuario tipoUsuario) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidos = apellidos;
