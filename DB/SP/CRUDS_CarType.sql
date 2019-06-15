@@ -7,7 +7,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CarTypeSelect] 
-    @carType_id int
+    @carType_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
