@@ -18,9 +18,12 @@ import javafx.stage.Stage;
 import modelo.ExtraVehiculo;
 
 import javafx.scene.image.Image;
+import modelo.GroupDBConnection;
+import modelo.Marca;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,6 +120,12 @@ public class C_IngresarVehiculoFabrica {
         //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
 
         //-----------------------------------
+        ArrayList<Marca> marcas = GroupDBConnection.getDBInstance().getCarBrands();
+        for (int i=0;i<marcas.size();i++){
+            cb_marca.getItems().add(marcas.get(i).getNombre());
+        }
+
+
     }
 
     private void init_cb_tipo() {
