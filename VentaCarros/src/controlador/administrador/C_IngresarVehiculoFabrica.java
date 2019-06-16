@@ -66,6 +66,8 @@ public class C_IngresarVehiculoFabrica {
     private File file_imagen = null;
     private FileInputStream fis;
 
+    private String path_imagen_default = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\default.jpg" ;
+
 
     public void initialize() throws Exception {
         initComponentes();
@@ -110,6 +112,16 @@ public class C_IngresarVehiculoFabrica {
         tf_precio.setText(vehiculoSeleccionado.getPrecio());
         tf_cantidad_vehiculos.setText(String.valueOf(vehiculoSeleccionado.getCantidad_en_fabrica()));
 
+        try {
+            String path = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\" + vehiculoSeleccionado.getNombre_carro() + ".jpg";
+            File file = new File(path);
+            Image image = new Image(file.toURI().toString());
+            iv_imagen_vehiculo.setImage(image);
+        } catch (Exception e) {}
+
+        //iv_imagen_vehiculo.setVisible(false);
+        btn_subir_imagen.setVisible(false);
+
         // obtener el valor del vehiculo, y buscar dentro de los valores del comboBox el item respectivo
         // para hacer el set del objeto
         ObservableList<Marca> items_m = cb_marca.getItems();
@@ -144,8 +156,8 @@ public class C_IngresarVehiculoFabrica {
         );
         fileChooser.getExtensionFilters().addAll(
                 //new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-               new FileChooser.ExtensionFilter("PNG", "*.png")
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")//,
+               //new FileChooser.ExtensionFilter("PNG", "*.png")
         );
     }
 
@@ -193,12 +205,20 @@ public class C_IngresarVehiculoFabrica {
         }
         else { // ingresar un nuevo vehiculo
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
-                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
-            try {
-                vehiculoSeleccionado.setImagen(new FileInputStream(file_imagen), (int) file_imagen.length());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+            if (file_imagen != null) { // se escogio una imagen
+                try {
+                    vehiculoSeleccionado.setFis(new FileInputStream(file_imagen), (int) file_imagen.length());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                File file = new File(path_imagen_default);
+                try {
+                    vehiculoSeleccionado.setFis(new FileInputStream(file), (int) file.length());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
