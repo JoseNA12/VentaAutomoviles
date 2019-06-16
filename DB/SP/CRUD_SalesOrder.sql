@@ -15,11 +15,11 @@ CREATE PROC [dbo].[usp_SalesOrderSelect]
 	@country int = NULL,
 	@date1 date = NULL,
 	@date2 date = NULL,
-	@paymentMethod_id int
+	@paymentMethod_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	-- [DESKTOP-3N2P4FH\HR_INSTANCE].HumanResourcesDB.dbo.Employee
+
 	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
 	FROM   [dbo].[SalesOrder] so
 	inner join SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
@@ -92,7 +92,7 @@ AS
 		WHERE  [salesOrder_id] = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove      
 		COMMIT
-		END		
+		END	
 	END
 GO
 
