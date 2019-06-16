@@ -509,4 +509,31 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             closeJDBCResources(connection, callableStatement, rs);
         }
     }
+
+    public ObservableList<Pais> SelectPaises(){
+        ObservableList<Pais> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CountrySelect]}");
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                int country_id = rs.getInt("country_id");
+                String name = rs.getString("name");
+                Pais countryAux = new Pais(Integer.toString(country_id),name);
+
+                if(!countryAux.getNombre().equals("")){
+                    ReturnList.add(countryAux);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
+    }
 }

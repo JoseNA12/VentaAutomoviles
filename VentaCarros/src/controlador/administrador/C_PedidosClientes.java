@@ -8,10 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import modelo.PedidoVehiculo;
-import modelo.TipoUsuario;
-import modelo.Usuario;
-import modelo.Vehiculo;
+import modelo.*;
 
 import java.io.IOException;
 
@@ -46,10 +43,10 @@ public class C_PedidosClientes {
         // -------------------- query a la base consultando pedidos actuales
         // crear objetos: PedidoVehiculo
         // -> hacer set del cliente: pedidoVehiculo.setUsuario(...);
-        PedidoVehiculo pedidoVehiculo_ = new PedidoVehiculo(
-                new Vehiculo(1, null, "a", "a", "a", null, "a", "a", null, "a", "a", "a", "100000"));
+        /*PedidoVehiculo pedidoVehiculo_ = new PedidoVehiculo(
+                new Vehiculo(1, new Marca(1,"Honda"), "a", "a", "a", null, "a", "a", null, "a", "a", "a", "100000"));
         pedidoVehiculo_.setUsuario(new Usuario(1, "b", "b", "b", "b", "b", "b", 12, TipoUsuario.CLIENTE));
-        pedidos_ObservableList.add(pedidoVehiculo_);
+        pedidos_ObservableList.add(pedidoVehiculo_);*/
         // -------------------------------------------------------------------
 
         listView_pedidos.setItems(pedidos_ObservableList);

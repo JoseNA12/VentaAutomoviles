@@ -37,6 +37,9 @@ public class C_Ventas {
 
     @FXML JFXListView listView_vehiculos_demanda;
     private ObservableList<Vehiculo> ventasDemandaObservableList;
+    private ObservableList<Sucursal> sucursalesObservablelist;
+    private ObservableList<Pais> paisesObservableList;
+    private ObservableList<MetodoPago> metodoPagoObservableList;
 
 
     public void initialize() throws Exception {
@@ -49,7 +52,6 @@ public class C_Ventas {
         btn_visualizar_datos_2.setOnAction(this::handle_btn_visualizar_datos_2);
         btn_atras.setOnAction(this::handle_btn_atras);
         btn_limpiar_campos.setOnAction(this::handle_btn_limpiar_campos);
-
         init_cb_sucursal();
         init_cb_tipo_vehiculo();
         init_cb_pais();
@@ -74,30 +76,38 @@ public class C_Ventas {
         // cb_sucursal
         // hacer el set tambien a: cb_sucursal_2
         // --------------------------------------------------
+        sucursalesObservablelist = FXCollections.observableArrayList();
+        sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
+        cb_sucursal.setItems(sucursalesObservablelist);
+        cb_sucursal_2.setItems(sucursalesObservablelist);
 
-        cb_sucursal.getSelectionModel().selectFirst();
-        cb_sucursal_2.getSelectionModel().selectFirst();
+        //cb_sucursal.getSelectionModel().selectFirst();
+        //cb_sucursal_2.getSelectionModel().selectFirst();
     }
 
     private void init_cb_tipo_vehiculo() {
         cb_tipo_vehiculo.setItems(GroupDBConnection.getDBInstance().getCarType());
-        cb_tipo_vehiculo.getSelectionModel().selectFirst();
+        //cb_tipo_vehiculo.getSelectionModel().selectFirst();
     }
 
     private void init_cb_pais() {
         // ------------------------- query a la BD's
         // cb_pais
         // ---------------------------------------------------
-
-        cb_pais.getSelectionModel().selectFirst();
+        paisesObservableList = FXCollections.observableArrayList();
+        paisesObservableList = GroupDBConnection.getDBInstance().SelectPaises();
+        cb_pais.setItems(paisesObservableList);
+        //cb_pais.getSelectionModel().selectFirst();
     }
 
     private void init_cb_tipo_pago() {
         // ------------------------- query a la BD's
         // cb_tipo_pago
         // ---------------------------------------------------
-
-        cb_tipo_pago.getSelectionModel().selectFirst();
+        metodoPagoObservableList = FXCollections.observableArrayList();
+        metodoPagoObservableList = GroupDBConnection.getDBInstance().SelectMetodosDePago();
+        cb_tipo_pago.setItems(metodoPagoObservableList);
+        //cb_tipo_pago.getSelectionModel().selectFirst();
     }
 
     private void init_cb_tipo_demanda() {

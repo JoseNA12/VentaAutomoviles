@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Observable;
 
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
@@ -106,5 +107,7 @@ public class GroupDBConnection {
     public void UpdateEmpleado(Empleado empleado){HSDBInstance.UpdateEmpleado(empleado);}
 
     public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
+
+    public ObservableList<Pais> SelectPaises(){return BOfficeDBInstance.SelectPaises();}
 
 }
