@@ -3,6 +3,7 @@ package modelo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -188,7 +189,14 @@ public class FactoryDB_Connection extends DB_Connection{
             callableStatement.setFloat(9, Float.parseFloat(vehiculo.getAceleracion()));
             callableStatement.setFloat(10, Float.parseFloat(vehiculo.getVel_maxima()));
             callableStatement.setInt(11, Integer.parseInt(vehiculo.getPrecio()));
-            callableStatement.setNull(12, Types.NULL);
+
+            if (vehiculo.getImagen() != null) {
+                callableStatement.setBinaryStream(12, (InputStream) vehiculo.getImagen(), vehiculo.getFile_length());
+            }
+            else  {
+                callableStatement.setNull(12, Types.NULL);
+            }
+
             callableStatement.setInt(13, idFabrica);
             callableStatement.setInt(14, Integer.parseInt(vehiculo.getCantidad_en_fabrica()));
             callableStatement.executeQuery();

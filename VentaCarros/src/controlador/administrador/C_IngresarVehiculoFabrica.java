@@ -20,6 +20,8 @@ import modelo.*;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -60,6 +62,9 @@ public class C_IngresarVehiculoFabrica {
     final FileChooser fileChooser = new FileChooser();
 
     private Vehiculo vehiculoSeleccionado = null; // solo en caso de modificar vehiculo
+
+    private File file_imagen = null;
+    private FileInputStream fis;
 
 
     public void initialize() throws Exception {
@@ -169,9 +174,9 @@ public class C_IngresarVehiculoFabrica {
 
     private void handle_btn_subir_imagen(ActionEvent event) {
         configureFileChooser(fileChooser);
-        File file = fileChooser.showOpenDialog((Stage)((Node) event.getSource()).getScene().getWindow());
-        if (file != null) {
-            iv_imagen_vehiculo.setImage(new Image(file.toURI().toString()));
+        file_imagen = fileChooser.showOpenDialog((Stage)((Node) event.getSource()).getScene().getWindow());
+        if (file_imagen != null) {
+            iv_imagen_vehiculo.setImage(new Image(file_imagen.toURI().toString()));
         }
     }
 
@@ -183,6 +188,15 @@ public class C_IngresarVehiculoFabrica {
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
+
+            if (file_imagen != null) {
+                try { // guardar la imagen
+                    vehiculoSeleccionado.setImagen(new FileInputStream(file_imagen), (int) file_imagen.length());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem()) == 0){
                 System.out.print("Error jaja\n");
             }else{
