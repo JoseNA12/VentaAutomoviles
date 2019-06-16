@@ -73,7 +73,7 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                 case ADMINISTRADOR:
                     btn_consultar.setVisible(false);
                     hbox_cantidad.setVisible(true);
-                    lb_cantidad_en_fabrica.setText(vehiculo.getCantidad_en_fabrica());
+                    lb_cantidad_en_fabrica.setText(String.valueOf(vehiculo.getCantidad_en_fabrica()));
                     break;
 
                 default:

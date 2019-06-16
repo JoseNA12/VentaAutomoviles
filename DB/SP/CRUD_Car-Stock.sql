@@ -125,7 +125,7 @@ AS
 GO
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
-
+exec usp_reduceCarStock 1, 1
 
 IF OBJECT_ID('[dbo].usp_reduceCarStock') IS NOT NULL
 BEGIN 
@@ -139,20 +139,11 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
-	BEGIN TRAN
-
 	DECLARE @stockID int;
 	SET @stockID = (SELECT stock_id FROM Stock WHERE office_id = @office_id);
-
+	BEGIN TRAN
 	UPDATE [dbo].[Car-Stock]
 	SET    [quantity] = [quantity] - 1
 	WHERE  (car_id = @car_id) AND (stock_id = @stockID)
-	
-	-- Begin Return Select <- do not remove
-	SELECT car_stock_id, [car_id], [stock_id], [quantity]
-	FROM   [dbo].[Car-Stock]
-	WHERE  (car_id = @car_id) AND (stock_id = @stockID)
-	-- End Return Select <- do not remove
-
 	COMMIT
 GO

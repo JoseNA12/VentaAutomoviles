@@ -10,6 +10,35 @@ public class PedidoVehiculo {
     private Usuario usuario;
     private float precioTotal;
     private MetodoPago metodoPago;
+    private int idPedido;
+    private int idSucursal;
+    private int idFabrica;
+    private int idCliente;
+    private int idCarro;
+    private Marca marca;
+    private String modelo;
+    private String nombreFabrica;
+    private String nombreCliente;
+    private String fechaPedido;
+    private String fechaEntrega;
+    private String detalles;
+
+
+    public PedidoVehiculo(int idPedido, int idSucursal, int idFabrica, String nombreFabrica, int idCliente, String nombreCliente, int idCarro, Marca marca,
+                          String modelo,String fechaPedido, String fechaEntrega, String detalles) {
+        this.idPedido = idPedido;
+        this.idSucursal = idSucursal;
+        this.idFabrica = idFabrica;
+        this.idCliente = idCliente;
+        this.idCarro = idCarro;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.nombreFabrica = nombreFabrica;
+        this.nombreCliente = nombreCliente;
+        this.fechaPedido = fechaPedido;
+        this.fechaEntrega = fechaEntrega;
+        this.detalles = detalles;
+    }
 
     public PedidoVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;

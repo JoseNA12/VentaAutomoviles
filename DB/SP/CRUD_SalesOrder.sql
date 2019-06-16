@@ -4,6 +4,20 @@ GO
 /*
 Consultar ventas x sucursal x tipo de automóvil x país y/o por fechas. Ventas por tipo de pago x sucursal y por fechas.
 */
+CREATE PROC x
+AS
+BEGIN
+	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
+	FROM  [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[SalesOrder] so
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].CarSold cso on cso.car_sold_id = sod.car_sold_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[Car-Stock] cst on cst.car_stock_id = cso.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cst.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
+	--inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].BranchOffice bo on bo.branchOffice_id = so.office_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
+END
+exec usp_SalesOrderSelect 
 IF OBJECT_ID('[dbo].[usp_SalesOrderSelect]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_SalesOrderSelect] 
@@ -19,20 +33,55 @@ CREATE PROC [dbo].[usp_SalesOrderSelect]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-
+	WITH BranchOffice2 ([salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], totalPrice, discount)
+	AS(
 	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
-	FROM   [dbo].[SalesOrder] so
-	inner join SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
-	inner join CarSold cso on cso.car_sold_id = sod.car_sold_id
-	inner join [Car-Stock] cst on cst.car_stock_id = cso.car_id
+	FROM  [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[SalesOrder] so
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].CarSold cso on cso.car_sold_id = sod.car_sold_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[Car-Stock] cst on cst.car_stock_id = cso.car_id
 	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cst.car_id
 	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
-	inner join BranchOffice bo on bo.branchOffice_id = so.office_id
-	inner join PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
+	--inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].BranchOffice bo on bo.branchOffice_id = so.office_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
+	WHERE  ([office_id] = @office_id OR @office_id IS NULL) OR (c.carType_id = @carType OR @carType IS NULL) OR 
+		((so.[order_date] < @date1 AND so.[order_date] > @date2) OR (@date1 IS NULL AND @date2 IS NULL)) OR
+		(so.[paymentMethod_id] = @paymentMethod_id OR @paymentMethod_id IS NULL))
+
+	SELECT * FROM BranchOffice2;
+	/*/*(bo.country_id = @country OR @country IS NULL) OR*/ 
+	WITH BranchOffice3 ([salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], totalPrice, discount)
+	AS(
+	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
+	FROM  [DESKTOP-3N2P4FH\BOFFICE_INST_3].BranchOfficeDB.[dbo].[SalesOrder] so
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_3].BranchOfficeDB.[dbo].SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_3].BranchOfficeDB.[dbo].CarSold cso on cso.car_sold_id = sod.car_sold_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_3].BranchOfficeDB.[dbo].[Car-Stock] cst on cst.car_stock_id = cso.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cst.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
+	--inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].BranchOffice bo on bo.branchOffice_id = so.office_id
+	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_3].BranchOfficeDB.[dbo].PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
+	WHERE  ([office_id] = @office_id OR @office_id IS NULL) OR (c.carType_id = @carType OR @carType IS NULL) OR
+		/*(bo.country_id = @country OR @country IS NULL) OR */((so.[order_date] < @date1 AND so.[order_date] > @date2) OR (@date1 IS NULL AND @date2 IS NULL)) OR
+		(so.[paymentMethod_id] = @paymentMethod_id OR @paymentMethod_id IS NULL))
+	);
+
+	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
+	FROM   [BranchOfficeDB].[dbo].[SalesOrder] so
+	inner join BranchOfficeDB.dbo.SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
+	inner join BranchOfficeDB.dbo.CarSold cso on cso.car_sold_id = sod.car_sold_id
+	inner join BranchOfficeDB.dbo.[Car-Stock] cst on cst.car_stock_id = cso.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cst.car_id
+	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
+	inner join BranchOfficeDB.dbo.BranchOffice bo on bo.branchOffice_id = so.office_id
+	inner join BranchOfficeDB.dbo.PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
 	WHERE  ([office_id] = @office_id OR @office_id IS NULL) OR (c.carType_id = @carType OR @carType IS NULL) OR
 		(bo.country_id = @country OR @country IS NULL) OR ((so.[order_date] < @date1 AND so.[order_date] > @date2) OR (@date1 IS NULL AND @date2 IS NULL)) OR
 		(so.[paymentMethod_id] = @paymentMethod_id OR @paymentMethod_id IS NULL)
-
+	UNION
+	SELECT * FROM BranchOffice2
+	UNION
+	SELECT * FROM BranchOffice3*/
 GO
 
 /*

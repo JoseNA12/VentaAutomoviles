@@ -8,12 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import modelo.PedidoVehiculo;
-import modelo.TipoUsuario;
-import modelo.Usuario;
-import modelo.Vehiculo;
+import modelo.*;
 
 import java.io.IOException;
+import java.security.acl.Group;
 
 public class C_PedidosClientes {
 
@@ -41,25 +39,14 @@ public class C_PedidosClientes {
     }
 
     private void init_listView_pedidos() {
-        pedidos_ObservableList = FXCollections.observableArrayList();
-
-        // -------------------- query a la base consultando pedidos actuales
-        // crear objetos: PedidoVehiculo
-        // -> hacer set del cliente: pedidoVehiculo.setUsuario(...);
-        PedidoVehiculo pedidoVehiculo_ = new PedidoVehiculo(
-                new Vehiculo(1, null, "a", "a", "a", null, "a", "a", null, "a", "a", "a", "100000"));
-        pedidoVehiculo_.setUsuario(new Usuario(1, "b", "b", "b", "b", "b", "b", 12, TipoUsuario.CLIENTE));
-        pedidos_ObservableList.add(pedidoVehiculo_);
-        // -------------------------------------------------------------------
-
-        listView_pedidos.setItems(pedidos_ObservableList);
+        listView_pedidos.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
         listView_pedidos.setCellFactory(miLista -> new PedidoListViewCell());
     }
 
     private void handle_btn_enviar_a_produccion(ActionEvent event) {
         pedidoVehiculo = (PedidoVehiculo) listView_pedidos.getSelectionModel().getSelectedItem();
         if (pedidoVehiculo != null && dt_fecha_de_entrega.getValue() != null) {
-            // mandar a "fabricar" el pedido
+           // GroupDBConnection.getDBInstance().enviarVehiculo(pedidoVehiculo);
         }
     }
 

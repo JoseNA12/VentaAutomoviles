@@ -37,9 +37,7 @@ public class C_Catalogo {
 
     private void init_listView() {
         //TODO: CAMBIAR IDSUCURSAL POR VARIABLE
-        catalogoObservableList = FXCollections.observableArrayList();
-        catalogoObservableList = GroupDBConnection.getDBInstance().SelectAutosXSucursal(1);
-        listView_catalogo.setItems(catalogoObservableList);
+        listView_catalogo.setItems(GroupDBConnection.getDBInstance().SelectAutosXSucursal(1));
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell());
     }
 

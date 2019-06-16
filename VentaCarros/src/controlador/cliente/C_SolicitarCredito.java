@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.GroupDBConnection;
-import modelo.PedidoVehiculo;
-import modelo.PlanDePago;
-import modelo.Vehiculo;
+import modelo.*;
 
 import java.io.IOException;
 import static controlador.C_InicioSesion.usuarioActual;
@@ -31,7 +28,7 @@ public class C_SolicitarCredito {
     @FXML Label lb_nombre_vehiculo;
 
 
-    private PedidoVehiculo pedidoVehiculo = null;
+    private VehiculoComprado vehiculoComprado = null;
 
 
     public void initialize() throws Exception {
@@ -40,9 +37,9 @@ public class C_SolicitarCredito {
     }
 
     private void initComponentes() throws Exception {
-        pedidoVehiculo = (PedidoVehiculo) FXRouter.getData();
+        vehiculoComprado = (VehiculoComprado) FXRouter.getData();
 
-        lb_nombre_vehiculo.setText(pedidoVehiculo.getVehiculo().getNombre_carro());
+        lb_nombre_vehiculo.setText(vehiculoComprado.getVehiculo().getNombre_carro());
         btn_comprar.setOnAction(this::handle_btn_comprar);
         btn_atras.setOnAction(this::handle_btn_atras);
     }
@@ -51,7 +48,7 @@ public class C_SolicitarCredito {
         planesObservableList = FXCollections.observableArrayList();
         plan_seleccionadoObservableList = FXCollections.observableArrayList();
 
-        plan_seleccionadoObservableList = GroupDBConnection.getDBInstance().getCreditPlan(pedidoVehiculo);
+        plan_seleccionadoObservableList = GroupDBConnection.getDBInstance().getCreditPlan(vehiculoComprado);
         planesObservableList.addAll(plan_seleccionadoObservableList);
         // ---------------------------------------------------------------
 
@@ -70,12 +67,12 @@ public class C_SolicitarCredito {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
-        GroupDBConnection.getDBInstance().comprarPorCredito(pedidoVehiculo, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
+        GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
     }
 
     private void handle_btn_atras(ActionEvent event) {
         try {
-            FXRouter.goTo("ConsultarVehiculo_cliente", pedidoVehiculo.getVehiculo());
+            FXRouter.goTo("ConsultarVehiculo_cliente", vehiculoComprado.getVehiculo());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -21,26 +21,6 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         return DBInstance;
     }
 
-    public void prueba(){
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            ps = connection.prepareCall("SELECT customer_id FROM Customer");
-            ps.execute();
-            rs = ps.getResultSet();
-            while (rs.next()) {
-                String name = rs.getString("customer_id");
-                System.out.println(name);
-            }
-        } catch (SQLException | ClassNotFoundException e ) {
-            e.printStackTrace();
-        } finally {
-            closeJDBCResources(connection, ps, rs);
-        }
-    }
-
     public Usuario login(String user, String password){
         Connection connection = null;
         CallableStatement  ps = null;
