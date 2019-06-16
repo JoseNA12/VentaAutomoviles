@@ -89,7 +89,7 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                     break;
             }
 
-            lb_marca.setText(vehiculo.getMarca());
+            lb_marca.setText(vehiculo.getMarca().getNombre());
             lb_modelo.setText(vehiculo.getModelo());
             lb_anio.setText(vehiculo.getAnio());
             lb_num_pasajeros.setText(vehiculo.getNum_pasajeros());

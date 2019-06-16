@@ -6,11 +6,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import controlador.cliente.ExtraVehiculoListViewCell;
-import controlador.cliente.VehiculoListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -21,12 +19,9 @@ import modelo.*;
 
 import javafx.scene.image.Image;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class C_IngresarVehiculoFabrica {
@@ -38,7 +33,7 @@ public class C_IngresarVehiculoFabrica {
     @FXML JFXComboBox<Fabrica> cb_fabrica;
     @FXML JFXComboBox<Marca> cb_marca;
     @FXML JFXComboBox<TipoVehiculo> cb_tipo;
-    @FXML JFXComboBox<TipoGasolina> cb_gasolina;
+    @FXML JFXComboBox<TipoCombustible> cb_gasolina;
 
     @FXML JFXTextField tf_modelo;
     @FXML JFXTextField tf_anio;
@@ -104,7 +99,7 @@ public class C_IngresarVehiculoFabrica {
         tf_anio.setText(vehiculoSeleccionado.getAnio());
         tf_num_pasajeros.setText(vehiculoSeleccionado.getNum_pasajeros());
         tf_motor.setText(vehiculoSeleccionado.getMotor());
-        tf_asientos.setText(vehiculoSeleccionado.getAsientos());
+        tf_asientos.setText(vehiculoSeleccionado.getNum_pasajeros());
         tf_puertas.setText(vehiculoSeleccionado.getPuertas());
         tf_aceleracion.setText(vehiculoSeleccionado.getAceleracion());
         tf_vel_maxima.setText(vehiculoSeleccionado.getVel_maxima());
@@ -127,8 +122,8 @@ public class C_IngresarVehiculoFabrica {
             }
         }
 
-        ObservableList<TipoGasolina> items_g = cb_gasolina.getItems();
-        for(TipoGasolina item : items_g) {
+        ObservableList<TipoCombustible> items_g = cb_gasolina.getItems();
+        for(TipoCombustible item : items_g) {
             if (item.getTipo().equals(vehiculoSeleccionado.getMarca())) {
                 cb_gasolina.getSelectionModel().select(item);
             }
@@ -151,13 +146,6 @@ public class C_IngresarVehiculoFabrica {
     }
 
     private void init_cb_fabrica() {
-        // -------------------- query a la BD
-
-        //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
-        //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
-
-        //-----------------------------------
-
         ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
         for (int i=0;i<fabricas.size();i++){
             cb_fabrica.getItems().add(fabricas.get(i));
@@ -165,29 +153,13 @@ public class C_IngresarVehiculoFabrica {
     }
 
     private void init_cb_marca() {
-        // -------------------- query a la BD
-        // objeto: Marca
-
-        //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
-        //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
-
-        //-----------------------------------
         ArrayList<Marca> marcas = GroupDBConnection.getDBInstance().getCarBrands();
         for (int i=0;i<marcas.size();i++){
             cb_marca.getItems().add(marcas.get(i));
         }
-
-
     }
 
     private void init_cb_tipo() {
-        // -------------------- query a la BD
-        // objeto: TipoVehiculo
-
-        //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
-        //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
-
-        //-----------------------------------
         ArrayList<TipoVehiculo> tipos = GroupDBConnection.getDBInstance().getCarType();
         for (int i=0;i<tipos.size();i++){
             cb_tipo.getItems().add(tipos.get(i));
@@ -195,15 +167,7 @@ public class C_IngresarVehiculoFabrica {
     }
 
     private void init_cb_gasolina() {
-        // -------------------- query a la BD
-        // objeto: TipoGasolina
-
-        //cb_filtrar_por_sucursal.setItems(GroupDBConnection.getDBInstance().getPaymentMethods());
-        //cb_filtrar_por_sucursal.getSelectionModel().selectFirst(); //select the first element
-
-        //-----------------------------------
-
-        ArrayList<TipoGasolina> tipos = GroupDBConnection.getDBInstance().getFuelType();
+        ArrayList<TipoCombustible> tipos = GroupDBConnection.getDBInstance().getFuelType();
         for (int i=0;i<tipos.size();i++){
             cb_gasolina.getItems().add(tipos.get(i));
         }
@@ -211,7 +175,6 @@ public class C_IngresarVehiculoFabrica {
 
     private void init_listView_extras() {
         extrasVehiculoObservableList = FXCollections.observableArrayList();
-
         listView_extras.setItems(extrasVehiculoObservableList);
         listView_extras.setCellFactory(studentListView -> new ExtraVehiculoListViewCell());
     }
@@ -229,10 +192,9 @@ public class C_IngresarVehiculoFabrica {
 
         }
         else { // ingresar un nuevo vehiculo
-            vehiculoSeleccionado = new Vehiculo(cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
-                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_asientos.getText(),
-                    tf_puertas.getText(), cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(),
-                    tf_precio.getText(), tf_cantidad_vehiculos.getText());
+            vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
+                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
+                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText());
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem()) == 0){
 
             }else{

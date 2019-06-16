@@ -1,94 +1,85 @@
 package modelo;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 public class Vehiculo {
 
-    private String ID;
+    private int ID;
     private String nombre_carro;
-    private String marca;
-    private int idMarca;
-    private Marca marcaTipo;
+    private Marca marca;
     private String modelo;
     private String anio;
     private String num_pasajeros;
-    private String tipo;
-    private int idTipo;
     private TipoVehiculo tipoVehiculo;
     private String motor;
-    private String asientos;
     private String puertas;
-    private String gasolina;
-    private int idTipoGasolina;
-    private TipoGasolina tipoGasolina;
+    private TipoCombustible tipoCombustible;
     private String aceleracion;
     private String vel_maxima;
     private String precio;
     private String cantidad_en_fabrica;
-    // falta la foto
+    private int idFabrica;
+    private String fechaProduccion;
+    //TODO falta la foto
 
-
-    public Vehiculo(Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String asientos, String puertas, TipoGasolina tipoGasolina, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica) {
-        this.marcaTipo = marca;
+    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas, TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica, int idFabrica, String fechaProduccion) {
+        this.ID = ID;
+        this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.num_pasajeros = num_pasajeros;
         this.tipoVehiculo = tipoVehiculo;
         this.motor = motor;
-        this.asientos = asientos;
         this.puertas = puertas;
-        this.tipoGasolina = tipoGasolina;
+        this.tipoCombustible = tipoCombustible;
         this.aceleracion = aceleracion;
         this.vel_maxima = vel_maxima;
         this.precio = precio;
         this.cantidad_en_fabrica = cantidad_en_fabrica;
+        this.idFabrica = idFabrica;
+        this.fechaProduccion = fechaProduccion;
     }
 
-    public Vehiculo(String ID, String marca, String modelo, String anio, String num_pasajeros,
-                    String tipo, String motor, String asientos, String puertas, String gasolina,
+    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
+                    TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
                     String aceleracion, String vel_maxima, String precio) {
         this.ID = ID;
-        this.nombre_carro = marca + " " + modelo;
+        this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.num_pasajeros = num_pasajeros;
-        this.tipo = tipo;
+        this.tipoVehiculo = tipo;
         this.motor = motor;
-        this.asientos = asientos;
         this.puertas = puertas;
-        this.gasolina = gasolina;
+        this.tipoCombustible = combustible;
         this.aceleracion = aceleracion;
         this.vel_maxima = vel_maxima;
         this.precio = precio;
     }
 
-    public Vehiculo(String ID, String marca, String modelo, String anio, String num_pasajeros,
-                    String tipo, String motor, String asientos, String puertas, String gasolina,
+    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
+                    TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
                     String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica) {
         this.ID = ID;
-        this.nombre_carro = marca + " " + modelo;
+        this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.num_pasajeros = num_pasajeros;
-        this.tipo = tipo;
+        this.tipoVehiculo = tipo;
         this.motor = motor;
-        this.asientos = asientos;
         this.puertas = puertas;
-        this.gasolina = gasolina;
+        this.tipoCombustible = combustible;
         this.aceleracion = aceleracion;
         this.vel_maxima = vel_maxima;
         this.precio = precio;
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -100,11 +91,11 @@ public class Vehiculo {
         this.nombre_carro = nombre_carro;
     }
 
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
@@ -132,12 +123,12 @@ public class Vehiculo {
         this.num_pasajeros = num_pasajeros;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoVehiculo getTipoVehiculo() {
+        return tipoVehiculo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public String getMotor() {
@@ -148,14 +139,6 @@ public class Vehiculo {
         this.motor = motor;
     }
 
-    public String getAsientos() {
-        return asientos;
-    }
-
-    public void setAsientos(String asientos) {
-        this.asientos = asientos;
-    }
-
     public String getPuertas() {
         return puertas;
     }
@@ -164,12 +147,12 @@ public class Vehiculo {
         this.puertas = puertas;
     }
 
-    public String getGasolina() {
-        return gasolina;
+    public TipoCombustible getTipoCombustible() {
+        return tipoCombustible;
     }
 
-    public void setGasolina(String gasolina) {
-        this.gasolina = gasolina;
+    public void setTipoCombustible(TipoCombustible tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
     }
 
     public String getAceleracion() {
@@ -204,27 +187,19 @@ public class Vehiculo {
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
-    public Marca getMarcaTipo() {
-        return marcaTipo;
+    public int getIdFabrica() {
+        return idFabrica;
     }
 
-    public void setMarcaTipo(Marca marcaTipo) {
-        this.marcaTipo = marcaTipo;
+    public void setIdFabrica(int idFabrica) {
+        this.idFabrica = idFabrica;
     }
 
-    public TipoVehiculo getTipoVehiculo() {
-        return tipoVehiculo;
+    public String getFechaProduccion() {
+        return fechaProduccion;
     }
 
-    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
-
-    public TipoGasolina getTipoGasolina() {
-        return tipoGasolina;
-    }
-
-    public void setTipoGasolina(TipoGasolina tipoGasolina) {
-        this.tipoGasolina = tipoGasolina;
+    public void setFechaProduccion(String fechaProduccion) {
+        this.fechaProduccion = fechaProduccion;
     }
 }

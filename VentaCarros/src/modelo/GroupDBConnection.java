@@ -25,18 +25,6 @@ public class GroupDBConnection {
         return DBInstance;
     }
 
-    public void prueba1(){
-        FactoryDBInstance.prueba();
-    }
-
-    public void prueba2(){
-        HSDBInstance.prueba();
-    }
-
-    public void prueba3(){
-        BOfficeDBInstance.prueba();
-    }
-
     public Usuario loginDB(String user, String password){ return HSDBInstance.login(user, password);}
 
     public boolean signIn(String name, String lastname, LocalDate birthDate, String idCard, String phone, String zip_code, String email, String password){ return HSDBInstance.signIn(name, lastname,birthDate.format(DateTimeFormatter.ISO_DATE), idCard, phone, Integer.parseInt(zip_code), email, password);}
@@ -53,7 +41,7 @@ public class GroupDBConnection {
 
     public ArrayList<TipoVehiculo> getCarType() {return FactoryDBInstance.getCarType();}
 
-    public ArrayList<TipoGasolina> getFuelType() {return FactoryDBInstance.getFuelType();}
+    public ArrayList<TipoCombustible> getFuelType() {return FactoryDBInstance.getFuelType();}
 
     public ArrayList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
 
@@ -70,7 +58,6 @@ public class GroupDBConnection {
         BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
     }
 
-
     public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}
 
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){return BOfficeDBInstance.SelectAbonoXUsuario(usuario);}
@@ -81,7 +68,9 @@ public class GroupDBConnection {
 
     public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
 
-    public int crearNuevoVehiculo(Vehiculo vehiculo, Fabrica fabrica){return FactoryDBInstance.insertVehiculo(vehiculo, fabrica.getID());}
+    public int crearNuevoVehiculo(Vehiculo vehiculo, Fabrica fabrica){
+        return FactoryDBInstance.insertVehiculo(vehiculo, fabrica.getID());
+    }
 
     public ObservableList<PlanDePago> getPlanesDePago() {return BOfficeDBInstance.getPlanesDePagos();}
 
@@ -91,5 +80,10 @@ public class GroupDBConnection {
 
     public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}
 
+    public void enviarCarroASucursal(Vehiculo vehiculo, Sucursal sucursal, int cantidadVehiculos){
+        FactoryDBInstance.generarOrdenEnvio(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos, vehiculo.getIdFabrica());
+        BOfficeDBInstance.agregarCarroEnSucursal(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos);
+    }
 
+    public ObservableList<Vehiculo> getCarrosDeFabrica(){ return FactoryDB_Connection.getFactoryDBInstance().getCarrosDeFabricas();}
 }

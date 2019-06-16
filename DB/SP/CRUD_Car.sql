@@ -19,13 +19,17 @@ AS
 	WHERE  (c.[car_id] = @car_id OR @car_id IS NULL) 
 
 GO
-DBCC CheckDB ('FactoryDB') WITH NO_INFOMSGS, ALL_ERRORMSGS  
+/*
+	INSERT INTO [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car 
+	([car_id], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo], [production_date])
+	SELECT 3543, 1, 1, 1, 1, 1, null, null
 
 EXEC ('EXECUTE FactoryDB.dbo.[usp_CarInsert] 
 		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
-		200, 1, 1, 1, 1, 1, NULL, '2019-08-16') AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
+		200, 1, 1, 1, 1, 1, NULL, '2019-08-16') AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]*/
 
 EXEC [dbo].[usp_CarInsert] 1,1,'asd','ads',200,1,1,1,1,1,1,NULL,1,1
+
 IF OBJECT_ID('[dbo].[usp_CarInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarInsert] 
@@ -60,12 +64,16 @@ AS
 
 	DECLARE @currentDate date
 	SET @currentDate = (SELECT GETDATE());		
-														
-	EXEC ('EXECUTE FactoryDB.dbo.[usp_CarInsert] 
-		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
-		@lastCar_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @currentDate) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
+			
+	INSERT INTO [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car 
+	([car_id], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo], [production_date])
+	SELECT @lastCar_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo,  @currentDate
 
-	EXEC [dbo].[usp_Factory-CarInsert] @car_id = @lastCar_id, @factory_id = @factoryID, @quantity = @quantity
+	/*EXEC ('EXECUTE FactoryDB.dbo.[usp_CarInsert] 
+		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
+		@lastCar_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @currentDate) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]*/
+
+--	EXEC [dbo].[usp_Factory-CarInsert] @car_id = @lastCar_id, @factory_id = @factoryID, @quantity = @quantity
 
     SELECT c.[car_id], c.[carBrand_id], c.[carType_id], c.[model], c.[engine], c.[year], c.[seats], 
 	c2.[doors], c2.[fuelType_id], c2.[acceleration], c2.[maximum_speed], c2.[price], c2.[photo], c2.production_date

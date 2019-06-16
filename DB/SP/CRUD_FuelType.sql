@@ -13,7 +13,7 @@ AS
 	SET XACT_ABORT ON  
 
 	SELECT ft.[fuelType_id], ft.[name]
-	FROM   [LEOROMÁN\FACTORY_2].FactoryDB.dbo.FuelType ft 
+	FROM   [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.FuelType ft 
 	WHERE  (ft.fuelType_id = @fuelType_id OR @fuelType_id IS NULL) 
 
 GO

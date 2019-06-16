@@ -47,7 +47,7 @@ public class C_PedidosClientes {
         // crear objetos: PedidoVehiculo
         // -> hacer set del cliente: pedidoVehiculo.setUsuario(...);
         PedidoVehiculo pedidoVehiculo_ = new PedidoVehiculo(
-                new Vehiculo("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "100000"));
+                new Vehiculo(1, null, "a", "a", "a", null, "a", "a", null, "a", "a", "a", "100000"));
         pedidoVehiculo_.setUsuario(new Usuario(1, "b", "b", "b", "b", "b", "b", 12, TipoUsuario.CLIENTE));
         pedidos_ObservableList.add(pedidoVehiculo_);
         // -------------------------------------------------------------------

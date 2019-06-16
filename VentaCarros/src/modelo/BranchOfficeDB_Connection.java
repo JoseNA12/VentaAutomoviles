@@ -161,22 +161,23 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
             while (rs.next()) {
-                String id = rs.getString("car_id");
-                String marca = rs.getString("brand");
-                String nombre = rs.getString("name");
+                int id = rs.getInt("car_id");
+                int idMarca = rs.getInt("carBrand_id");
+                String nombreMarca = rs.getString("brand");
+                int idTipo = rs.getInt("carType_id");
+                String nombreTipo = rs.getString("typeName");
                 String modelo = rs.getString("model");
                 String annio = rs.getString("year");
                 String num_pasajeros = rs.getString("seats");
-                String tipo = rs.getString("name");
                 String motor = rs.getString("engine");
-                String asientos = rs.getString("seats");
                 String puertas = rs.getString("doors");
-                String gasolina = rs.getString("fuel");
+                int idFuel = rs.getInt("fuelType_id");
+                String nombreCombustible = rs.getString("fuel");
                 String aceleracion = rs.getString("acceleration");
                 String vel_maxima = rs.getString("maximum_speed");
                 String precio = rs.getString("price");
-                Vehiculo CarroAux = new Vehiculo(id, marca, modelo, annio, num_pasajeros, tipo, motor,
-                        asientos, puertas, gasolina, aceleracion, vel_maxima, precio);
+                Vehiculo CarroAux = new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros,
+                        new TipoVehiculo(idTipo, nombreTipo), motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio);
                 ReturnList.add(CarroAux);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -298,7 +299,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?)}");
-            ps.setInt(1, Integer.parseInt(pedidoVehiculo.getVehiculo().getID()));
+            ps.setInt(1, pedidoVehiculo.getVehiculo().getID());
             ps.executeQuery();
             rs = ps.getResultSet();
             while (rs.next()) {
@@ -468,6 +469,25 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             e.printStackTrace();
         } finally {
             closeJDBCResources(connection, ps, rs);
+        }
+    }
+
+    public void agregarCarroEnSucursal(int idVehiculo, int idSucursal, int cantidadVehiculos){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockInsert](?,?,?)}");
+            callableStatement.setInt(1, idVehiculo);
+            callableStatement.setInt(2, idSucursal);
+            callableStatement.setInt(3, cantidadVehiculos);
+            callableStatement.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
         }
     }
 }
