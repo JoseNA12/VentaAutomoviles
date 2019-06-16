@@ -10,9 +10,6 @@ import java.util.ArrayList;
 public class FactoryDB_Connection extends DB_Connection{
 
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    // Path Josué
-    //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORYINSTANCE:51024;database=FactoryDB;user=sa;password=123";
-    // Path Jose
     private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORYINSTANCE:51024;database=FactoryDB;user=sa;password=123";
     // Path Leo
     //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\FACTORY_1:51024;database=FactoryDB;user=sa;password=123";
