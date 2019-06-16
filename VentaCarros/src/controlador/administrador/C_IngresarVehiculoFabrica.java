@@ -66,6 +66,8 @@ public class C_IngresarVehiculoFabrica {
     private File file_imagen = null;
     private FileInputStream fis;
 
+    private String path_imagen_default = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\default.jpg" ;
+
 
     public void initialize() throws Exception {
         initComponentes();
@@ -109,6 +111,16 @@ public class C_IngresarVehiculoFabrica {
         tf_vel_maxima.setText(vehiculoSeleccionado.getVel_maxima());
         tf_precio.setText(vehiculoSeleccionado.getPrecio());
         tf_cantidad_vehiculos.setText(vehiculoSeleccionado.getCantidad_en_fabrica());
+
+        try {
+            String path = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\" + vehiculoSeleccionado.getNombre_carro() + ".jpg";
+            File file = new File(path);
+            Image image = new Image(file.toURI().toString());
+            iv_imagen_vehiculo.setImage(image);
+        } catch (Exception e) {}
+
+        //iv_imagen_vehiculo.setVisible(false);
+        btn_subir_imagen.setVisible(false);
 
         // obtener el valor del vehiculo, y buscar dentro de los valores del comboBox el item respectivo
         // para hacer el set del objeto
@@ -203,7 +215,12 @@ public class C_IngresarVehiculoFabrica {
                     e.printStackTrace();
                 }
             } else {
-
+                File file = new File(path_imagen_default);
+                try {
+                    vehiculoSeleccionado.setFis(new FileInputStream(file), (int) file.length());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
