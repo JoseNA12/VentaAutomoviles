@@ -86,4 +86,8 @@ public class GroupDBConnection {
     }
 
     public ObservableList<Vehiculo> getCarrosDeFabrica(){ return FactoryDB_Connection.getFactoryDBInstance().getCarrosDeFabricas();}
+
+    public void DeleteEmpleado(Empleado empleado){HSDBInstance.DeleteEmpleado(empleado);}
+
+    public void UpdateEmpleado(Empleado empleado){HSDBInstance.UpdateEmpleado(empleado);}
 }

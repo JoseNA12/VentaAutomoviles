@@ -43,9 +43,6 @@ public class C_GestionarEmpleados {
         empleadosObservableList = FXCollections.observableArrayList();
 
         empleadosObservableList = GroupDBConnection.getDBInstance().SelectEmpleados();
-        /*Empleado emp1 = new Empleado(1,"Jon","Calvo","Mañana","305060175","87139703",
-                "jon@correo.com",30105,FACTURADOR,"2","Facturador",1);
-        empleadosObservableList.add(emp1);*/
         ListView_Empleados.setItems(empleadosObservableList);
         ListView_Empleados.setCellFactory(empleadosListView -> new EmpleadoListViewCell());
     }
@@ -67,17 +64,24 @@ public class C_GestionarEmpleados {
         }
     }
     private void handle_btn_DeleteEmpleado(ActionEvent event){
-        /*try{
-            FXRouter.goTo("Menu_administrador");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(!ListView_Empleados.getSelectionModel().isEmpty()){
+            Empleado empSeleccionado = ListView_Empleados.getSelectionModel().getSelectedItem();
+            GroupDBConnection.getDBInstance().DeleteEmpleado(empSeleccionado);
+            init_ListView_Empleados();
+        }else{
+            System.out.println("nada seleccionado");
+        }
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
-        try{
-            FXRouter.goTo("Empleados_Actualizar");
-        }catch (IOException e) {
-            e.printStackTrace();
+        if(!ListView_Empleados.getSelectionModel().isEmpty()) {
+            try {
+                FXRouter.goTo("Empleados_Actualizar",ListView_Empleados.getSelectionModel().getSelectedItem());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            //MENSAJE DE QUE SELECCIONE EMPLEADO
         }
     }
     private void handle_btn_Atras(ActionEvent event) {
