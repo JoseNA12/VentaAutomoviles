@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXRouter.bind(this, primaryStage, "Jx3-L Autos", 1280, 700);

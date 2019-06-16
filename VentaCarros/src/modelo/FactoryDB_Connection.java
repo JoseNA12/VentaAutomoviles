@@ -3,7 +3,8 @@ package modelo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -191,7 +192,9 @@ public class FactoryDB_Connection extends DB_Connection{
                 callableStatement.setBinaryStream(12, (InputStream) vehiculo.getImagen(), vehiculo.getFile_length());
             }
             else  {
-                callableStatement.setNull(12, Types.NULL);
+                InputStream fis = Main.class.getResourceAsStream("../vista/images/car_2.png");
+                callableStatement.setBinaryStream(12, fis);
+                //callableStatement.setNull(12, Types.NULL);
             }
 
             callableStatement.setInt(13, idFabrica);
@@ -214,6 +217,7 @@ public class FactoryDB_Connection extends DB_Connection{
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement ps = null;
+        byte[] fileBytes;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call [dbo].[usp_Factory-CarSelect]}");
@@ -238,9 +242,19 @@ public class FactoryDB_Connection extends DB_Connection{
                 String precio = rs.getString("price");
                 String asientos = rs.getString("seats");
                 String fechaProduccion = rs.getString("production_date");
-                //int id = rs.getInt("photo");
-                ReturnList.add(new Vehiculo(idCarro, new Marca(idMarca, nombreMarca), modelo, anio, asientos, new TipoVehiculo(idTipo, nombreTipo),
-                        motor, puertas, new TipoCombustible(idCombustible, nombreCombustible), aceleracion, velMaxima, precio, cantidad, idFabrica, fechaProduccion));
+
+                /*fileBytes = rs.getBytes("photo");
+                OutputStream targetFile = new FileOutputStream(
+                                "C://Users//jose_//Desktop//VentaAutomoviles//VentaCarros//new.JPG");
+                targetFile.write(fileBytes);
+                targetFile.close();*/
+
+                Vehiculo miVehiculo = new Vehiculo(idCarro, new Marca(idMarca, nombreMarca), modelo, anio, asientos, new TipoVehiculo(idTipo, nombreTipo),
+                        motor, puertas, new TipoCombustible(idCombustible, nombreCombustible), aceleracion, velMaxima, precio, cantidad, idFabrica, fechaProduccion);
+
+                miVehiculo.setBytes_imagen(rs.getBytes("photo"));
+
+                ReturnList.add(miVehiculo);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

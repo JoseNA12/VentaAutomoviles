@@ -20,8 +20,11 @@ public class Vehiculo {
     private String cantidad_en_fabrica;
     private int idFabrica;
     private String fechaProduccion;
+
     private FileInputStream imagen;
     private int file_length; // para la imagen
+    private byte[] bytes_imagen;
+
 
     public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas, TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica, int idFabrica, String fechaProduccion) {
         this.ID = ID;
@@ -221,5 +224,13 @@ public class Vehiculo {
 
     public int getFile_length() {
         return file_length;
+    }
+
+    public byte[] getBytes_imagen() {
+        return bytes_imagen;
+    }
+
+    public void setBytes_imagen(byte[] bytes_imagen) {
+        this.bytes_imagen = bytes_imagen;
     }
 }
