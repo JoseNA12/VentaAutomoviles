@@ -146,31 +146,19 @@ public class C_IngresarVehiculoFabrica {
     }
 
     private void init_cb_fabrica() {
-        ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
-        for (int i=0;i<fabricas.size();i++){
-            cb_fabrica.getItems().add(fabricas.get(i));
-        }
+        cb_fabrica.setItems(GroupDBConnection.getDBInstance().getFactory());
     }
 
     private void init_cb_marca() {
-        ArrayList<Marca> marcas = GroupDBConnection.getDBInstance().getCarBrands();
-        for (int i=0;i<marcas.size();i++){
-            cb_marca.getItems().add(marcas.get(i));
-        }
+        cb_marca.setItems(GroupDBConnection.getDBInstance().getCarBrands());
     }
 
     private void init_cb_tipo() {
-        ArrayList<TipoVehiculo> tipos = GroupDBConnection.getDBInstance().getCarType();
-        for (int i=0;i<tipos.size();i++){
-            cb_tipo.getItems().add(tipos.get(i));
-        }
+        cb_tipo.setItems(GroupDBConnection.getDBInstance().getCarType());
     }
 
     private void init_cb_gasolina() {
-        ArrayList<TipoCombustible> tipos = GroupDBConnection.getDBInstance().getFuelType();
-        for (int i=0;i<tipos.size();i++){
-            cb_gasolina.getItems().add(tipos.get(i));
-        }
+        cb_gasolina.setItems(GroupDBConnection.getDBInstance().getFuelType());
     }
 
     private void init_listView_extras() {
@@ -191,12 +179,12 @@ public class C_IngresarVehiculoFabrica {
         if (vehiculoSeleccionado != null) { // pantalla de modificar, actualizar los datos
 
         }
-        else { // ingresar un nuevo vehiculo
+        else { // ingresar un nuevo vehiculo tf_cantidad_vehiculos
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText());
+                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem()) == 0){
-
+                System.out.print("Error jaja\n");
             }else{
 
             }

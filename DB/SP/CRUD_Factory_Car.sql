@@ -45,11 +45,11 @@ AS
 	INSERT INTO [dbo].[Factory-Car] ([car_id], [factory_id], [quantity])
 	SELECT @car_id, @factory_id, @quantity
 	
-	-- Begin Return Select <- do not remove
+/*	-- Begin Return Select <- do not remove
 	SELECT [factory_car_id], [car_id], [factory_id], [quantity]
 	FROM   [dbo].[Factory-Car]
 	WHERE  [factory_car_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
+	-- End Return Select <- do not remove*/
                
 	COMMIT
 GO
@@ -120,11 +120,11 @@ AS
 	INSERT INTO [dbo].[Factory-Car] ([car_id], [factory_id], [quantity])
 	SELECT @car_id, @factory_id, @quantity
 	
-	-- Begin Return Select <- do not remove
+	/*-- Begin Return Select <- do not remove
 	SELECT [factory_car_id], [car_id], [factory_id], [quantity]
 	FROM   [dbo].[Factory-Car]
 	WHERE  [factory_car_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
+	-- End Return Select <- do not remove*/
                
 	COMMIT
 GO

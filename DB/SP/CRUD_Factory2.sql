@@ -39,16 +39,8 @@ AS
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-	
 	INSERT INTO [dbo].[Car] ([car_id], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo], [production_date])
-	SELECT @car_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @production_date
-	
-	-- Begin Return Select <- do not remove
-	SELECT [car_id], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo], [production_date]
-	FROM   [dbo].[Car]
-	WHERE  [car_id] = @car_id
-	-- End Return Select <- do not remove
-               
+	SELECT @car_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @production_date  
 	COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_CarUpdate]') IS NOT NULL

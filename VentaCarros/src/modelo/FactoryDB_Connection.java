@@ -72,8 +72,8 @@ public class FactoryDB_Connection extends DB_Connection{
         return ReturnList;
     }
 
-    public ArrayList<Marca> getCarBrands(){
-        ArrayList<Marca> marcas = new ArrayList<>();
+    public ObservableList<Marca> getCarBrands(){
+        ObservableList<Marca> marcas = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -97,8 +97,8 @@ public class FactoryDB_Connection extends DB_Connection{
         return marcas;
     }
 
-    public ArrayList<TipoVehiculo> getCarType(){
-        ArrayList<TipoVehiculo> tipos = new ArrayList<>();
+    public ObservableList<TipoVehiculo> getCarType(){
+        ObservableList<TipoVehiculo> tipos = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -121,8 +121,8 @@ public class FactoryDB_Connection extends DB_Connection{
         return tipos;
     }
 
-    public ArrayList<TipoCombustible> getFuelType(){
-        ArrayList<TipoCombustible> tipos = new ArrayList<>();
+    public ObservableList<TipoCombustible> getFuelType(){
+        ObservableList<TipoCombustible> tipos = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -145,8 +145,8 @@ public class FactoryDB_Connection extends DB_Connection{
         return tipos;
     }
 
-    public ArrayList<Fabrica> getFactory(){
-        ArrayList<Fabrica> fabricas = new ArrayList<>();
+    public ObservableList<Fabrica> getFactory(){
+        ObservableList<Fabrica> fabricas = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -48,11 +48,7 @@ public class C_VehiculosFabricas {
     }
 
     private void init_cb_filtrar_por_fabrica() {
-        ArrayList<Fabrica> fabricas = GroupDBConnection.getDBInstance().getFactory();
-        for (int i=0;i<fabricas.size();i++){
-            cb_filtrar_por_fabrica.getItems().add(fabricas.get(i));
-        }
-
+        cb_filtrar_por_fabrica.setItems(GroupDBConnection.getDBInstance().getFactory());
         // listener del combo box, cuando se selecciona un elemento hacer un trigger con una accion
         cb_filtrar_por_fabrica.setOnAction(this::handle_cb_filtrar_por_fabrica);
     }

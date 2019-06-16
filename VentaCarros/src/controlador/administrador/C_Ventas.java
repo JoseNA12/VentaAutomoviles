@@ -80,11 +80,7 @@ public class C_Ventas {
     }
 
     private void init_cb_tipo_vehiculo() {
-        ArrayList<TipoVehiculo> tipos = GroupDBConnection.getDBInstance().getCarType();
-        for (int i=0;i<tipos.size();i++){
-            cb_tipo_vehiculo.getItems().add(tipos.get(i));
-        }
-
+        cb_tipo_vehiculo.setItems(GroupDBConnection.getDBInstance().getCarType());
         cb_tipo_vehiculo.getSelectionModel().selectFirst();
     }
 
