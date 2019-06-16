@@ -73,9 +73,7 @@ public class C_ActualizarEmpleado {
 
     private void initcbx_sucursales() {
         sucursalObservableList = FXCollections.observableArrayList();
-        sucursalObservableList.addAll(new Sucursal(1,"Autos Jx3-L Cieneguita", "Costa Rica",1,"08:00","17:00"),
-                new Sucursal(2,"Autos Jx3-L Río de Janeiro", "Brasil",3,"08:00","18:00"),
-                new Sucursal(3,"Autos Jx3-L Detroit", "Estados Unidos",2,"07:30","16:00"));
+        sucursalObservableList = GroupDBConnection.getDBInstance().getSucursales();
         cbx_sucursal.setItems(sucursalObservableList);
         for(Sucursal sucursal : sucursalObservableList){
             if(sucursal.getIdSucursal()==empleado.getIdSucursal()){

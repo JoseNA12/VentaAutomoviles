@@ -1,6 +1,8 @@
 package controlador.administrador;
 
 import com.github.fxrouter.FXRouter;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,14 +34,17 @@ public class C_GestionarEmpleados {
     public void initialize(){
         initComponentes();
         init_ListView_Empleados();
+        cbx_Sucursal.valueProperty().addListener(new ChangeListener<Sucursal>(){
+            @Override
+            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
+                filtrarEmpleadosXSucursal();
+            }
+        });
     }
 
     private void init_cbx_Sucursal() {
-        //sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
         sucursalesObservablelist = FXCollections.observableArrayList();
-        sucursalesObservablelist.addAll(new Sucursal(1,"Autos Jx3-L Cieneguita", "Costa Rica",1,"08:00","17:00"),
-                new Sucursal(2,"Autos Jx3-L Río de Janeiro", "Brasil",3,"08:00","18:00"),
-                new Sucursal(3,"Autos Jx3-L Detroit", "Estados Unidos",2,"07:30","16:00"));
+        sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
         cbx_Sucursal.setItems(sucursalesObservablelist);
     }
 
@@ -94,6 +99,18 @@ public class C_GestionarEmpleados {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void filtrarEmpleadosXSucursal(){
+        ObservableList<Empleado> EmpleadosXSucursal = FXCollections.observableArrayList();
+        int idSucursalSeleccionada = cbx_Sucursal.getSelectionModel().getSelectedItem().getIdSucursal();
+        for(Empleado emp : empleadosObservableList){
+            if(emp.getIdSucursal() == idSucursalSeleccionada){
+                EmpleadosXSucursal.add(emp);
+            }
+        }
+        ListView_Empleados.setItems(EmpleadosXSucursal);
+        ListView_Empleados.setCellFactory(empleadosListView -> new EmpleadoListViewCell());
     }
 
 
