@@ -47,9 +47,13 @@ public class C_NuevoCredito {
         else { // crear plan de credito
             if (!tf_porcentaje_prima.getText().trim().equals("") && !tf_interes.getText().trim().equals("") &&
                     !tf_plazo.getText().trim().equals("")) {
-                // --------------------------------------------------
-                // query
-                // --------------------------------------------------
+                PlanDePago nuevoPlan = new PlanDePago(Float.parseFloat(tf_porcentaje_prima.getText()),Float.parseFloat(tf_interes.getText()),Float.parseFloat(tf_plazo.getText()));
+                GroupDBConnection.getDBInstance().InsertNuevoPlan(nuevoPlan);
+                try {
+                    FXRouter.goTo("PlanesCredito_administrador");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
