@@ -115,21 +115,21 @@ public class C_IngresarVehiculoFabrica {
         // para hacer el set del objeto
         ObservableList<Marca> items_m = cb_marca.getItems();
         for(Marca item : items_m) {
-            if (item.getNombre().equals(vehiculoSeleccionado.getMarca())) {
+            if (item.getNombre().equals(vehiculoSeleccionado.getMarca().getNombre())) {
                 cb_marca.getSelectionModel().select(item);
             }
         }
 
         ObservableList<TipoVehiculo> items_t = cb_tipo.getItems();
         for(TipoVehiculo item : items_t) {
-            if (item.getTipo().equals(vehiculoSeleccionado.getMarca())) {
+            if (item.getTipo().equals(vehiculoSeleccionado.getTipoVehiculo().getTipo())) {
                 cb_tipo.getSelectionModel().select(item);
             }
         }
 
         ObservableList<TipoCombustible> items_g = cb_gasolina.getItems();
         for(TipoCombustible item : items_g) {
-            if (item.getTipo().equals(vehiculoSeleccionado.getMarca())) {
+            if (item.getTipo().equals(vehiculoSeleccionado.getTipoCombustible().getTipo())) {
                 cb_gasolina.getSelectionModel().select(item);
             }
         }
@@ -182,9 +182,14 @@ public class C_IngresarVehiculoFabrica {
 
     private void handle_btn_registrar(ActionEvent event) {
         if (vehiculoSeleccionado != null) { // pantalla de modificar, actualizar los datos
+            int idVehiculo = vehiculoSeleccionado.getID();
+            vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
+                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
+                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
 
+            GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado);
         }
-        else { // ingresar un nuevo vehiculo tf_cantidad_vehiculos
+        else { // ingresar un nuevo vehiculo
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
