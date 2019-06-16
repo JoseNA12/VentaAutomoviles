@@ -18,7 +18,7 @@
    <children>
       <AnchorPane layoutX="92.0" layoutY="60.0" prefHeight="44.0" prefWidth="1097.0" style="-fx-background-color: #c6d8d3;">
          <children>
-            <Label fx:id="lb_titulo_ventana" layoutX="61.0" layoutY="4.0" text="Planes crediticios">
+            <Label layoutX="61.0" layoutY="4.0" text="Registrar nuevo empleado">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
@@ -56,13 +56,13 @@
             <JFXComboBox fx:id="cbx_sucursal" focusColor="#d81e5b" labelFloat="true" prefHeight="37.0" prefWidth="285.0" promptText="Sucursal" style="-fx-font: 16px system;" />
             <JFXTextField fx:id="txt_nombre" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Nombre" style="-fx-font: 16px system;" GridPane.rowIndex="1" />
             <JFXTextField fx:id="txt_apellidos" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Apellidos" style="-fx-font: 16px system;" GridPane.rowIndex="2" />
-            <JFXTextField fx:id="txt_telefono" focusColor="#d81e5b" prefHeight="26.0" prefWidth="180.0" promptText="Teléfono" style="-fx-font: 16px system;" GridPane.rowIndex="3" />
-            <JFXTextField fx:id="txt_correo" focusColor="#d81e5b" prefHeight="26.0" prefWidth="180.0" promptText="Correo" style="-fx-font: 16px system;" GridPane.rowIndex="4" />
-            <JFXDatePicker fx:id="date_fechaIngreso" defaultColor="#d81e5b" overLay="true" prefWidth="270.0" promptText="Fecha de ingreso" style="-fx-font: 16px system;" GridPane.columnIndex="2" />
+            <JFXTextField fx:id="txt_telefono" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Teléfono" style="-fx-font: 16px system;" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="txt_correo" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Correo" style="-fx-font: 16px system;" GridPane.rowIndex="4" />
             <JFXComboBox fx:id="cbx_position" focusColor="#d81e5b" labelFloat="true" prefHeight="37.0" prefWidth="270.0" promptText="Posición" style="-fx-font: 16px system;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <JFXComboBox fx:id="cbx_tipoUsuario" focusColor="#d81e5b" labelFloat="true" prefHeight="37.0" prefWidth="275.0" promptText="Tipo de usuario" style="-fx-font: 16px system;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <JFXTextField fx:id="txt_cedula" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Cédula" style="-fx-font: 16px system;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <JFXPasswordField fx:id="txt_contrania" focusColor="#d81e5b" labelFloat="true" prefHeight="26.0" prefWidth="180.0" promptText="Contraseña" style="-fx-font: 16px system;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <JFXDatePicker fx:id="date_fechaIngreso" defaultColor="#d81e5b" prefHeight="37.0" prefWidth="273.0" style="-fx-font: 16px sysem;" GridPane.columnIndex="2" />
          </children>
       </GridPane>
       <!--<Button fx:id="btn_atras" layoutX="680.0" layoutY="376.0" mnemonicParsing="false" text="Atrás" />-->
