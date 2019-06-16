@@ -86,7 +86,6 @@ public class C_IngresarVehiculoFabrica {
         btn_aniadir_extra.setOnAction(this::handle_btn_aniadir_extra);
         btn_remover_extra.setOnAction(this::handle_btn_remover_extra);
         btn_atras.setOnAction(this::handle_btn_atras);
-
     }
 
     /**
@@ -181,17 +180,17 @@ public class C_IngresarVehiculoFabrica {
             vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
-
             GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado);
+            limpiarCampos();
         }
         else { // ingresar un nuevo vehiculo
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
-            if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem()) == 0){
+            if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
                 System.out.print("Error jaja\n");
             }else{
-
+                limpiarCampos();
             }
         }
 
@@ -220,5 +219,24 @@ public class C_IngresarVehiculoFabrica {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void limpiarCampos(){
+        cb_marca.getSelectionModel().selectFirst();
+        cb_gasolina.getSelectionModel().selectFirst();
+        cb_tipo.getSelectionModel().selectFirst();
+        tf_modelo.setText("");
+        tf_anio.setText("");
+        tf_num_pasajeros.setText("");
+        tf_motor.setText("");
+        tf_puertas.setText("");
+        tf_aceleracion.setText("");
+        tf_vel_maxima.setText("");
+        tf_precio.setText("");
+        tf_cantidad_vehiculos.setText("");
+        tf_nombre_extra.setText("");
+        tf_precio_extra.setText("");
+        extrasVehiculoObservableList.clear();
+        listView_extras.setItems(extrasVehiculoObservableList);
     }
 }

@@ -304,5 +304,46 @@ public class FactoryDB_Connection extends DB_Connection{
         return result;
     }
 
+    public int agregarExtra(ExtraVehiculo extraVehiculo, int idVehiculo){
+        int result = 0;
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_AccessoryInsert](?)}");
+            callableStatement.setNString(1, extraVehiculo.getNombre());
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                result = rs.getInt("accessory_id");
+                asociarExtraAVehiculo(result, Integer.parseInt(extraVehiculo.getPrecio()), idVehiculo);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+            return result;
+        }
+    }
+
+    public void asociarExtraAVehiculo(int extraID, int extraPrecio, int idVehiculo){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CarXAccessoryInsert](?,?,?)}");
+            callableStatement.setInt(1, idVehiculo);
+            callableStatement.setInt(2, extraID);
+            callableStatement.setInt(3, extraPrecio);
+            callableStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
+
 
 }

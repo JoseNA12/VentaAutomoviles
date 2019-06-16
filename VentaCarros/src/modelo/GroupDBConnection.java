@@ -68,8 +68,13 @@ public class GroupDBConnection {
 
     public void InsertAbono(int credit_id, float payment, int paymentMethod_id){BOfficeDBInstance.InsertAbono(credit_id,payment,paymentMethod_id);}
 
-    public int crearNuevoVehiculo(Vehiculo vehiculo, Fabrica fabrica){
-        return FactoryDBInstance.insertVehiculo(vehiculo, fabrica.getID());
+    public int crearNuevoVehiculo(Vehiculo vehiculo, Fabrica fabrica, ObservableList<ExtraVehiculo> extras){
+        int idVehiculo = FactoryDBInstance.insertVehiculo(vehiculo, fabrica.getID());
+        if (idVehiculo != 0){
+            for(ExtraVehiculo extraVehiculo: extras)
+                FactoryDBInstance.agregarExtra(extraVehiculo, idVehiculo);
+        }
+        return idVehiculo;
     }
 
     public ObservableList<PlanDePago> getPlanesDePago() {return BOfficeDBInstance.getPlanesDePagos();}

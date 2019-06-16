@@ -27,23 +27,20 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
-	IF EXISTS(SELECT name FROM Accessory WHERE name = @name)
-		BEGIN 
-		SELECT 1 as exit_status, 'Error, el accesorio ya existe' as result
-		END
-	ELSE
+	IF NOT EXISTS(SELECT name FROM Accessory WHERE name = @name)
+		BEGIN
 		BEGIN TRAN
 		INSERT INTO [dbo].[Accessory] ([name])
 		SELECT @name
-	
-		-- Begin Return Select <- do not remove
-		SELECT [accessory_id], [name]
-		FROM   [dbo].[Accessory]
-		WHERE  [accessory_id] = SCOPE_IDENTITY()
-		-- End Return Select <- do not remove
-               
 		COMMIT
+		END
+	-- Begin Return Select <- do not remove
+	SELECT [accessory_id], [name]
+	FROM   [dbo].[Accessory]
+	WHERE  ([accessory_id] = SCOPE_IDENTITY()) OR (name = @name)
+	-- End Return Select <- do not remove	
 GO
+
 IF OBJECT_ID('[dbo].[usp_AccessoryUpdate]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_AccessoryUpdate] 
