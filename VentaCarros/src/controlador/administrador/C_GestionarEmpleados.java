@@ -1,6 +1,11 @@
 package controlador.administrador;
 
 import com.github.fxrouter.FXRouter;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,12 +24,12 @@ import static modelo.TipoUsuario.FACTURADOR;
 
 public class C_GestionarEmpleados {
 
-    @FXML private ListView<Empleado> ListView_Empleados;
-    @FXML private ComboBox<Sucursal> cbx_Sucursal;
-    @FXML private Button btn_InsertEmpleado;
-    @FXML private Button btn_DeleteEmpleado;
-    @FXML private Button btn_UpdateEmpleado;
-    @FXML private Button btn_Atras;
+    @FXML private JFXListView<Empleado> ListView_Empleados;
+    @FXML private JFXComboBox<Sucursal> cbx_Sucursal;
+    @FXML private JFXButton btn_InsertEmpleado;
+    @FXML private JFXButton btn_DeleteEmpleado;
+    @FXML private JFXButton btn_UpdateEmpleado;
+    @FXML private JFXButton btn_Atras;
 
     private ObservableList<Empleado> empleadosObservableList;
     private ObservableList<Sucursal> sucursalesObservablelist;
@@ -32,9 +37,16 @@ public class C_GestionarEmpleados {
     public void initialize(){
         initComponentes();
         init_ListView_Empleados();
+        cbx_Sucursal.valueProperty().addListener(new ChangeListener<Sucursal>(){
+            @Override
+            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
+                filtrarEmpleadosXSucursal();
+            }
+        });
     }
 
     private void init_cbx_Sucursal() {
+        sucursalesObservablelist = FXCollections.observableArrayList();
         sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
         cbx_Sucursal.setItems(sucursalesObservablelist);
     }
@@ -90,6 +102,18 @@ public class C_GestionarEmpleados {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void filtrarEmpleadosXSucursal(){
+        ObservableList<Empleado> EmpleadosXSucursal = FXCollections.observableArrayList();
+        int idSucursalSeleccionada = cbx_Sucursal.getSelectionModel().getSelectedItem().getIdSucursal();
+        for(Empleado emp : empleadosObservableList){
+            if(emp.getIdSucursal() == idSucursalSeleccionada){
+                EmpleadosXSucursal.add(emp);
+            }
+        }
+        ListView_Empleados.setItems(EmpleadosXSucursal);
+        ListView_Empleados.setCellFactory(empleadosListView -> new EmpleadoListViewCell());
     }
 
 

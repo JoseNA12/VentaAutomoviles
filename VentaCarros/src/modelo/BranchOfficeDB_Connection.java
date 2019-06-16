@@ -490,4 +490,23 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             closeJDBCResources(connection, callableStatement, rs);
         }
     }
+
+    public void InsertNuevoPlan(PlanDePago plan){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanInsert](?,?,?)}");
+            callableStatement.setFloat(1, plan.getPrima());
+            callableStatement.setFloat(2, plan.getInteres());
+            callableStatement.setFloat(3, plan.getPlazo());
+            callableStatement.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
 }

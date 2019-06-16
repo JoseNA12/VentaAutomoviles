@@ -1,6 +1,9 @@
 package controlador.administrador;
 
 import com.github.fxrouter.FXRouter;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,13 +20,13 @@ import java.io.IOException;
 
 public class C_ActualizarEmpleado {
 
-    @FXML private ComboBox<Sucursal> cbx_sucursal;
-    @FXML private TextField txt_nombre;
-    @FXML private TextField txt_apellidos;
-    @FXML private TextField txt_telefono;
-    @FXML private ComboBox<String> cbx_userType;
-    @FXML private Button btn_actualizar;
-    @FXML private Button btn_atras;
+    @FXML private JFXComboBox<Sucursal> cbx_sucursal;
+    @FXML private JFXTextField txt_nombre;
+    @FXML private JFXTextField txt_apellidos;
+    @FXML private JFXTextField txt_telefono;
+    @FXML private JFXComboBox<String> cbx_userType;
+    @FXML private JFXButton btn_actualizar;
+    @FXML private JFXButton btn_atras;
 
     private ObservableList<Sucursal> sucursalObservableList;
     private ObservableList<String> tipoUsuarioObservableList;
@@ -73,9 +76,7 @@ public class C_ActualizarEmpleado {
 
     private void initcbx_sucursales() {
         sucursalObservableList = FXCollections.observableArrayList();
-        sucursalObservableList.addAll(new Sucursal(1,"Autos Jx3-L Cieneguita", "Costa Rica",1,"08:00","17:00"),
-                new Sucursal(2,"Autos Jx3-L Río de Janeiro", "Brasil",3,"08:00","18:00"),
-                new Sucursal(3,"Autos Jx3-L Detroit", "Estados Unidos",2,"07:30","16:00"));
+        sucursalObservableList = GroupDBConnection.getDBInstance().getSucursales();
         cbx_sucursal.setItems(sucursalObservableList);
         for(Sucursal sucursal : sucursalObservableList){
             if(sucursal.getIdSucursal()==empleado.getIdSucursal()){

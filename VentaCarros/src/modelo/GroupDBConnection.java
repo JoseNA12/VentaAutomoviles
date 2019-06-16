@@ -90,4 +90,6 @@ public class GroupDBConnection {
     public void DeleteEmpleado(Empleado empleado){HSDBInstance.DeleteEmpleado(empleado);}
 
     public void UpdateEmpleado(Empleado empleado){HSDBInstance.UpdateEmpleado(empleado);}
+
+    public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
 }
