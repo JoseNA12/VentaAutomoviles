@@ -35,10 +35,7 @@ public class C_GestionarEmpleados {
     }
 
     private void init_cbx_Sucursal() {
-        sucursalesObservablelist = FXCollections.observableArrayList();
-        sucursalesObservablelist.addAll(new Sucursal(1,"Autos Jx3-L Cieneguita", "Costa Rica",1,"08:00","17:00"),
-                new Sucursal(2,"Autos Jx3-L Río de Janeiro", "Brasil",3,"08:00","18:00"),
-                new Sucursal(3,"Autos Jx3-L Detroit", "Estados Unidos",2,"07:30","16:00"));
+        sucursalesObservablelist = GroupDBConnection.getDBInstance().getSucursales();
         cbx_Sucursal.setItems(sucursalesObservablelist);
     }
 
@@ -46,9 +43,6 @@ public class C_GestionarEmpleados {
         empleadosObservableList = FXCollections.observableArrayList();
 
         empleadosObservableList = GroupDBConnection.getDBInstance().SelectEmpleados();
-        /*Empleado emp1 = new Empleado(1,"Jon","Calvo","Mañana","305060175","87139703",
-                "jon@correo.com",30105,FACTURADOR,"2","Facturador",1);
-        empleadosObservableList.add(emp1);*/
         ListView_Empleados.setItems(empleadosObservableList);
         ListView_Empleados.setCellFactory(empleadosListView -> new EmpleadoListViewCell());
     }
@@ -70,17 +64,24 @@ public class C_GestionarEmpleados {
         }
     }
     private void handle_btn_DeleteEmpleado(ActionEvent event){
-        /*try{
-            FXRouter.goTo("Menu_administrador");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(!ListView_Empleados.getSelectionModel().isEmpty()){
+            Empleado empSeleccionado = ListView_Empleados.getSelectionModel().getSelectedItem();
+            GroupDBConnection.getDBInstance().DeleteEmpleado(empSeleccionado);
+            init_ListView_Empleados();
+        }else{
+            System.out.println("nada seleccionado");
+        }
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
-        try{
-            FXRouter.goTo("Empleados_Actualizar");
-        }catch (IOException e) {
-            e.printStackTrace();
+        if(!ListView_Empleados.getSelectionModel().isEmpty()) {
+            try {
+                FXRouter.goTo("Empleados_Actualizar",ListView_Empleados.getSelectionModel().getSelectedItem());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            //MENSAJE DE QUE SELECCIONE EMPLEADO
         }
     }
     private void handle_btn_Atras(ActionEvent event) {
