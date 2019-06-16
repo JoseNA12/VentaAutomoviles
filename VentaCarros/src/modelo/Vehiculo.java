@@ -62,6 +62,10 @@ public class Vehiculo {
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
+    public Vehiculo() { // dejar para hacer pruebas
+        this.nombre_carro = "marca" + " " + "modelo";
+    }
+
     public String getID() {
         return ID;
     }
