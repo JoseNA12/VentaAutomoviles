@@ -7,7 +7,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_Factory-CarSelect] 
-    @factory_car_id int = NULL
+    @factory_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -20,10 +20,10 @@ AS
 	FROM   [dbo].[Factory-Car] fc 
 	inner join [dbo].[Car] c on c.car_id = fc.car_id
 	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.Car c2 on c2.car_id = c.car_id
-	inner join CarBrands cb on cb.carBrand_id = c.car_id
+	inner join CarBrands cb on cb.carBrand_id = c.carBrand_id
 	inner join CarType ct on ct.carType_id = c.carType_id
 	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.FuelType cf on cf.fuelType_id = c2.fuelType_id
-	WHERE  (fc.[factory_car_id] = @factory_car_id OR @factory_car_id IS NULL) 
+	WHERE  (fc.[factory_id] = @factory_id OR @factory_id IS NULL) 
 
 	COMMIT
 GO
