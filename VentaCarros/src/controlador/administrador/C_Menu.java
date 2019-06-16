@@ -43,7 +43,7 @@ public class C_Menu {
 
     private void handle_btn_empleados(ActionEvent event) {
         try {
-            FXRouter.goTo("Empleados_administrador");
+            FXRouter.goTo("Empleados_administrador", false); // false: no es cliente
         } catch (IOException e) {
             e.printStackTrace();
         }

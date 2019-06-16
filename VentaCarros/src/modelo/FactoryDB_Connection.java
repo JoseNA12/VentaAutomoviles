@@ -1,5 +1,6 @@
 package modelo;
 
+import com.sun.org.apache.bcel.internal.generic.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -191,11 +192,11 @@ public class FactoryDB_Connection extends DB_Connection{
             if (vehiculo.getFis() != null) {
                 callableStatement.setBinaryStream(12, (InputStream) vehiculo.getFis(), vehiculo.getFile_length());
             }
-            else  {
+           /* else  { // innecesario
                 InputStream fis = Main.class.getResourceAsStream(vehiculo.getPathImagen());
                 callableStatement.setBinaryStream(12, fis);
                 //callableStatement.setNull(12, Types.NULL);
-            }
+            }*/
 
             callableStatement.setInt(13, idFabrica);
             callableStatement.setInt(14, Integer.parseInt(vehiculo.getCantidad_en_fabrica()));

@@ -26,6 +26,11 @@
             <Image url="@../images/office.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="70.0" fitWidth="113.0" layoutX="1092.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/officer.png" />
+         </image>
+      </ImageView>
       <JFXButton fx:id="btn_catalogo" alignment="BOTTOM_CENTER" layoutX="119.0" layoutY="164.0" prefHeight="341.0" prefWidth="316.0" text="Catálogo">
          <font>
             <Font size="22.0" />
@@ -36,7 +41,7 @@
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btn_sucursales" alignment="BOTTOM_CENTER" layoutX="846.0" layoutY="163.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales">
+      <JFXButton fx:id="btn_sucursales" alignment="BOTTOM_CENTER" layoutX="846.0" layoutY="163.0" prefHeight="341.0" prefWidth="316.0" text="Sucursales y empleados">
          <font>
             <Font size="22.0" />
          </font>

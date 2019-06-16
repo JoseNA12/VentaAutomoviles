@@ -26,9 +26,6 @@ public class Vehiculo {
     private FileInputStream fis; // para la imagen
     private int file_length;
     private byte[] bytes_imagen;
-    private String pathImagen;
-    private String nombre_imagen;
-    private String extension;
     private ImageView imagen;
 
 
@@ -239,30 +236,6 @@ public class Vehiculo {
 
     public void setBytes_imagen(byte[] bytes_imagen) {
         this.bytes_imagen = bytes_imagen;
-    }
-
-    public String getPathImagen() {
-        return pathImagen;
-    }
-
-    public void setPathImagen(String pathImagen) {
-        this.pathImagen = pathImagen;
-    }
-
-    public String getNombre_imagen() {
-        return nombre_imagen;
-    }
-
-    public void setNombre_imagen(String nombre_imagen) {
-        this.nombre_imagen = nombre_imagen;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
     }
 
     public ImageView getImagen() {
