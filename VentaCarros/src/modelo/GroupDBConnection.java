@@ -29,7 +29,7 @@ public class GroupDBConnection {
 
     public boolean signIn(String name, String lastname, LocalDate birthDate, String idCard, String phone, String zip_code, String email, String password){ return HSDBInstance.signIn(name, lastname,birthDate.format(DateTimeFormatter.ISO_DATE), idCard, phone, Integer.parseInt(zip_code), email, password);}
 
-    public ObservableList<ExtraVehiculo> getCarAccessories(String idCar){ return FactoryDBInstance.getCarAccessories(Integer.parseInt(idCar));}
+    public ObservableList<ExtraVehiculo> getCarAccessories(int idCar){ return FactoryDBInstance.getCarAccessories(idCar);}
 
     public ObservableList<Vehiculo> SelectAutosXSucursal(int idSucursal){ return BOfficeDBInstance.SelectAutosXSucursal(idSucursal);}
 
@@ -77,6 +77,15 @@ public class GroupDBConnection {
         return idVehiculo;
     }
 
+    public int updateVehiculo(Vehiculo vehiculo, Fabrica fabrica, ObservableList<ExtraVehiculo> extras){
+        int idVehiculo = FactoryDBInstance.updateVehiculo(vehiculo);
+        if (idVehiculo != 0){
+            for(ExtraVehiculo extraVehiculo: extras)
+                FactoryDBInstance.agregarExtra(extraVehiculo, idVehiculo);
+        }
+        return idVehiculo;
+    }
+
     public ObservableList<PlanDePago> getPlanesDePago() {return BOfficeDBInstance.getPlanesDePagos();}
 
     public void cambiarTazaInteres(float tazaInteres, int idPlan){BOfficeDBInstance.cambiarTazaInteres(tazaInteres, idPlan);}
@@ -98,5 +107,4 @@ public class GroupDBConnection {
 
     public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
 
-    public int updateVehiculo(Vehiculo vehiculo){return FactoryDBInstance.updateVehiculo(vehiculo);}
 }

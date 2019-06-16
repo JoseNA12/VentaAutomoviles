@@ -101,7 +101,7 @@ public class C_ConsultarVehiculo {
         extrasObservableList = FXCollections.observableArrayList();
         extras_seleccionadasObservableList = FXCollections.observableArrayList();
 
-        extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(String.valueOf(vehiculo_seleccionado.getID()));
+        extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(vehiculo_seleccionado.getID());
 
         lv_extras.setItems(extrasObservableList);
         lv_extras.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());
