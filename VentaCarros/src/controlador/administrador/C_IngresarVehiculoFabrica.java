@@ -144,8 +144,8 @@ public class C_IngresarVehiculoFabrica {
         );
         fileChooser.getExtensionFilters().addAll(
                 //new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-               new FileChooser.ExtensionFilter("PNG", "*.png")
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")//,
+               //new FileChooser.ExtensionFilter("PNG", "*.png")
         );
     }
 
@@ -195,10 +195,15 @@ public class C_IngresarVehiculoFabrica {
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
-            try {
-                vehiculoSeleccionado.setImagen(new FileInputStream(file_imagen), (int) file_imagen.length());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+
+            if (file_imagen != null) { // se escogio una imagen
+                try {
+                    vehiculoSeleccionado.setFis(new FileInputStream(file_imagen), (int) file_imagen.length());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+
             }
 
             if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){

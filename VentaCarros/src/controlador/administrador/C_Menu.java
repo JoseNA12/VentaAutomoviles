@@ -25,6 +25,8 @@ public class C_Menu {
 
     public void initialize() throws Exception {
         initComponentes();
+        System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI

@@ -8,13 +8,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import modelo.TipoUsuario;
 import modelo.Vehiculo;
 
-import java.io.IOException;
+import java.io.*;
 
 
 public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
@@ -89,6 +90,28 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
                     break;
             }
 
+            OutputStream targetFile = null;
+            try {
+                String path = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\" + vehiculo.getNombre_carro() + ".jpg";
+
+                targetFile = new FileOutputStream(path);
+                        //"C://Users//jose_//Desktop//VentaAutomoviles//VentaCarros//new.JPG");
+
+                targetFile.write(vehiculo.getBytes_imagen());
+                targetFile.close();
+
+                File file = new File(path);
+                Image image = new Image(file.toURI().toString());
+                //ImageView iv = new ImageView(image);
+
+                imgv_imagen.setImage(image);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //imgv_imagen.setImage();
             lb_marca.setText(vehiculo.getMarca().getNombre());
             lb_modelo.setText(vehiculo.getModelo());
             lb_anio.setText(vehiculo.getAnio());
