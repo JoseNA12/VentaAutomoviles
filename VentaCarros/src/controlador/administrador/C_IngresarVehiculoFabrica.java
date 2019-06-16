@@ -133,7 +133,7 @@ public class C_IngresarVehiculoFabrica {
             }
         }
 
-        // faltan los extras
+        listView_extras.setItems(GroupDBConnection.getDBInstance().getCarAccessories(vehiculoSeleccionado.getID()));
     }
 
     private static void configureFileChooser(
@@ -185,8 +185,11 @@ public class C_IngresarVehiculoFabrica {
             vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
                     cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
-            GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado);
-            limpiarCampos();
+            if (GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
+                System.out.print("Error jaja\n");
+            }else{
+                limpiarCampos();
+            }
         }
         else { // ingresar un nuevo vehiculo
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),

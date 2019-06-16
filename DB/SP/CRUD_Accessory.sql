@@ -53,19 +53,20 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
-	BEGIN TRAN
-
-	UPDATE [dbo].[Accessory]
-	SET    [name] = @name
-	WHERE  [accessory_id] = @accessory_id
-	
+	IF NOT EXISTS(SELECT name FROM Accessory WHERE name = @name)
+		BEGIN
+		BEGIN TRAN
+		UPDATE [dbo].[Accessory]
+		SET    [name] = @name
+		WHERE  [accessory_id] = @accessory_id
+		COMMIT	
+		END
 	-- Begin Return Select <- do not remove
 	SELECT [accessory_id], [name]
 	FROM   [dbo].[Accessory]
 	WHERE  [accessory_id] = @accessory_id	
 	-- End Return Select <- do not remove
 
-	COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_AccessoryDelete]') IS NOT NULL
 BEGIN 

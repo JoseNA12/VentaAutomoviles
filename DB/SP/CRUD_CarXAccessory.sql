@@ -30,19 +30,17 @@ CREATE PROC [dbo].[usp_CarXAccessoryInsert]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
+	IF NOT EXISTS(SELECT 1 FROM [dbo].[CarXAccessory] WHERE ([car_id] = @car_id) AND ([accessorie_id] = @accessorie_id))
+		BEGIN TRAN
+		INSERT INTO [dbo].[CarXAccessory] ([car_id], [accessorie_id], [price])
+		SELECT @car_id, @accessorie_id, @price
 	
-	BEGIN TRAN
-	
-	INSERT INTO [dbo].[CarXAccessory] ([car_id], [accessorie_id], [price])
-	SELECT @car_id, @accessorie_id, @price
-	
-	-- Begin Return Select <- do not remove
-	SELECT [carXAccessory_id], [car_id], [accessorie_id], [price]
-	FROM   [dbo].[CarXAccessory]
-	WHERE  [carXAccessory_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
-               
-	COMMIT
+		-- Begin Return Select <- do not remove
+		SELECT [carXAccessory_id], [car_id], [accessorie_id], [price]
+		FROM   [dbo].[CarXAccessory]
+		WHERE  [carXAccessory_id] = SCOPE_IDENTITY()
+		-- End Return Select <- do not remove          
+		COMMIT
 GO
 IF OBJECT_ID('[dbo].[usp_CarXAccessoryUpdate]') IS NOT NULL
 BEGIN 
