@@ -1,5 +1,7 @@
 package modelo;
 
+import java.io.FileInputStream;
+
 public class Vehiculo {
 
     private int ID;
@@ -18,7 +20,8 @@ public class Vehiculo {
     private String cantidad_en_fabrica;
     private int idFabrica;
     private String fechaProduccion;
-    //TODO falta la foto
+    private FileInputStream imagen;
+    private int file_length; // para la imagen
 
     public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas, TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica, int idFabrica, String fechaProduccion) {
         this.ID = ID;
@@ -205,5 +208,18 @@ public class Vehiculo {
 
     public void setFechaProduccion(String fechaProduccion) {
         this.fechaProduccion = fechaProduccion;
+    }
+
+    public FileInputStream getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(FileInputStream imagen, int file_length) {
+        this.imagen = imagen;
+        this.file_length = file_length;
+    }
+
+    public int getFile_length() {
+        return file_length;
     }
 }

@@ -20,6 +20,8 @@ import modelo.*;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -60,6 +62,9 @@ public class C_IngresarVehiculoFabrica {
     final FileChooser fileChooser = new FileChooser();
 
     private Vehiculo vehiculoSeleccionado = null; // solo en caso de modificar vehiculo
+
+    private File file_imagen = null;
+    private FileInputStream fis;
 
 
     public void initialize() throws Exception {
@@ -168,9 +173,9 @@ public class C_IngresarVehiculoFabrica {
 
     private void handle_btn_subir_imagen(ActionEvent event) {
         configureFileChooser(fileChooser);
-        File file = fileChooser.showOpenDialog((Stage)((Node) event.getSource()).getScene().getWindow());
-        if (file != null) {
-            iv_imagen_vehiculo.setImage(new Image(file.toURI().toString()));
+        file_imagen = fileChooser.showOpenDialog((Stage)((Node) event.getSource()).getScene().getWindow());
+        if (file_imagen != null) {
+            iv_imagen_vehiculo.setImage(new Image(file_imagen.toURI().toString()));
         }
     }
 
@@ -232,7 +237,7 @@ public class C_IngresarVehiculoFabrica {
         tf_puertas.setText("");
         tf_aceleracion.setText("");
         tf_vel_maxima.setText("");
-        tf_precio.setText("");
+        tf_precio.setText("");s
         tf_cantidad_vehiculos.setText("");
         tf_nombre_extra.setText("");
         tf_precio_extra.setText("");
