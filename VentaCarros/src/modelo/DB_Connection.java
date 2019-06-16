@@ -9,7 +9,7 @@ public class DB_Connection {
         return DriverManager.getConnection(url);
     }
 
-    protected static void closeJDBCResources(Connection conn, PreparedStatement ps, ResultSet rs){
+    protected static void closeJDBCResources(Connection conn, CallableStatement ps, ResultSet rs){
         try { if (rs != null) rs.close(); } catch (Exception e) {}
         try { if (ps != null) ps.close(); } catch (Exception e) {}
         try { if (conn != null) conn.close(); } catch (Exception e) {}

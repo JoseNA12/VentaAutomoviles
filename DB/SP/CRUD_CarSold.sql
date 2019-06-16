@@ -36,6 +36,7 @@ AS
 	
 	INSERT INTO [dbo].[CarSold] ([car_id])
 	SELECT @car_id
+	COMMIT
 
 	EXEC usp_reduceCarStock @office_id, @car_id
 
@@ -44,9 +45,9 @@ AS
 	FROM   [dbo].[CarSold]
 	WHERE  [car_sold_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
-               
-	COMMIT
+              
 GO
+
 IF OBJECT_ID('[dbo].[usp_CarSoldUpdate]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarSoldUpdate] 

@@ -108,7 +108,7 @@ public class C_IngresarVehiculoFabrica {
         tf_aceleracion.setText(vehiculoSeleccionado.getAceleracion());
         tf_vel_maxima.setText(vehiculoSeleccionado.getVel_maxima());
         tf_precio.setText(vehiculoSeleccionado.getPrecio());
-        tf_cantidad_vehiculos.setText(vehiculoSeleccionado.getCantidad_en_fabrica());
+        tf_cantidad_vehiculos.setText(String.valueOf(vehiculoSeleccionado.getCantidad_en_fabrica()));
 
         // obtener el valor del vehiculo, y buscar dentro de los valores del comboBox el item respectivo
         // para hacer el set del objeto
@@ -184,7 +184,7 @@ public class C_IngresarVehiculoFabrica {
             int idVehiculo = vehiculoSeleccionado.getID();
             vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
+                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
             if (GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
                 System.out.print("Error jaja\n");
             }else{
@@ -194,7 +194,7 @@ public class C_IngresarVehiculoFabrica {
         else { // ingresar un nuevo vehiculo
             vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                     tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), tf_cantidad_vehiculos.getText());
+                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
             try {
                 vehiculoSeleccionado.setImagen(new FileInputStream(file_imagen), (int) file_imagen.length());
             } catch (FileNotFoundException e) {

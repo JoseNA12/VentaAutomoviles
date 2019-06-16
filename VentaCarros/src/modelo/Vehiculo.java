@@ -17,7 +17,7 @@ public class Vehiculo {
     private String aceleracion;
     private String vel_maxima;
     private String precio;
-    private String cantidad_en_fabrica;
+    private int cantidad_en_fabrica;
     private int idFabrica;
     private String fechaProduccion;
 
@@ -26,7 +26,9 @@ public class Vehiculo {
     private byte[] bytes_imagen;
 
 
-    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas, TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica, int idFabrica, String fechaProduccion) {
+    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas,
+                    TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica, int idFabrica,
+                    String fechaProduccion) {
         this.ID = ID;
         this.marca = marca;
         this.modelo = modelo;
@@ -64,7 +66,7 @@ public class Vehiculo {
 
     public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
                     TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
-                    String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica) {
+                    String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica) {
         this.ID = ID;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
@@ -189,11 +191,11 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    public String getCantidad_en_fabrica() {
+    public int getCantidad_en_fabrica() {
         return cantidad_en_fabrica;
     }
 
-    public void setCantidad_en_fabrica(String cantidad_en_fabrica) {
+    public void setCantidad_en_fabrica(int cantidad_en_fabrica) {
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
