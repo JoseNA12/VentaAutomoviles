@@ -121,8 +121,8 @@ public class FactoryDB_Connection extends DB_Connection{
         return tipos;
     }
 
-    public ArrayList<TipoGasolina> getFuelType(){
-        ArrayList<TipoGasolina> tipos = new ArrayList<>();
+    public ArrayList<TipoCombustible> getFuelType(){
+        ArrayList<TipoCombustible> tipos = new ArrayList<>();
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -135,7 +135,7 @@ public class FactoryDB_Connection extends DB_Connection{
             while (rs.next()){
                 int id = rs.getInt("fuelType_id");
                 String name = rs.getString("name");
-                tipos.add(new TipoGasolina(id, name));
+                tipos.add(new TipoCombustible(id, name));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -177,14 +177,14 @@ public class FactoryDB_Connection extends DB_Connection{
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CarInsert](?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            callableStatement.setInt(1, vehiculo.getMarcaTipo().getID());
+            callableStatement.setInt(1, vehiculo.getMarca().getID());
             callableStatement.setInt(2, vehiculo.getTipoVehiculo().getID());
             callableStatement.setNString(3, vehiculo.getModelo());
             callableStatement.setNString(4, vehiculo.getMotor());
             callableStatement.setInt(5, Integer.parseInt(vehiculo.getAnio()));
-            callableStatement.setInt(6, Integer.parseInt(vehiculo.getAsientos()));
+            callableStatement.setInt(6, Integer.parseInt(vehiculo.getNum_pasajeros()));
             callableStatement.setInt(7, Integer.parseInt(vehiculo.getPuertas()));
-            callableStatement.setInt(8, vehiculo.getTipoGasolina().getID());
+            callableStatement.setInt(8, vehiculo.getTipoCombustible().getID());
             callableStatement.setFloat(9, Float.parseFloat(vehiculo.getAceleracion()));
             callableStatement.setFloat(10, Float.parseFloat(vehiculo.getVel_maxima()));
             callableStatement.setInt(11, Integer.parseInt(vehiculo.getPrecio()));
@@ -203,4 +203,69 @@ public class FactoryDB_Connection extends DB_Connection{
         }
         return result;
     }
+
+    public ObservableList<Vehiculo> getCarrosDeFabricas(){
+        ObservableList<Vehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_Factory-CarSelect]}");
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()){
+                int idCarro = rs.getInt("car_id");
+                int idFabrica = rs.getInt("factory_id");
+                String cantidad = rs.getString("quantity");
+                int idMarca = rs.getInt("carBrand_id");
+                String nombreMarca = rs.getString("Brandname");
+                int idTipo = rs.getInt("carType_id");
+                String nombreTipo = rs.getString("typeName");
+                String modelo = rs.getString("model");
+                String motor = rs.getString("engine");
+                String anio = rs.getString("year");
+                String puertas = rs.getString("doors");
+                int idCombustible = rs.getInt("fuelType_id");
+                String nombreCombustible = rs.getString("fuelName");
+                String aceleracion = rs.getString("acceleration");
+                String velMaxima = rs.getString("maximum_speed");
+                String precio = rs.getString("price");
+                String asientos = rs.getString("seats");
+                String fechaProduccion = rs.getString("production_date");
+                //int id = rs.getInt("photo");
+                ReturnList.add(new Vehiculo(idCarro, new Marca(idMarca, nombreMarca), modelo, anio, asientos, new TipoVehiculo(idTipo, nombreTipo),
+                        motor, puertas, new TipoCombustible(idCombustible, nombreCombustible), aceleracion, velMaxima, precio, cantidad, idFabrica, fechaProduccion));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+            return ReturnList;
+        }
+    }
+
+    public void generarOrdenEnvio(int idVehiculo, int idSucursal, int cantidadVehiculo, int idFabrica){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            System.out.print(idSucursal);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderInsert](?,?,?,?,?)}");
+            callableStatement.setInt(1, idSucursal);
+            callableStatement.setInt(2, idFabrica);
+            callableStatement.setNull(3, Types.NULL);
+            callableStatement.setInt(4, idVehiculo);
+            callableStatement.setInt(5, 1);
+            //callableStatement.setNull(6, Types.NULL);
+            callableStatement.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
+
 }

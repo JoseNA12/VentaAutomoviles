@@ -79,15 +79,15 @@ public class C_ConsultarVehiculo {
 
         vehiculo_seleccionado = (Vehiculo) FXRouter.getData(); // la pantalla previa a esta envia el objeto Vehiculo
         lb_nombre_carro.setText(vehiculo_seleccionado.getNombre_carro());
-        lb_marca.setText(vehiculo_seleccionado.getMarca());
+        lb_marca.setText(vehiculo_seleccionado.getMarca().getNombre());
         lb_modelo.setText(vehiculo_seleccionado.getModelo());
         lb_anio.setText(vehiculo_seleccionado.getAnio());
         lb_num_pasajeros.setText(vehiculo_seleccionado.getNum_pasajeros());
-        lb_tipo.setText(vehiculo_seleccionado.getTipo());
+        lb_tipo.setText(vehiculo_seleccionado.getTipoVehiculo().getTipo());
         lb_motor.setText(vehiculo_seleccionado.getMotor());
-        lb_asientos.setText(vehiculo_seleccionado.getAsientos());
+        lb_asientos.setText(vehiculo_seleccionado.getNum_pasajeros());
         lb_puertas.setText(vehiculo_seleccionado.getPuertas());
-        lb_gasolina.setText(vehiculo_seleccionado.getGasolina());
+        lb_gasolina.setText(vehiculo_seleccionado.getTipoCombustible().getTipo());
         lb_aceleracion.setText(vehiculo_seleccionado.getAceleracion());
         lb_vel_maxima.setText(vehiculo_seleccionado.getVel_maxima());
         lb_precio.setText(vehiculo_seleccionado.getPrecio());
@@ -101,7 +101,7 @@ public class C_ConsultarVehiculo {
         extrasObservableList = FXCollections.observableArrayList();
         extras_seleccionadasObservableList = FXCollections.observableArrayList();
 
-        extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(vehiculo_seleccionado.getID());
+        extrasObservableList = GroupDBConnection.getDBInstance().getCarAccessories(String.valueOf(vehiculo_seleccionado.getID()));
 
         lv_extras.setItems(extrasObservableList);
         lv_extras.setCellFactory(extrasListView -> new ExtraVehiculoListViewCell());

@@ -1,11 +1,11 @@
 package modelo;
 
-public class TipoGasolina {
+public class TipoCombustible {
 
     private int ID;
     private String tipo;
 
-    public TipoGasolina(int ID, String tipo) {
+    public TipoCombustible(int ID, String tipo) {
         this.ID = ID;
         this.tipo = tipo;
     }

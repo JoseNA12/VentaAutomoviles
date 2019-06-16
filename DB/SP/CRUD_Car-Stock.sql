@@ -13,7 +13,8 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	IF EXISTS(SELECT branchOffice_id FROM BranchOffice WHERE branchOffice_id = @office_id)
-		SELECT cs.[car_stock_id], cs.[stock_id], cs.[quantity], c.car_id, c.carBrand_id, cb.name as "brand", c.carType_id, ct.name, c.model, c.engine, c.year, c.seats, c2.doors, c2.fuelType_id, cf.name as "fuel", c2.acceleration, c2.maximum_speed, c2.price, c2.photo, c2.production_date
+		SELECT cs.[car_stock_id], cs.[stock_id], cs.[quantity], c.car_id, c.carBrand_id, cb.name as "brand", c.carType_id, ct.name as typeName, c.model, 
+		c.engine, c.year, c.seats, c2.doors, c2.fuelType_id, cf.name as "fuel", c2.acceleration, c2.maximum_speed, c2.price, c2.photo, c2.production_date
 		FROM [Car-Stock] cs 
 		inner join Stock s on s.stock_id = cs.stock_id
 		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cs.car_id
@@ -32,6 +33,7 @@ BEGIN
     DROP PROC [dbo].[usp_Car-StockInsert] 
 END 
 GO
+
 CREATE PROC [dbo].[usp_Car-StockInsert] 
     @car_id int = NULL,
     @stock_id int = NULL,
@@ -40,12 +42,16 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	IF EXISTS(SELECT car_id FROM [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car WHERE car_id = @car_id)
+	IF EXISTS(SELECT car_id FROM [dbo].[Car-Stock] WHERE car_id = 1)
 		BEGIN
-		BEGIN TRAN
-		INSERT INTO [dbo].[Car-Stock] ([car_id], [stock_id], [quantity])
-		SELECT @car_id, @stock_id, @quantity
-	
+		BEGIN TRAN	
+		DECLARE @currentQuantity int;
+		SET @currentQuantity = (SELECT [quantity] FROM [dbo].[Car-Stock] WHERE car_id = @car_id)
+
+		UPDATE [dbo].[Car-Stock]
+		SET [quantity] = (SELECT @currentQuantity + @quantity)
+		WHERE [car_id] = @car_id
+
 		-- Begin Return Select <- do not remove
 		SELECT 0 as exit_status, car_stock_id, [car_id], [stock_id], [quantity]
 		FROM   [dbo].[Car-Stock]
@@ -56,7 +62,17 @@ AS
 		END
 	ELSE
 		BEGIN
-		SELECT 1 as exit_status, 'El auto ingresado no existe' as result
+		BEGIN TRAN
+		
+		INSERT INTO [dbo].[Car-Stock] ([car_id], [stock_id], [quantity])
+		SELECT @car_id, @stock_id, @quantity
+	
+		-- Begin Return Select <- do not remove
+		SELECT 0 as exit_status, car_stock_id, [car_id], [stock_id], [quantity]
+		FROM   [dbo].[Car-Stock]
+		WHERE  car_stock_id = SCOPE_IDENTITY()
+		-- End Return Select <- do not remove
+		COMMIT 
 		END
 	GO
 

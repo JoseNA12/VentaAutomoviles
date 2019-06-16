@@ -58,17 +58,7 @@ public class C_VehiculosFabricas {
     }
 
     private void init_listView() {
-        catalogoObservableList = FXCollections.observableArrayList();
-
-        // ------------------- Query a la BD consultando vehiculos de las fabricas
-        // en GroupDBConnection.getDBInstance()... acordarse de meter la cantidad de vehiculos en fabrica
-        //catalogoObservableList = GroupDBConnection.getDBInstance().SelectAutosXSucursal(1);
-        catalogoObservableList.add(
-                new Vehiculo("1", "marca", "modelo", "año", "num", "tipo",
-                        "motor", "sentate en esta", "puesta", "gas mokey", "0",
-                        "0", "500000", "23"));
-        // --------------------
-
+        catalogoObservableList = GroupDBConnection.getDBInstance().getCarrosDeFabrica();
         listView_catalogo.setItems(catalogoObservableList);
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell(TipoUsuario.ADMINISTRADOR));
 
