@@ -68,11 +68,11 @@ AS
 		   [maximum_speed] = ISNULL(@maximum_speed,[maximum_speed]), [price] = ISNULL(@price,[price]), [photo] = ISNULL(@photo,[photo]), [production_date] = ISNULL(@production_date,[production_date])
 	WHERE  [car_id] = @car_id
 	
-	-- Begin Return Select <- do not remove
+	/*-- Begin Return Select <- do not remove
 	SELECT [car_id], [doors], [fuelType_id], [acceleration], [maximum_speed], [price], [photo], [production_date]
 	FROM   [dbo].[Car]
 	WHERE  [car_id] = @car_id	
-	-- End Return Select <- do not remove
+	-- End Return Select <- do not remove*/
 
 	COMMIT
 GO

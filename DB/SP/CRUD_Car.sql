@@ -19,7 +19,7 @@ AS
 	WHERE  (c.[car_id] = @car_id OR @car_id IS NULL) 
 
 GO
-exec [dbo].[usp_CarInsert] 1,1,1,1,1,1,1,1,1,1,1,null,1,1
+--exec [dbo].[usp_CarInsert] 1,1,1,1,1,1,1,1,1,1,1,null,1,1
 GO
 IF OBJECT_ID('[dbo].[usp_CarInsert]') IS NOT NULL
 BEGIN 
@@ -70,11 +70,14 @@ AS
 GO
 
 
+exec [dbo].[usp_CarUpdate] 33,2,2,2,2,2,2,2,2,2,2,2,NULL,NULL
+
+GO
 IF OBJECT_ID('[dbo].[usp_CarUpdate]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarUpdate] 
 END 
-GO
+GO 
 CREATE PROC [dbo].[usp_CarUpdate] 
     @car_id int,
     @carBrand_id int = NULL,
@@ -102,7 +105,7 @@ AS
 										
 	EXEC ('EXECUTE FactoryDB.dbo.[usp_CarUpdate] 
 		@car_id=?, @doors=?, @fuelType_id=?, @acceleration=?, @maximum_speed=?, @price=?, @photo=?, @production_date=?', 
-		@car_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, @productionDate) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
+		@car_id, @doors, @fuelType_id, @acceleration, @maximum_speed, @price, @photo, NULL) AT [DESKTOP-3N2P4FH\FACTORYINSTANCE2]
 
 	SELECT c.[car_id], c.[carBrand_id], c.[carType_id], c.[model], c.[engine], c.[year], c.[seats], 
 	c2.[doors], c2.[fuelType_id], c2.[acceleration], c2.[maximum_speed], c2.[price], c2.[photo], c2.production_date

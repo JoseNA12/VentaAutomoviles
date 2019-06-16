@@ -268,4 +268,41 @@ public class FactoryDB_Connection extends DB_Connection{
         }
     }
 
+    public int updateVehiculo(Vehiculo vehiculo){
+        int result = 0;
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            System.out.print(vehiculo.getID());
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CarUpdate](?,?,?,?,?,?,?,?,?,?,?,?)}");
+            callableStatement.setInt(1, vehiculo.getID());
+            callableStatement.setInt(2, vehiculo.getMarca().getID());
+            callableStatement.setInt(3, vehiculo.getTipoVehiculo().getID());
+            callableStatement.setNString(4, vehiculo.getModelo());
+            callableStatement.setNString(5, vehiculo.getMotor());
+            callableStatement.setInt(6, Integer.parseInt(vehiculo.getAnio()));
+            callableStatement.setInt(7, Integer.parseInt(vehiculo.getNum_pasajeros()));
+            callableStatement.setInt(8, Integer.parseInt(vehiculo.getPuertas()));
+            callableStatement.setInt(9, vehiculo.getTipoCombustible().getID());
+            callableStatement.setFloat(10, Float.parseFloat(vehiculo.getAceleracion()));
+            callableStatement.setFloat(11, Float.parseFloat(vehiculo.getVel_maxima()));
+            callableStatement.setFloat(12, Float.parseFloat(vehiculo.getPrecio()));
+            //callableStatement.setNull(12, Types.NULL);
+            //callableStatement.setInt(14, Integer.parseInt(vehiculo.getCantidad_en_fabrica()));
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                result = rs.getInt("car_id");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return result;
+    }
+
+
 }
