@@ -9,6 +9,9 @@ public class Marca {
         this.ID = ID;
         this.nombre = nombre;
     }
+    public Marca(String nombre){
+        this.nombre = nombre;
+    }
 
     public int getID() {
         return ID;

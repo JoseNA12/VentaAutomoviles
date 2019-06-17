@@ -39,7 +39,22 @@ public class C_PedidosClientes {
     }
 
     private void init_listView_pedidos() {
+
+        pedidos_ObservableList = FXCollections.observableArrayList();
+
+        // -------------------- query a la base consultando pedidos actuales
+        // crear objetos: PedidoVehiculo
+        // -> hacer set del cliente: pedidoVehiculo.setUsuario(...);
+        /*PedidoVehiculo pedidoVehiculo_ = new PedidoVehiculo(
+                new Vehiculo(1, new Marca(1,"Honda"), "a", "a", "a", null, "a", "a", null, "a", "a", "a", "100000"));
+        pedidoVehiculo_.setUsuario(new Usuario(1, "b", "b", "b", "b", "b", "b", 12, TipoUsuario.CLIENTE));
+        pedidos_ObservableList.add(pedidoVehiculo_);*/
+        // -------------------------------------------------------------------
+
+        listView_pedidos.setItems(pedidos_ObservableList);
+
         listView_pedidos.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
+
         listView_pedidos.setCellFactory(miLista -> new PedidoListViewCell());
     }
 

@@ -9,6 +9,10 @@ public class MetodoPago {
         this.name = name;
     }
 
+    public MetodoPago(String name){
+        this.name = name;
+    }
+
     public int getIdMethod() {
         return idMethod;
     }

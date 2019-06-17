@@ -87,6 +87,17 @@ public class Vehiculo {
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
+    public Vehiculo(String marca, String modelo, String anio, String num_pasajeros,
+                    String tipo,String precio){
+        this.marca = new Marca(marca);
+        this.modelo = modelo;
+        this.anio = anio;
+        this.num_pasajeros = num_pasajeros;
+        this.tipoVehiculo = new TipoVehiculo(tipo);
+        this.precio = precio;
+
+    }
+
     public Vehiculo() { // dejar para hacer pruebas
         this.nombre_carro = "marca" + " " + "modelo";
     }

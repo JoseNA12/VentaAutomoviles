@@ -37,7 +37,6 @@ public class C_Menu {
         btn_salir.setOnAction(this::handle_btn_salir);
         btn_planes_de_credito.setOnAction(this::handle_btn_planes_de_credito);
         btn_empleados.setOnAction(this::handle_btn_empleados);
-
         lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
     }
 
