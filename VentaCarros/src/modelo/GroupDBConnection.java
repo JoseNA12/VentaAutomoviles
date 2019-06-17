@@ -125,4 +125,6 @@ public class GroupDBConnection {
 
     public ObservableList<PedidoVehiculo> SelectMiPedido(int idCliente){return FactoryDBInstance.SelectMiPedido(idCliente);}
 
+    public ObservableList<PedidoVehiculo> SelectPedidosPendientes(String aCargar){return FactoryDBInstance.SelectVentanaPedidosAdministrador(aCargar);}
+
 }

@@ -33,7 +33,7 @@ public class C_PedidosClientes {
     public void initialize() throws Exception {
         initComponentes();
         init_listView_pedidos_pendientes();
-        init_listView_pedidos_atendidos();
+        //init_listView_pedidos_atendidos();
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
@@ -43,8 +43,8 @@ public class C_PedidosClientes {
     }
 
     private void init_listView_pedidos_pendientes() {
-
         pedidos_pendientes_ObservableList = FXCollections.observableArrayList();
+        pedidos_pendientes_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Pendientes");
 
         // TODO: PENDIENTES
 
@@ -55,7 +55,7 @@ public class C_PedidosClientes {
 
     private void init_listView_pedidos_atendidos() {
         pedidos_atendidos_ObservableList = FXCollections.observableArrayList();
-
+        pedidos_atendidos_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Pendientes");
         // TODO: ATENDIDOS
 
         listView_pedidos_atendidos.setItems(pedidos_atendidos_ObservableList);

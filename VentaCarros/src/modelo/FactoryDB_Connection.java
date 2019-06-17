@@ -474,4 +474,40 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
         return ReturnList;
     }
 
+    public ObservableList<PedidoVehiculo> SelectVentanaPedidosAdministrador(String aCargar){
+        ObservableList<PedidoVehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            if(aCargar.equals("Pendientes")) {
+                callableStatement = connection.prepareCall("{call [dbo].[usp_SelectPedidosPendientes]}");
+            }
+            else{
+                callableStatement = connection.prepareCall("{call [dbo].[usp_SelectPedidosAtendidos]}");
+            }
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                Float precio = rs.getFloat("precio");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String telefono = rs.getString("telefono");
+                PedidoVehiculo nuevoPedido = new PedidoVehiculo(marca,modelo,Float.toString(precio),nombre,apellido,telefono,correo);
+                ReturnList.add(nuevoPedido);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
+    }
+
+
+
 }
