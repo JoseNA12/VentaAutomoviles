@@ -7,7 +7,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CountrySelect] 
-    @country_id int
+    @country_id int = NULL 
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -16,11 +16,11 @@ AS
 	FROM   [dbo].[Country] 
 	WHERE  ([country_id] = @country_id OR @country_id IS NULL) 
 	UNION
-	SELECT * FROM OPENQUERY([LAPTOP-CCS17DF7\BOFFICEINSTANCE2], 
+	SELECT * FROM OPENQUERY([DESKTOP-3N2P4FH\BOFFICE_INST_2], 
 	'SELECT c.[country_id], c.[name] 
 	FROM BranchOfficeDB.dbo.Country c')
 	UNION
-	SELECT * FROM OPENQUERY([LAPTOP-CCS17DF7\BOFFICEINSTANCE3], 
+	SELECT * FROM OPENQUERY([DESKTOP-3N2P4FH\BOFFICE_INST_3], 
 	'SELECT c.[country_id], c.[name] 
 	FROM BranchOfficeDB.dbo.Country c')
 GO

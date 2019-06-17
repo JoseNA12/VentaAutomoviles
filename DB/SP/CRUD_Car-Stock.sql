@@ -28,6 +28,8 @@ AS
 
 GO
 
+exec [usp_Car-StockInsert] 1,1,1,1
+
 IF OBJECT_ID('[dbo].[usp_Car-StockInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_Car-StockInsert] 
@@ -37,28 +39,32 @@ GO
 CREATE PROC [dbo].[usp_Car-StockInsert] 
     @car_id int = NULL,
     @stock_id int = NULL,
-    @quantity int = NULL
+    @quantity int = NULL,
+	@idFabrica int = NULL
 AS 
+	BEGIN
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
-	IF EXISTS(SELECT car_id FROM [dbo].[Car-Stock] WHERE car_id = 1)
+	EXEC [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.usp_reduceCarsInFactory @car_id, @idFabrica, @quantity
+
+	IF EXISTS(SELECT car_id FROM [dbo].[Car-Stock] WHERE car_id = @car_id)
 		BEGIN
-		BEGIN TRAN	
 		DECLARE @currentQuantity int;
 		SET @currentQuantity = (SELECT [quantity] FROM [dbo].[Car-Stock] WHERE car_id = @car_id)
 
+		BEGIN TRAN
 		UPDATE [dbo].[Car-Stock]
 		SET [quantity] = (SELECT @currentQuantity + @quantity)
 		WHERE [car_id] = @car_id
+		COMMIT
 
 		-- Begin Return Select <- do not remove
 		SELECT 0 as exit_status, car_stock_id, [car_id], [stock_id], [quantity]
 		FROM   [dbo].[Car-Stock]
-		WHERE  car_stock_id = SCOPE_IDENTITY()
+		WHERE  [car_id] = @car_id
 		-- End Return Select <- do not remove
-               
-		COMMIT
+		
 		END
 	ELSE
 		BEGIN
@@ -66,14 +72,17 @@ AS
 		
 		INSERT INTO [dbo].[Car-Stock] ([car_id], [stock_id], [quantity])
 		SELECT @car_id, @stock_id, @quantity
-	
+
+		COMMIT
+
 		-- Begin Return Select <- do not remove
 		SELECT 0 as exit_status, car_stock_id, [car_id], [stock_id], [quantity]
 		FROM   [dbo].[Car-Stock]
 		WHERE  car_stock_id = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove
-		COMMIT 
+		
 		END
+	END
 	GO
 
 IF OBJECT_ID('[dbo].[usp_Car-StockUpdate]') IS NOT NULL

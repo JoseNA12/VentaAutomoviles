@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.deploy.util.FXLoader;
 import controlador.cliente.ExtraVehiculoListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -118,8 +119,6 @@ public class C_IngresarVehiculoFabrica {
             Image image = new Image(file.toURI().toString());
             iv_imagen_vehiculo.setImage(image);
         } catch (Exception e) {}
-
-        //iv_imagen_vehiculo.setVisible(false);
         btn_subir_imagen.setVisible(false);
 
         // obtener el valor del vehiculo, y buscar dentro de los valores del comboBox el item respectivo
@@ -130,21 +129,18 @@ public class C_IngresarVehiculoFabrica {
                 cb_marca.getSelectionModel().select(item);
             }
         }
-
         ObservableList<TipoVehiculo> items_t = cb_tipo.getItems();
         for(TipoVehiculo item : items_t) {
             if (item.getTipo().equals(vehiculoSeleccionado.getTipoVehiculo().getTipo())) {
                 cb_tipo.getSelectionModel().select(item);
             }
         }
-
         ObservableList<TipoCombustible> items_g = cb_gasolina.getItems();
         for(TipoCombustible item : items_g) {
             if (item.getTipo().equals(vehiculoSeleccionado.getTipoCombustible().getTipo())) {
                 cb_gasolina.getSelectionModel().select(item);
             }
         }
-
         listView_extras.setItems(GroupDBConnection.getDBInstance().getCarAccessories(vehiculoSeleccionado.getID()));
     }
 
@@ -155,9 +151,7 @@ public class C_IngresarVehiculoFabrica {
                 new File(System.getProperty("user.home"))
         );
         fileChooser.getExtensionFilters().addAll(
-                //new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("JPG", "*.jpg")//,
-               //new FileChooser.ExtensionFilter("PNG", "*.png")
         );
     }
 
@@ -192,39 +186,56 @@ public class C_IngresarVehiculoFabrica {
     }
 
     private void handle_btn_registrar(ActionEvent event) {
-        if (vehiculoSeleccionado != null) { // pantalla de modificar, actualizar los datos
-            int idVehiculo = vehiculoSeleccionado.getID();
-            vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
-                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                    cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
-            if (GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
-                System.out.print("Error jaja\n");
-            }else{
-                limpiarCampos();
+        if (vehiculoSeleccionado != null)
+            modificarVehiculo();
+        else
+            ingresarNuevoVehiculo();
+    }
+
+    private void modificarVehiculo(){
+        int idVehiculo = vehiculoSeleccionado.getID();
+        vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
+                tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
+                cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+        if (GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
+            Alerts.errorDialog("Error","Error en la inserción","Ha ocurrido un error inesperado, inténtelo de nuevo!");
+            limpiarCampos();
+        }else{
+            Alerts.informationDialog("Vehículo insertado","Vehículo insertado","Se ha agregado el vehículo a la Base de Datos");
+            try {
+                FXRouter.goTo("VehiculosFabricas_administrador");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        else { // ingresar un nuevo vehiculo
-            vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
-                    tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
-            if (file_imagen != null) { // se escogio una imagen
-                try {
-                    vehiculoSeleccionado.setFis(new FileInputStream(file_imagen), (int) file_imagen.length());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                File file = new File(path_imagen_default);
-                try {
-                    vehiculoSeleccionado.setFis(new FileInputStream(file), (int) file.length());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
+    }
 
-            if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
-                System.out.print("Error jaja\n");
-            }else{
-                limpiarCampos();
+    private void ingresarNuevoVehiculo(){
+        vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
+                tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+        if (file_imagen != null) { // se escogio una imagen
+            try {
+                vehiculoSeleccionado.setFis(new FileInputStream(file_imagen), (int) file_imagen.length());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            File file = new File(path_imagen_default);
+            try {
+                vehiculoSeleccionado.setFis(new FileInputStream(file), (int) file.length());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        if (GroupDBConnection.getDBInstance().crearNuevoVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
+            Alerts.errorDialog("Error","Error en la inserción","Ha ocurrido un error inesperado, inténtelo de nuevo!");
+            limpiarCampos();
+        }else{
+            Alerts.informationDialog("Vehículo insertado","Vehículo insertado","Se ha agregado el vehículo a la Base de Datos");
+            try {
+                FXRouter.goTo("VehiculosFabricas_administrador");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -258,17 +269,17 @@ public class C_IngresarVehiculoFabrica {
         cb_marca.getSelectionModel().selectFirst();
         cb_gasolina.getSelectionModel().selectFirst();
         cb_tipo.getSelectionModel().selectFirst();
-        tf_modelo.setText("");
-        tf_anio.setText("");
-        tf_num_pasajeros.setText("");
-        tf_motor.setText("");
-        tf_puertas.setText("");
-        tf_aceleracion.setText("");
-        tf_vel_maxima.setText("");
-        tf_precio.setText("");
-        tf_cantidad_vehiculos.setText("");
-        tf_nombre_extra.setText("");
-        tf_precio_extra.setText("");
+        tf_modelo.clear();
+        tf_anio.clear();
+        tf_num_pasajeros.clear();
+        tf_motor.clear();
+        tf_puertas.clear();
+        tf_aceleracion.clear();
+        tf_vel_maxima.clear();
+        tf_precio.clear();
+        tf_cantidad_vehiculos.clear();
+        tf_nombre_extra.clear();
+        tf_precio_extra.clear();
         extrasVehiculoObservableList.clear();
         listView_extras.setItems(extrasVehiculoObservableList);
     }

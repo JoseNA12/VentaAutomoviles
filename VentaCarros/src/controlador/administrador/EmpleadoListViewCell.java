@@ -35,7 +35,7 @@ public class EmpleadoListViewCell extends JFXListCell<Empleado> {
                     e.printStackTrace();
                 }
             }
-            lb_nombre.setText(empleado.getNombre());
+            lb_nombre.setText(empleado.getNombre() + " " + empleado.getApellidos());
             lb_telefono.setText(empleado.getTelefono());
             lb_cedula.setText(empleado.getCedula());
             lb_correo.setText(empleado.getCorreo());

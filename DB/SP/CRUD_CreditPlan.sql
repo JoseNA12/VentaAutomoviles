@@ -20,6 +20,7 @@ AS
 
 	COMMIT
 GO
+exec [usp_CreditPlanSelect] 
 IF OBJECT_ID('[dbo].[usp_CreditPlanInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CreditPlanInsert] 

@@ -1,4 +1,4 @@
-USE [BranchOfficeDB];
+USE [FactoryDB];
 GO
 
 IF OBJECT_ID('[dbo].[usp_OrderStatusSelect]') IS NOT NULL
@@ -7,16 +7,16 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_OrderStatusSelect] 
-    @status_id int
+    @orderStatus_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
 	BEGIN TRAN
 
-	SELECT [status_id], [name], [details] 
+	SELECT [orderStatus_id], [statusName], [details] 
 	FROM   [dbo].[OrderStatus] 
-	WHERE  ([status_id] = @status_id OR @status_id IS NULL) 
+	WHERE  ([orderStatus_id] = @orderStatus_id OR @orderStatus_id IS NULL) 
 
 	COMMIT
 GO
@@ -26,21 +26,21 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_OrderStatusInsert] 
-    @name nvarchar(50) = NULL,
-    @details nvarchar(300) = NULL
+    @statusName nvarchar(50) = NULL,
+    @details nvarchar(500) = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
 	
-	INSERT INTO [dbo].[OrderStatus] ([name], [details])
-	SELECT @name, @details
+	INSERT INTO [dbo].[OrderStatus] ([statusName], [details])
+	SELECT @statusName, @details
 	
 	-- Begin Return Select <- do not remove
-	SELECT [status_id], [name], [details]
+	SELECT [orderStatus_id], [statusName], [details]
 	FROM   [dbo].[OrderStatus]
-	WHERE  [status_id] = SCOPE_IDENTITY()
+	WHERE  [orderStatus_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
                
 	COMMIT
@@ -51,9 +51,9 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_OrderStatusUpdate] 
-    @status_id int,
-    @name nvarchar(50) = NULL,
-    @details nvarchar(300) = NULL
+    @orderStatus_id int,
+    @statusName nvarchar(50) = NULL,
+    @details nvarchar(500) = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -61,13 +61,13 @@ AS
 	BEGIN TRAN
 
 	UPDATE [dbo].[OrderStatus]
-	SET    [name] = @name, [details] = @details
-	WHERE  [status_id] = @status_id
+	SET    [statusName] = @statusName, [details] = @details
+	WHERE  [orderStatus_id] = @orderStatus_id
 	
 	-- Begin Return Select <- do not remove
-	SELECT [status_id], [name], [details]
+	SELECT [orderStatus_id], [statusName], [details]
 	FROM   [dbo].[OrderStatus]
-	WHERE  [status_id] = @status_id	
+	WHERE  [orderStatus_id] = @orderStatus_id	
 	-- End Return Select <- do not remove
 
 	COMMIT
@@ -78,7 +78,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_OrderStatusDelete] 
-    @status_id int
+    @orderStatus_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -87,7 +87,7 @@ AS
 
 	DELETE
 	FROM   [dbo].[OrderStatus]
-	WHERE  [status_id] = @status_id
+	WHERE  [orderStatus_id] = @orderStatus_id
 
 	COMMIT
 GO

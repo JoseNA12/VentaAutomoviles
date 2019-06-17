@@ -39,8 +39,7 @@ public class C_PlanesCredito {
     }
 
     private void init_listView_planes() {
-        planesObservableList = GroupDBConnection.getDBInstance().getPlanesDePago();
-        listView_planes_pago.setItems(planesObservableList);
+        listView_planes_pago.setItems(GroupDBConnection.getDBInstance().getPlanesDePago());
         listView_planes_pago.setCellFactory(planListView -> new PlanDePagoListViewCell(TipoUsuario.ADMINISTRADOR));
     }
 

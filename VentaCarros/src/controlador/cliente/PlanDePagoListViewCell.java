@@ -54,18 +54,18 @@ public class PlanDePagoListViewCell extends JFXListCell<PlanDePago> {
             }
 
             if (bandera == TipoUsuario.ADMINISTRADOR) {
-                lb_prima.setText("[Según la compra]");
+                lb_prima.setText(String.valueOf(planDePago.getPorcentaje_prima()*100)+"%");
                 lb_pago_por_mes.setText("[Según la compra]");
-                lb_plazo.setText("[Según la compra]");
+                lb_plazo.setText(String.valueOf(planDePago.getPlazo())+" años");
                 lb_monto_total.setText("[Según la compra]");
-                lb_interes.setText(String.valueOf(planDePago.getInteres()));
+                lb_interes.setText(String.valueOf(planDePago.getInteres()*100)+"%");
             }
             else {
-                lb_prima.setText(String.valueOf(planDePago.getPorcentaje_prima()));
-                lb_pago_por_mes.setText(String.valueOf(planDePago.getPago_por_mes()));
-                lb_plazo.setText(String.valueOf(planDePago.getPlazo()));
-                lb_interes.setText(String.valueOf(planDePago.getInteres()));
-                lb_monto_total.setText(String.valueOf(planDePago.getTotal_a_pagar()));
+                lb_prima.setText(String.valueOf(planDePago.getPorcentaje_prima()*100)+"%");
+                lb_pago_por_mes.setText(String.valueOf(planDePago.getPago_por_mes())+" dólares");
+                lb_plazo.setText(String.valueOf(planDePago.getPlazo())+" años");
+                lb_interes.setText(String.valueOf(planDePago.getInteres()*100)+"%");
+                lb_monto_total.setText(String.valueOf(planDePago.getTotal_a_pagar())+" dólares");
             }
 
             setText(null);

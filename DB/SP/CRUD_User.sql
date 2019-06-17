@@ -80,7 +80,7 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_UserDelete] 
-    @email int
+    @email nvarchar(50)
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
