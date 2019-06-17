@@ -161,6 +161,14 @@ public class C_ConsultarVehiculo {
                     // TODO: Cambiar ID Sucursal
                     if (validarEdad()) {
                         GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
+
+                        informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
+
+                        try {
+                            FXRouter.goTo("Menu_cliente");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!", "No cuenta con la edad suficiente para comprar un vehículo");
                     }
@@ -287,6 +295,13 @@ public class C_ConsultarVehiculo {
 
             GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), 1);
 
+            informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
+
+            try {
+                FXRouter.goTo("Menu_facturador");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //System.out.println("Your name: " + result.get());
         }
     }
