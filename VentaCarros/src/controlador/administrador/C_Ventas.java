@@ -118,30 +118,34 @@ public class C_Ventas {
     }
 
     private void handle_btn_visualizar_datos(ActionEvent event) {
+        int sucursal=-1,tipoCarro=-1,pais=-1,tipoPago=-1;
+        String fecha1="null",fecha2="null";
         if (cb_sucursal.getValue() != null) {
-            cb_sucursal.getValue().getIdSucursal();
+            sucursal = cb_sucursal.getValue().getIdSucursal();
         }
 
         if (cb_tipo_vehiculo.getValue() != null) {
-            cb_tipo_vehiculo.getValue().getID();
+            tipoCarro = cb_tipo_vehiculo.getValue().getID();
         }
 
         if (cb_pais.getValue() != null) {
-            cb_pais.getValue().getID();
+            pais = Integer.parseInt(cb_pais.getValue().getID());
         }
 
-        if (cb_pais.getValue() != null) {
-            cb_pais.getValue().getID();
+        if (cb_tipo_pago.getValue() != null) {
+            tipoPago = cb_tipo_pago.getValue().getIdMethod();
         }
 
         if (dt_fecha_inicial.getValue() != null) {
-            dt_fecha_inicial.getValue(); // en el query -> dt_fecha_inicial.getValue().toString();
+            fecha1 = dt_fecha_inicial.getValue().toString(); // en el query -> dt_fecha_inicial.getValue().toString();
         }
 
         if (dt_fecha_final.getValue() != null) {
-            dt_fecha_final.getValue(); // en el query -> dt_fecha_final.getValue().toString();
+            fecha2 = dt_fecha_final.getValue().toString(); // en el query -> dt_fecha_final.getValue().toString();
         }
         ventasObservableList.removeAll();   // limpiar la lista
+        ventasObservableList = FXCollections.observableArrayList();
+        ventasObservableList = GroupDBConnection.getDBInstance().SelectInfoVentas(sucursal,tipoCarro,pais,fecha1,fecha2,tipoPago);
         listView_ventas.setItems(ventasObservableList);
 
         // ------------------------- query a la BD's

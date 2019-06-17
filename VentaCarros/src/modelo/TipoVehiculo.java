@@ -16,6 +16,9 @@ public class TipoVehiculo {
         this.ID = ID;
         this.tipo = tipo;
     }
+    public TipoVehiculo(String tipo){
+        this.tipo = tipo;
+    }
 
     public int getID() {
         return ID;

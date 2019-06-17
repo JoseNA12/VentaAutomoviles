@@ -110,4 +110,6 @@ public class GroupDBConnection {
 
     public ObservableList<Pais> SelectPaises(){return BOfficeDBInstance.SelectPaises();}
 
+    public ObservableList<Venta> SelectInfoVentas(int sucursal, int tipoCar, int pais, String fecha1, String fecha2, int metodoPago){return BOfficeDBInstance.SelectInfoVentas(sucursal,tipoCar,pais,fecha1,fecha2,metodoPago);}
+
 }
