@@ -153,8 +153,13 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                 String vel_maxima = rs.getString("maximum_speed");
                 String precio = rs.getString("price");
                 int cantidad = rs.getInt("quantity");
-                ReturnList.add(new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
-                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad));
+
+                Vehiculo miVehiculo = new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
+                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad);
+
+                miVehiculo.setBytes_imagen(rs.getBytes("photo"));
+
+                ReturnList.add(miVehiculo);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
