@@ -116,6 +116,12 @@ public class Vehiculo {
         this.precio = Float.toString(precio);
     }
 
+    public Vehiculo(String marca,String modelo,String precio){
+        this.marca = new Marca(marca);
+        this.modelo = modelo;
+        this.precio = precio;
+    }
+
     public Vehiculo() { // dejar para hacer pruebas
         this.nombre_carro = "marca" + " " + "modelo";
     }
