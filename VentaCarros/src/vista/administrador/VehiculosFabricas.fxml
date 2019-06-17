@@ -36,23 +36,23 @@
       <JFXListView fx:id="listView_catalogo" layoutX="92.0" layoutY="94.0" prefHeight="502.0" prefWidth="1097.0" />
       <ToolBar layoutX="92.0" layoutY="609.0" prefHeight="54.0" prefWidth="1097.0">
         <items>
-            <JFXButton fx:id="btn_nuevo_ingreso" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Nuevo ingreso" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_nuevo_ingreso" maxHeight="44.0" maxWidth="194.0" minHeight="44.0" minWidth="194.0" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Nuevo ingreso" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_editar_caracteristicas" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Editar caracteristicas" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_editar_caracteristicas" maxHeight="44.0" maxWidth="194.0" minHeight="44.0" minWidth="194.0" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Editar caracteristicas" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_ingresar_a_sucursales" layoutX="208.0" layoutY="10.0" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Ingresar a sucursales" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_ingresar_a_sucursales" layoutX="208.0" layoutY="10.0" maxHeight="44.0" maxWidth="194.0" minHeight="44.0" minWidth="194.0" prefHeight="44.0" prefWidth="194.0" style="-fx-background-color: #f0544f;" text="Ingresar a sucursales" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <Separator prefHeight="44.0" prefWidth="256.0" />
-            <JFXComboBox fx:id="cb_filtrar_por_fabrica" focusColor="#f0544f" labelFloat="true" prefHeight="37.0" prefWidth="228.0" promptText="Filtrar por fabrica" style="-fx-font: 16px System;" />
+            <Separator maxHeight="44.0" maxWidth="241.0" minHeight="44.0" minWidth="241.0" prefHeight="44.0" prefWidth="241.0" />
+            <JFXComboBox fx:id="cb_filtrar_por_fabrica" focusColor="#f0544f" labelFloat="true" maxHeight="37.0" maxWidth="228.0" minHeight="37.0" minWidth="228.0" prefHeight="37.0" prefWidth="228.0" promptText="Filtrar por fabrica" style="-fx-font: 16px System;" />
         </items>
       </ToolBar>
     </children>
