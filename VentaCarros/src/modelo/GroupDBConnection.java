@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Observable;
 
 //Agrupa las conexiones a la DB. Actua como una interfaz de estas.
 public class GroupDBConnection {
@@ -112,4 +113,11 @@ public class GroupDBConnection {
     public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.pedirVehiculo(pedidoVehiculo);}
 
     public void enviarPedidoVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.enviarPedidoVehiculo(pedidoVehiculo);}
+
+    public ObservableList<Pais> SelectPaises(){return BOfficeDBInstance.SelectPaises();}
+
+    public ObservableList<Venta> SelectInfoVentas(int sucursal, int tipoCar, int pais, String fecha1, String fecha2, int metodoPago){return BOfficeDBInstance.SelectInfoVentas(sucursal,tipoCar,pais,fecha1,fecha2,metodoPago);}
+
+    //public void enviarVehiculo(PedidoVehiculo pedidoVehiculo){BOfficeDBInstance.enviarVehiculoPedido(pedid);}
+
 }

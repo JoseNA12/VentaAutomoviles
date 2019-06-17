@@ -47,6 +47,12 @@ public class Usuario {
         this.password = password;
     }
 
+    public Usuario(String nombre, String apellidos, String telefono){
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+    }
+
     public Usuario(){ }
 
     public String getNombre() {

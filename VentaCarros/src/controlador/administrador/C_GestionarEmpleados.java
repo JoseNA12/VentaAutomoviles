@@ -21,6 +21,7 @@ import modelo.Sucursal;
 
 import java.io.IOException;
 
+import static modelo.Alerts.errorDialog;
 import static modelo.TipoUsuario.FACTURADOR;
 
 public class C_GestionarEmpleados {
@@ -94,8 +95,8 @@ public class C_GestionarEmpleados {
             Empleado empSeleccionado = ListView_Empleados.getSelectionModel().getSelectedItem();
             GroupDBConnection.getDBInstance().DeleteEmpleado(empSeleccionado);
             init_ListView_Empleados();
-        }else{
-            System.out.println("nada seleccionado");
+        } else {
+            errorDialog("Error", "Empleado no selecionado", "Debe seleccionar un empleado para continuar");
         }
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
@@ -106,8 +107,8 @@ public class C_GestionarEmpleados {
                 e.printStackTrace();
             }
         }
-        else{
-            //MENSAJE DE QUE SELECCIONE EMPLEADO
+        else {
+            errorDialog("Error", "Empleado no selecionado", "Debe seleccionar un empleado para continuar");
         }
     }
     private void handle_btn_Atras(ActionEvent event) {

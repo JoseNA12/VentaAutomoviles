@@ -3,11 +3,14 @@ package modelo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.lang.reflect.Type;
 import java.sql.*;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+    private static final String DEFAULT_URLBO1 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+    private static final String DEFAULT_URLBO2 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
+    private static final String DEFAULT_URLBO3 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
     private static BranchOfficeDB_Connection DBInstance;
 
     public static BranchOfficeDB_Connection getHSDBInstance(){
@@ -17,13 +20,14 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return DBInstance;
     }
 
+
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){
         ObservableList<Abono> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGiven-PaymentSelect](?)}");
             callableStatement.setInt(1, usuario.getIdUsuario());
             callableStatement.executeQuery();
@@ -50,7 +54,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGivenPlanInfo](?)}");
             callableStatement.setInt(1, credit_id);
             callableStatement.executeQuery();
@@ -78,7 +82,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -104,7 +108,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -127,7 +131,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockSelect](?)}");
             callableStatement.setInt(1, idSucursal);
             callableStatement.executeQuery();
@@ -166,7 +170,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -189,7 +193,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -215,7 +219,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_SalesOrderInsert](?, ?, ?, ?, ?, ?)}");
             ps.setInt(1, usuario.getIdUsuario());
             ps.setInt(2, metodoPago.getIdMethod());
@@ -242,7 +246,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_SalesOrderDetailsInsert](?,?,?,?)}");
             ps.setInt(1, ordenCompra);
             ps.setInt(2, idCarroVendido);
@@ -267,6 +271,9 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?)}");
+            ps.setInt(1, pedidoVehiculo.getVehiculo().getID());
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?,?)}");
             ps.setInt(1, vehiculoComprado.getVehiculo().getID());
@@ -292,7 +299,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CarSold-AccessoryInsert](?,?)}");
             ps.setInt(1, idCarroVendido);
             ps.setInt(2, extraVehiculo.getIdExtra());
@@ -315,7 +322,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenInsert](?,?,?,?)}");
             ps.setInt(1, idCompra);
             ps.setInt(2, planDePago.getPlanID());
@@ -340,7 +347,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call [dbo].[usp_BranchOfficeSelectAll]}");
             ps.executeQuery();
             rs = ps.getResultSet();
@@ -366,7 +373,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CreditGiven-PaymentInsert](?,?,?)}");
             ps.setInt(1, credit_id);
             ps.setFloat(2, payment);
@@ -384,7 +391,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CreditPlanUpdate](?,?)}");
             ps.setInt(1, idPlanDeCredito);
             ps.setFloat(2, tazaInteres);
@@ -403,7 +410,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         CallableStatement ps = null;
         PlanDePago p;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenSelectByPlan](?)}");
             ps.setInt(1, idPlanDeCredito);
             ps.executeQuery();
@@ -428,7 +435,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenUpdateMensualPayment](?,?)}");
             ps.setInt(1, idCreditoOtorgado);
             ps.setFloat(2, cuotaMensual);
@@ -445,7 +452,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockInsert](?,?,?)}");
             callableStatement.setInt(1, idVehiculo);
             callableStatement.setInt(2, idSucursal);
@@ -464,7 +471,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanInsert](?,?,?)}");
             callableStatement.setFloat(1, plan.getPrima());
             callableStatement.setFloat(2, plan.getInteres());
@@ -478,20 +485,135 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
     }
 
-    public void enviarVehiculoPedido(String fechaEntrega, int idPedido){
+
+    public ObservableList<Pais> SelectPaises(){
+        ObservableList<Pais> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?)}");
-            callableStatement.setInt(1, idPedido);
-            callableStatement.setNString(2, fechaEntrega);
+
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CountrySelect]}");
             callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                int country_id = rs.getInt("country_id");
+                String name = rs.getString("name");
+                Pais countryAux = new Pais(Integer.toString(country_id),name);
+
+                if(!countryAux.getNombre().equals("")){
+                    ReturnList.add(countryAux);
+                }
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             closeJDBCResources(connection, callableStatement, rs);
         }
+        return ReturnList;
+    }
+
+    //public void enviarVehiculoPedido(String fechaEntrega, int idPedido){
+
+
+
+    public ObservableList<Venta> SelectInfoVentas(int sucursal, int tipoCar, int pais, String fecha1, String fecha2, int metodoPago){
+        ObservableList<Venta> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            switch (sucursal){
+                case 1:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
+                    break;
+                case 2:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
+                    break;
+                case 3:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
+                    break;
+                default:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelectAll](?,?,?,?,?,?)}");
+                    break;
+            }
+            if(!(sucursal==-1)){
+                callableStatement.setInt(1, sucursal);
+            }
+            else{
+                callableStatement.setNull(1, Types.NULL);
+            }
+            if(!(tipoCar==-1)){
+                callableStatement.setInt(2, tipoCar);
+            }
+            else{
+                callableStatement.setNull(2, Types.NULL);
+            }
+            if(!(pais==-1)){
+                callableStatement.setInt(3, pais);
+            }
+            else{
+                callableStatement.setNull(3, Types.NULL);
+            }
+            if(!fecha1.equals("null")){
+                callableStatement.setString(4, fecha1);
+            }
+            else{
+                callableStatement.setNull(4, Types.DATE);
+            }
+            if(!fecha2.equals("null")){
+                callableStatement.setString(5, fecha2);
+            }
+            else{
+                callableStatement.setNull(5, Types.DATE);
+            }
+            if(!(metodoPago==-1)){
+                callableStatement.setInt(6, metodoPago);
+            }
+            else{
+                callableStatement.setNull(6, Types.NULL);
+            }
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                int anio = rs.getInt("anio");
+                String pasajeros = rs.getString("pasajeros");
+                float precio = rs.getFloat("precio");
+                String tipo = rs.getString("tipo");
+                String nombreCl = rs.getString("nombreCl");
+                String apellidos = rs.getString("apellidos");
+                String telefono = rs.getString("telefonoCl");
+                String mPago = rs.getString("metodoPago");
+                float precioTotal = rs.getFloat("precioTotal");
+                String fecha = rs.getString("fecha");
+                int estatus = rs.getInt("estatus");
+                Venta ventaAux = new Venta(marca,modelo,Integer.toString(anio),pasajeros,Float.toString(precio),
+                        tipo,nombreCl,apellidos,telefono, mPago,Float.toString(precioTotal),Integer.toString(estatus),
+                        fecha);
+                ReturnList.add(ventaAux);
+            }
+
+
+            /*connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?)}");
+            callableStatement.setInt(1, idPedido);
+            callableStatement.setNString(2, fechaEntrega);
+            callableStatement.executeQuery();*/
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+
+        return ReturnList;
+
     }
 }

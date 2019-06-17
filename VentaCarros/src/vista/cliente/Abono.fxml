@@ -48,17 +48,16 @@
                       <Font size="16.0" />
                   </font>
               </JFXButton>
-            <Label layoutX="704.0" layoutY="9.0" text="Próximo pago:" textFill="WHITE">
+            <Label layoutX="636.0" layoutY="9.0" text="Próximo pago:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_fecha_pago" layoutX="841.0" layoutY="9.0" text="[fecha pago]" textFill="WHITE">
+            <Label fx:id="lb_fecha_pago" layoutX="773.0" layoutY="9.0" text="[fecha pago]" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator layoutX="957.0" layoutY="4.0" orientation="VERTICAL" prefHeight="37.0" prefWidth="9.0" />
             </children>
         </AnchorPane>
       <JFXListView fx:id="listView_abonos" layoutX="131.0" layoutY="117.0" prefHeight="391.0" prefWidth="617.0" />

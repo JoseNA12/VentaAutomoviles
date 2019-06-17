@@ -18,6 +18,19 @@ public class Venta {
         this.fecha = fecha;
     }
 
+    public Venta(String marca, String modelo, String anio, String pasajeros, String precio, String tipo,
+                 String nombreCl,String apellidosCl, String telefono, String metodopago, String monto,
+                 String estado, String fecha){
+        this.vehiculo = new Vehiculo(marca,modelo,anio,pasajeros,
+                tipo,precio);
+        this.metodoPago = new MetodoPago(metodopago);
+        this.usuario = new Usuario(nombreCl,apellidosCl,telefono);
+        this.monto = monto;
+        this.estado = estado;
+        this.fecha = fecha;
+
+    }
+
     public Vehiculo getVehiculo() {
         return vehiculo;
     }

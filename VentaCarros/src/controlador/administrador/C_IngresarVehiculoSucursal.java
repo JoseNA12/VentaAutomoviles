@@ -14,6 +14,8 @@ import modelo.Vehiculo;
 
 import java.io.IOException;
 
+import static modelo.Alerts.informationDialog;
+
 public class C_IngresarVehiculoSucursal {
 
     @FXML JFXListView listView_vehiculo_seleccionado;
@@ -58,6 +60,8 @@ public class C_IngresarVehiculoSucursal {
     private void handle_btn_enviar(ActionEvent event) {
         GroupDBConnection.getDBInstance().enviarCarroASucursal(vehiculo_seleccionado,
                 cb_sucursal.getSelectionModel().getSelectedItem(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+
+        informationDialog("Atención", "Vehículo enviado", "Se ha enviado el vehículo a la sucursal" + cb_sucursal.getSelectionModel().getSelectedItem().getNombreSucursal());
     }
 
     private void handle_btn_atras(ActionEvent event) {

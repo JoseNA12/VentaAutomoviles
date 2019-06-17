@@ -227,7 +227,6 @@ public class C_IngresarVehiculoFabrica {
                 limpiarCampos();
             }
         }
-
     }
 
     private void handle_btn_aniadir_extra(ActionEvent event) {
