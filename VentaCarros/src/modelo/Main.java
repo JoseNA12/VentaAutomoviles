@@ -48,6 +48,7 @@ public class Main extends Application {
 
         // -> Pantalla inicial
         FXRouter.startFrom("InicioSesion");
+
     }
 
     public static void main(String[] args) {
