@@ -13,6 +13,7 @@ import modelo.*;
 import java.io.IOException;
 import java.security.acl.Group;
 
+import static modelo.Alerts.errorDialog;
 import static modelo.Alerts.informationDialog;
 
 public class C_PedidosClientes {
@@ -76,6 +77,10 @@ public class C_PedidosClientes {
             listView_pedidos_pendientes.setItems(pedidos_pendientes_ObservableList);
 
             informationDialog("Atención", "Vehículo enviado!", "Se ha enviado el pedido del vehículo a la fabrica");
+        }
+        else {
+            errorDialog("Error", "Indique una fecha para continuar",
+                    "Debe ingresar una fecha para enviar el vehículo a la fabrica");
         }
     }
 
