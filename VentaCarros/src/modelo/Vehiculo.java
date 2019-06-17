@@ -6,7 +6,8 @@ import java.io.FileInputStream;
 
 public class Vehiculo {
 
-    private int ID;
+    private int idCarroEnFabrica;
+    private int idCarroEnInventario;
     private String nombre_carro;
     private Marca marca;
     private String modelo;
@@ -31,18 +32,18 @@ public class Vehiculo {
 
 
 
-    public Vehiculo(int ID, Marca marca, String modelo){
-        this.ID = ID;
+    public Vehiculo(int idCarroEnFabrica, Marca marca, String modelo){
+        this.idCarroEnFabrica = idCarroEnFabrica;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
     }
 
 
-    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas,
+    public Vehiculo(int idCarroEnFabrica, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas,
                     TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica, int idFabrica,
                     String fechaProduccion) {
-        this.ID = ID;
+        this.idCarroEnFabrica = idCarroEnFabrica;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
@@ -60,10 +61,10 @@ public class Vehiculo {
         this.fechaProduccion = fechaProduccion;
     }
 
-    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
+    public Vehiculo(int idCarroEnFabrica, Marca marca, String modelo, String anio, String num_pasajeros,
                     TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
                     String aceleracion, String vel_maxima, String precio) {
-        this.ID = ID;
+        this.idCarroEnFabrica = idCarroEnFabrica;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
@@ -78,10 +79,11 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
+    public Vehiculo(int idCarroEnFabrica, Marca marca, String modelo, String anio, String num_pasajeros,
                     TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
                     String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica) {
-        this.ID = ID;
+        this.idCarroEnFabrica = idCarroEnFabrica;
+        this.idCarroEnInventario = idCarroEnInventario;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
@@ -127,11 +129,19 @@ public class Vehiculo {
     }
 
     public int getID() {
-        return this.ID;
+        return this.idCarroEnFabrica;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int idCarroEnFabrica) {
+        this.idCarroEnFabrica = idCarroEnFabrica;
+    }
+
+    public int getIdCarroEnInventario() {
+        return idCarroEnInventario;
+    }
+
+    public void setIdCarroEnInventario(int idCarroEnInventario) {
+        this.idCarroEnInventario = idCarroEnInventario;
     }
 
     public String getNombre_carro() {

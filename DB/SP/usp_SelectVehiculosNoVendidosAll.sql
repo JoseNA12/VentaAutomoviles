@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-ALTER procedure [dbo].[usp_SelectVehiculosNoVendidosAll] as
+CREATE procedure [dbo].[usp_SelectVehiculosNoVendidosAll] as
 begin
 	CREATE TABLE #VentasBO1 (marca varchar(50),modelo varchar(50),pasajeros int,anio int,cantidad int,precio money)
 	CREATE TABLE #VentasBO2 (marca varchar(50),modelo varchar(50),pasajeros int,anio int,cantidad int,precio money)

@@ -3,8 +3,10 @@ package modelo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -137,7 +139,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
             while (rs.next()) {
-                int id = rs.getInt("car_id");
+                int idCarroEnFabrica = rs.getInt("car_id");
                 int idMarca = rs.getInt("carBrand_id");
                 String nombreMarca = rs.getString("brand");
                 int idTipo = rs.getInt("carType_id");
@@ -154,7 +156,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                 String precio = rs.getString("price");
                 int cantidad = rs.getInt("quantity");
 
-                Vehiculo miVehiculo = new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
+                Vehiculo miVehiculo = new Vehiculo(idCarroEnFabrica, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
                         motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad);
 
                 miVehiculo.setBytes_imagen(rs.getBytes("photo"));
@@ -236,6 +238,9 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             rs = ps.getResultSet();
             while (rs.next()) {
                 result = rs.getInt("salesOrder_id");
+                if(rs.getInt("isDiscount") == 1){
+                    Alerts.informationDialog("Descuento","Se ha aplicado un descuento","Se ha aplicado un descuento del 10% a su compra");
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -318,18 +323,20 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
     }
 
-    public int generarCredito(int idCompra, PlanDePago planDePago){
+    public int generarCredito(int idCompra, PlanDePago planDePago, int idMetodoPago){
         int result = 0;
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
-            ps = connection.prepareCall("{call dbo.[usp_CreditGivenInsert](?,?,?,?)}");
+            ps = connection.prepareCall("{call dbo.[usp_CreditGivenInsert](?,?,?,?,?,?)}");
             ps.setInt(1, idCompra);
             ps.setInt(2, planDePago.getPlanID());
             ps.setFloat(3, planDePago.getTotal_a_pagar());
             ps.setFloat(4, planDePago.getPago_por_mes());
+            ps.setFloat(5, planDePago.getPrima());
+            ps.setFloat(6, idMetodoPago);
             ps.executeQuery();
             rs = ps.getResultSet();
             while (rs.next()) {

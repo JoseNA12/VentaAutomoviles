@@ -49,23 +49,22 @@ CREATE PROC [dbo].[usp_CreditGivenInsert]
     @order_id bigint = NULL,
     @creditPlan_id int = NULL,
     @balance money = NULL,
-    @mensualPayment float = NULL
+    @mensualPayment float = NULL,
+	@prima float = NULL,
+	@paymentMethod_id int = NULL
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-	
 	INSERT INTO [dbo].[CreditGiven] ([order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus])
-	SELECT @order_id, dateadd(m, 1, getdate()), @creditPlan_id, @balance, @mensualPayment, 1
-	
-	-- Begin Return Select <- do not remove
-	SELECT [credit_id], [order_id], nextPayment_date, [creditPlan_id], [balance], [mensualPayment], [creditStatus]
-	FROM   [dbo].[CreditGiven]
-	WHERE  [credit_id] = SCOPE_IDENTITY()
-	-- End Return Select <- do not remove
-               
+	SELECT @order_id, getdate(), @creditPlan_id, @balance, @mensualPayment, 1
 	COMMIT
+
+	DECLARE @creditID int
+	SET @creditID = (SELECT [credit_id] FROM   [dbo].[CreditGiven] WHERE  [credit_id] = SCOPE_IDENTITY())
+
+	EXEC [usp_CreditGiven-PaymentInsert] @creditID, @prima, @paymentMethod_id           
 GO
 --exec usp_CreditGivenUpdateMensualPayment 1, 110
 

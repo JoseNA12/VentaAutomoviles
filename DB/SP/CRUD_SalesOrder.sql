@@ -2,23 +2,6 @@ USE [BranchOfficeDB];
 GO
 
 /*
-Consultar ventas x sucursal x tipo de automóvil x país y/o por fechas. Ventas por tipo de pago x sucursal y por fechas.
-*/
-CREATE PROC x
-AS
-BEGIN
-	SELECT so.[salesOrder_id], so.[customer_id], so.[order_status], so.[order_date], so.[paymentMethod_id], so.[office_id], so.totalPrice, so.discount
-	FROM  [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[SalesOrder] so
-	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].SalesOrderDetails sod on sod.salesOrder_id = so.salesOrder_id
-	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].CarSold cso on cso.car_sold_id = sod.car_sold_id
-	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].[Car-Stock] cst on cst.car_stock_id = cso.car_id
-	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cst.car_id
-	inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
-	--inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].BranchOffice bo on bo.branchOffice_id = so.office_id
-	inner join [DESKTOP-3N2P4FH\BOFFICE_INST_2].BranchOfficeDB.[dbo].PaymentMethod pm on pm.paymentMethod_id = so.paymentMethod_id
-END
-
-/*
 Otra parte importante a tomar en cuenta es que la sucursal puede otorgar crédito al comprador, 
 por lo que cuando alguien desea que se les financie un automóvil se debe entonces cobrar un 20% de prima y 
 luego llevar control de los diferentes pagos que debe realizar a una tasa de interés que puede ser variable. 
@@ -48,29 +31,39 @@ AS
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
 
+	DECLARE @taxAmount money
+	IF(@paymentMethod_id = 1) -- Credit card
+		BEGIN
+		SET @taxAmount = (@totalPrice * 0.10)
+		END
+	ELSE 
+		BEGIN
+		SET @taxAmount = 0
+		END
+	
 	DECLARE @amountPurchases int
 	SET @amountPurchases = (SELECT SUM(salesOrder_id) FROM SalesOrder WHERE customer_id = @customer_id AND (year(getdate()) - 5 <= year(order_date)))
-	IF(@amountPurchases > 3 AND @orderStatus = 2) -- Discount and without credit
+	IF(@amountPurchases > 3 AND @orderStatus = 2) -- Discount and without loan
 		BEGIN 
 		BEGIN TRAN
-		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount)
-		SELECT @customer_id, 1, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment - (@payment * 0.10), 0.10
+		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount, tax)
+		SELECT @customer_id, 1, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment - (@payment * 0.10), 0.10, @taxAmount
 	
 		-- Begin Return Select <- do not remove
-		SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
+		SELECT 1 as isDiscount, [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
 		FROM   [dbo].[SalesOrder]
 		WHERE  [salesOrder_id] = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove
 		COMMIT
 		END
 	ELSE
-		BEGIN -- Credit or Without discount
+		BEGIN -- loan or Without discount
 		BEGIN TRAN
-		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount)
-		SELECT @customer_id, @orderStatus, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment, 0
+		INSERT INTO [dbo].[SalesOrder] ([customer_id], [order_status],  [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount, tax)
+		SELECT @customer_id, @orderStatus, GETDATE(), @paymentMethod_id, @office_id, @totalPrice, @payment, 0, @taxAmount
 	
 		-- Begin Return Select <- do not remove
-		SELECT [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
+		SELECT 0 as isDiscount, [salesOrder_id], [customer_id], [order_status], [order_date], [paymentMethod_id], [office_id], [totalPrice], totalPayment, discount
 		FROM   [dbo].[SalesOrder]
 		WHERE  [salesOrder_id] = SCOPE_IDENTITY()
 		-- End Return Select <- do not remove      

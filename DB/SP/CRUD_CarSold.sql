@@ -24,7 +24,7 @@ IF OBJECT_ID('[dbo].[usp_CarSoldInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarSoldInsert] 
 END 
-GO
+GO--"FK_CarSold_Car-Stock". The conflict occurred in database "BranchOfficeDB", table "dbo.Car-Stock", column 'car_stock_id'.
 CREATE PROC [dbo].[usp_CarSoldInsert] 
     @car_id int,
 	@office_id int
@@ -33,7 +33,6 @@ AS
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-	
 	INSERT INTO [dbo].[CarSold] ([car_id])
 	SELECT @car_id
 	COMMIT

@@ -67,8 +67,20 @@ public class C_SolicitarCredito {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
-
         GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
+        Alerts.informationDialog("Crédito brindado!","Crédito dado","Se le ha brindado el crédito en la compra");
+        try {
+            switch (usuarioActual.getTipoUsuario()) {
+                case FACTURADOR:
+                    FXRouter.goTo("Menu_facturador");
+                    break;
+                case CLIENTE:
+                    FXRouter.goTo("Menu_cliente");
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handle_btn_atras(ActionEvent event) {
