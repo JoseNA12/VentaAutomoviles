@@ -46,7 +46,8 @@ public class C_PedidosClientes {
     private void handle_btn_enviar_a_produccion(ActionEvent event) {
         pedidoVehiculo = (PedidoVehiculo) listView_pedidos.getSelectionModel().getSelectedItem();
         if (pedidoVehiculo != null && dt_fecha_de_entrega.getValue() != null) {
-           // GroupDBConnection.getDBInstance().enviarVehiculo(pedidoVehiculo);
+            pedidoVehiculo.setFechaEntrega(dt_fecha_de_entrega.getValue().toString());
+            GroupDBConnection.getDBInstance().enviarPedidoVehiculo(pedidoVehiculo);
         }
     }
 

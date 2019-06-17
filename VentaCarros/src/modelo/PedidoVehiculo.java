@@ -5,90 +5,86 @@ import java.util.List;
 
 public class PedidoVehiculo {
 
-    private Vehiculo vehiculo;
-    private ArrayList<ExtraVehiculo> extrasVehiculo;
-    private Usuario usuario;
-    private float precioTotal;
-    private MetodoPago metodoPago;
     private int idPedido;
+    private Vehiculo vehiculoPedido;
+    private Usuario usuarioSolicitante;
+    private Fabrica fabrica;
     private int idSucursal;
-    private int idFabrica;
-    private int idCliente;
-    private int idCarro;
-    private Marca marca;
-    private String modelo;
-    private String nombreFabrica;
-    private String nombreCliente;
     private String fechaPedido;
     private String fechaEntrega;
     private String detalles;
 
 
-    public PedidoVehiculo(int idPedido, int idSucursal, int idFabrica, String nombreFabrica, int idCliente, String nombreCliente, int idCarro, Marca marca,
-                          String modelo,String fechaPedido, String fechaEntrega, String detalles) {
+    public PedidoVehiculo(int idPedido, Vehiculo vehiculoPedido, Usuario usuarioSolicitante, Fabrica fabrica ,int idSucursal,
+                          String fechaPedido, String fechaEntrega, String detalles) {
         this.idPedido = idPedido;
         this.idSucursal = idSucursal;
-        this.idFabrica = idFabrica;
-        this.idCliente = idCliente;
-        this.idCarro = idCarro;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.nombreFabrica = nombreFabrica;
-        this.nombreCliente = nombreCliente;
         this.fechaPedido = fechaPedido;
         this.fechaEntrega = fechaEntrega;
         this.detalles = detalles;
     }
 
-    public PedidoVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-        this.precioTotal = Float.parseFloat(vehiculo.getPrecio());
-        this.extrasVehiculo = new ArrayList<ExtraVehiculo>();
+    public int getIdPedido() {
+        return idPedido;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public Vehiculo getVehiculoPedido() {
+        return vehiculoPedido;
     }
 
-    public ArrayList<ExtraVehiculo> getExtrasVehiculo() {
-        return extrasVehiculo;
+    public void setVehiculoPedido(Vehiculo vehiculoPedido) {
+        this.vehiculoPedido = vehiculoPedido;
     }
 
-    public void setExtrasVehiculo(ArrayList<ExtraVehiculo> extrasVehiculo) {
-        this.extrasVehiculo = extrasVehiculo;
+    public Usuario getUsuarioSolicitante() {
+        return usuarioSolicitante;
     }
 
-    public void addExtra(ExtraVehiculo extraVehiculo) {
-        this.precioTotal += Float.parseFloat(extraVehiculo.getPrecio());
-        System.out.println(extraVehiculo.getPrecio());
-        this.extrasVehiculo.add(extraVehiculo);
+    public void setUsuarioSolicitante(Usuario usuarioSolicitante) {
+        this.usuarioSolicitante = usuarioSolicitante;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Fabrica getFabrica() {
+        return fabrica;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFabrica(Fabrica fabrica) {
+        this.fabrica = fabrica;
     }
 
-    public float getPrecioTotal() {
-        return precioTotal;
+    public int getIdSucursal() {
+        return idSucursal;
     }
 
-    public void setPrecioTotal(float precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
-    public MetodoPago getMetodoPago() {
-        return metodoPago;
+    public String getFechaPedido() {
+        return fechaPedido;
     }
 
-    public void setMetodoPago(MetodoPago metodoPago) {
-        this.metodoPago = metodoPago;
+    public void setFechaPedido(String fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
     }
 }

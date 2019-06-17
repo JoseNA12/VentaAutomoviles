@@ -109,6 +109,7 @@ public class GroupDBConnection {
 
     public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
 
-    //public void enviarVehiculo(PedidoVehiculo pedidoVehiculo){BOfficeDBInstance.enviarVehiculoPedido(pedid);}
+    public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.pedirVehiculo(pedidoVehiculo);}
 
+    public void enviarPedidoVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.enviarPedidoVehiculo(pedidoVehiculo);}
 }
