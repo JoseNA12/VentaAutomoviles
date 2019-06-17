@@ -596,21 +596,104 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                         fecha);
                 ReturnList.add(ventaAux);
             }
-
-
             /*connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?)}");
             callableStatement.setInt(1, idPedido);
             callableStatement.setNString(2, fechaEntrega);
             callableStatement.executeQuery();*/
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             closeJDBCResources(connection, callableStatement, rs);
         }
-
         return ReturnList;
+    }
 
+    public ObservableList<Vehiculo> SelectVehiculosDemanda(int idSucursal){
+        ObservableList<Vehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try{
+            switch (idSucursal){
+                case 1:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
+                    break;
+                case 2:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
+                    break;
+                case 3:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
+                    break;
+                default:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemandaAll]}");
+                    break;
+            }
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                int pasajeros = rs.getInt("pasajeros");
+                String anio = rs.getString("anio");
+                int cantidad = rs.getInt("cantidad");
+                float precio = rs.getFloat("precio");
+                Vehiculo carroAux = new Vehiculo(marca,modelo,anio,pasajeros,cantidad,precio);
+                ReturnList.add(carroAux);
+            }
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
+    }
+
+    public ObservableList<Vehiculo> SelectVehiculosNoVendidos(int idSucursal){
+        ObservableList<Vehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try{
+            switch (idSucursal){
+                case 1:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
+                    break;
+                case 2:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
+                    break;
+                case 3:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
+                    break;
+                default:
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    callableStatement = connection.prepareCall("{call [dbo].[usp_SelectVehiculosNoVendidosAll]}");
+                    break;
+            }
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                int pasajeros = rs.getInt("pasajeros");
+                String anio = rs.getString("anio");
+                int cantidad = rs.getInt("cantidad");
+                float precio = rs.getFloat("precio");
+                Vehiculo carroAux = new Vehiculo(marca,modelo,anio,pasajeros,cantidad,precio);
+                ReturnList.add(carroAux);
+            }
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
     }
 }

@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import modelo.BranchOfficeDB_Connection;
 import modelo.GroupDBConnection;
+import modelo.TipoUsuario;
 import modelo.Vehiculo;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class C_Catalogo {
         init_listView();
     }
 
-    // Inicializar las referecias de los handlers de los componentes de la UI
+    //Inicializar las referecias de los handlers de los componentes de la UI
     private void initComponentes() throws Exception {
         btn_atras.setOnAction(this::handle_btn_atras);
     }

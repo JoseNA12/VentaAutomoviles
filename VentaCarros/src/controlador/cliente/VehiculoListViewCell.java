@@ -96,8 +96,11 @@ public class VehiculoListViewCell extends JFXListCell<Vehiculo> {
 
                 targetFile = new FileOutputStream(path);
                         //"C://Users//jose_//Desktop//VentaAutomoviles//VentaCarros//new.JPG");
-
-                targetFile.write(vehiculo.getBytes_imagen());
+                if(vehiculo.getBytes_imagen()==(null)){
+                    path = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\default.jpg";
+                }else{
+                    targetFile.write(vehiculo.getBytes_imagen());
+                }
                 targetFile.close();
 
                 File file = new File(path);
