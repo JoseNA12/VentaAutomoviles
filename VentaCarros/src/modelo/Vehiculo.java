@@ -23,6 +23,7 @@ public class Vehiculo {
     private int idFabrica;
     private String fechaProduccion;
 
+
     private FileInputStream fis; // para la imagen
     private int file_length;
     private byte[] bytes_imagen;
@@ -104,7 +105,15 @@ public class Vehiculo {
         this.num_pasajeros = num_pasajeros;
         this.tipoVehiculo = new TipoVehiculo(tipo);
         this.precio = precio;
+    }
 
+    public Vehiculo(String marca, String modelo, String anio, int pasajeros, int cantidad, float precio){
+        this.marca = new Marca(marca);
+        this.modelo = modelo;
+        this.anio = anio;
+        this.num_pasajeros = Integer.toString(pasajeros);
+        this.cantidad_en_fabrica = cantidad;
+        this.precio = Float.toString(precio);
     }
 
     public Vehiculo() { // dejar para hacer pruebas
@@ -267,4 +276,5 @@ public class Vehiculo {
     public void setImagen(ImageView imagen) {
         this.imagen = imagen;
     }
+
 }

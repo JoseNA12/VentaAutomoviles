@@ -68,7 +68,7 @@ public class C_Ventas {
 
         ventasDemandaObservableList = FXCollections.observableArrayList();
         listView_vehiculos_demanda.setItems(ventasDemandaObservableList);
-        listView_vehiculos_demanda.setCellFactory(cacaListView -> new VehiculoListViewCell(TipoUsuario.ADMINISTRADOR));
+        listView_vehiculos_demanda.setCellFactory(vehiculosDemandaListView -> new VehiculoListViewCell(TipoUsuario.ADMINISTRADOR));
     }
 
     private void init_cb_sucursal() {
@@ -147,14 +147,24 @@ public class C_Ventas {
         ventasObservableList = FXCollections.observableArrayList();
         ventasObservableList = GroupDBConnection.getDBInstance().SelectInfoVentas(sucursal,tipoCarro,pais,fecha1,fecha2,tipoPago);
         listView_ventas.setItems(ventasObservableList);
-
-        // ------------------------- query a la BD's
-
-        // ---------------------------------------------------
     }
 
     private void handle_btn_visualizar_datos_2(ActionEvent event) {
-
+        int sucursal = -1;
+        if (cb_sucursal_2.getValue() != null) {
+            sucursal = cb_sucursal_2.getValue().getIdSucursal();
+        }
+        if(cb_tipo_demanda.getSelectionModel().getSelectedItem().equals("Demanda en ventas")){
+            ventasDemandaObservableList.removeAll();
+            ventasDemandaObservableList = FXCollections.observableArrayList();
+            ventasDemandaObservableList = GroupDBConnection.getDBInstance().SelectVehiculosDemanda(sucursal);
+            listView_vehiculos_demanda.setItems(ventasDemandaObservableList);
+        }else{
+            ventasDemandaObservableList.removeAll();
+            ventasDemandaObservableList = FXCollections.observableArrayList();
+            ventasDemandaObservableList = GroupDBConnection.getDBInstance().SelectVehiculosNoVendidos(sucursal);
+            listView_vehiculos_demanda.setItems(ventasDemandaObservableList);
+        }
     }
 
     private void handle_btn_limpiar_campos(ActionEvent event) {
