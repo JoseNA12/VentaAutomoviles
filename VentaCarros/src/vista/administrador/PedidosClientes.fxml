@@ -2,9 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListCell?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,17 +35,40 @@
             </JFXButton>
         </children>
     </AnchorPane>
-      <JFXListView fx:id="listView_pedidos" layoutX="92.0" layoutY="116.0" prefHeight="445.0" prefWidth="1097.0" />
-      <ToolBar layoutX="92.0" layoutY="561.0" prefHeight="57.0" prefWidth="1097.0">
-         <items>
-            <JFXDatePicker fx:id="dt_fecha_de_entrega" defaultColor="#d81e5b" prefHeight="28.0" prefWidth="185.0" promptText="Fecha de entrega" style="-fx-font: 18px System;" styleClass="-jfx-text-field" />
-            <Separator orientation="VERTICAL" prefHeight="45.0" prefWidth="630.0" />
-            <JFXButton fx:id="btn_enviar_a_produccion" prefHeight="48.0" prefWidth="262.0" style="-fx-background-color: #d81e5b;" text="Enviar a producción" textFill="#fdf0d5">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </JFXButton>
-         </items>
-      </ToolBar>
+
+        <JFXTabPane fx:id="tb_datos_vehiculo" layoutX="92.0" layoutY="104.0" prefHeight="539.0" prefWidth="1097.0">
+        <tabs>
+            <Tab text="Pendientes">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
+                     <children>
+                  
+                        <JFXListView fx:id="listView_pedidos_pendientes" prefHeight="449.0" prefWidth="1097.0" />
+                        <ToolBar layoutY="444.0" prefHeight="57.0" prefWidth="1097.0">
+                           <items>
+                              <JFXDatePicker fx:id="dt_fecha_de_entrega" defaultColor="#d81e5b" prefHeight="28.0" prefWidth="185.0" promptText="Fecha de entrega" style="-fx-font: 18px System;" styleClass="-jfx-text-field" />
+                              <Separator orientation="VERTICAL" prefHeight="48.0" prefWidth="620.0" />
+                              <JFXButton fx:id="btn_enviar_a_produccion" prefHeight="48.0" prefWidth="262.0" style="-fx-background-color: #d81e5b;" text="Enviar a producción" textFill="#fdf0d5">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </JFXButton>
+                           </items>
+                        </ToolBar>
+                     </children>
+                </AnchorPane>
+            </content>
+            </Tab>
+            <Tab text="Atendidos">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
+                     <children>
+                        <JFXListView fx:id="listView_pedidos_atendidos" prefHeight="502.0" prefWidth="1097.0" />
+                     </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+        </JFXTabPane>
     </children>
 </AnchorPane>

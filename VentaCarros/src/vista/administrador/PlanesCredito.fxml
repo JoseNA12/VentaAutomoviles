@@ -33,12 +33,12 @@
       <JFXListView fx:id="listView_planes_pago" layoutX="92.0" layoutY="120.0" prefHeight="453.0" prefWidth="1097.0" />
       <ToolBar layoutX="92.0" layoutY="573.0" prefHeight="43.0" prefWidth="1097.0">
          <items>
-            <JFXButton fx:id="btn_nuevo_credito" prefHeight="42.0" prefWidth="360.0" style="-fx-background-color: #d81e5b;" text="Nuevo credito" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_nuevo_credito" prefHeight="42.0" prefWidth="355.0" style="-fx-background-color: #d81e5b;" text="Nuevo credito" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_editar_credito" prefHeight="42.0" prefWidth="355.0" style="-fx-background-color: #d81e5b;" text="Editar credito" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_editar_credito" prefHeight="42.0" prefWidth="350.0" style="-fx-background-color: #d81e5b;" text="Editar credito" textFill="#fdf0d5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

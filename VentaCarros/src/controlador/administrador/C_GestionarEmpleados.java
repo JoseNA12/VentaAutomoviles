@@ -22,6 +22,7 @@ import modelo.Sucursal;
 import java.io.IOException;
 
 import static modelo.Alerts.errorDialog;
+import static modelo.Alerts.informationDialog;
 import static modelo.TipoUsuario.FACTURADOR;
 
 public class C_GestionarEmpleados {
@@ -32,6 +33,7 @@ public class C_GestionarEmpleados {
     @FXML private JFXButton btn_DeleteEmpleado;
     @FXML private JFXButton btn_UpdateEmpleado;
     @FXML private JFXButton btn_Atras;
+    @FXML private JFXButton btn_horarios;
 
     private ObservableList<Empleado> empleadosObservableList;
     private ObservableList<Sucursal> sucursalesObservablelist;
@@ -78,10 +80,10 @@ public class C_GestionarEmpleados {
         btn_InsertEmpleado.setOnAction(this::handle_btn_InsertEmpleado);
         btn_DeleteEmpleado.setOnAction(this::handle_btn_DeleteEmpleado);
         btn_UpdateEmpleado.setOnAction(this::handle_btn_UpdateEmpleado);
+        btn_horarios.setOnAction(this::handle_btn_horarios);
         btn_Atras.setOnAction(this::handle_btn_Atras);
         init_cbx_Sucursal();
     }
-
 
     private void handle_btn_InsertEmpleado(ActionEvent event){
         try{
@@ -111,6 +113,7 @@ public class C_GestionarEmpleados {
             errorDialog("Error", "Empleado no selecionado", "Debe seleccionar un empleado para continuar");
         }
     }
+
     private void handle_btn_Atras(ActionEvent event) {
         try {
             if (esCliente) {
@@ -118,9 +121,21 @@ public class C_GestionarEmpleados {
             } else {
                 FXRouter.goTo("Menu_administrador");
             }
-
         }catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void handle_btn_horarios(ActionEvent event) {
+        if (cbx_Sucursal.getValue() != null) {
+            informationDialog("Horarios", cbx_Sucursal.getValue().getNombreSucursal(),
+                    "De Lunes a Domingo \n\n" +
+                    "Hora de apertura: " + cbx_Sucursal.getValue().getHoraApertura() + "\n\n" +
+                            "Hora de cierre: " + cbx_Sucursal.getValue().getHoraCierre());
+        }
+        else {
+            errorDialog("Error", "Seleccione una sucursal",
+                    "Para mostrar los horarios debe seleccionar una sucursal!");
         }
     }
 

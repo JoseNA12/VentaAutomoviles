@@ -32,7 +32,7 @@
                 </Label>
                 <ImageView fx:id="imgv_imagen" fitHeight="83.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/cart.png" />
+                        <Image url="@../images/product.png" />
                     </image>
                 </ImageView>
                 <Label fx:id="lb_nombre_vehiculo" text="Label" GridPane.columnIndex="2">
