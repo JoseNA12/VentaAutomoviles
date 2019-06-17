@@ -339,7 +339,12 @@ public class FactoryDB_Connection extends DB_Connection{
             closeJDBCResources(connection, callableStatement, rs);
         }
     }
+/*
+o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[customer_id], cu.name as customerName, cu.lastname, cu.phone, u.email,
+	o.[car_id], c.carBrand_id, cb.name as brandName, c.model,o.[quantity], c.engine, c.seats, c2.doors, c2.fuelType_id, c.year, c2.acceleration, c2.maximum_speed,
+	c2.price, c2.photo, o2.order_date, o2.delivery_date, o2.details, o.orderStatus, os.statusName
 
+ */
     public ObservableList<PedidoVehiculo> getPedidoVehiculos(){
         ObservableList<PedidoVehiculo> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -357,6 +362,7 @@ public class FactoryDB_Connection extends DB_Connection{
                 String nombreFabrica = rs.getString("factoryName");
                 int idCliente = rs.getInt("customer_id");
                 String nombreCliente = rs.getString("customerName");
+                String apellidoCliente = rs.getString("lastname");
                 int idCarro = rs.getInt("car_id");
                 int idMarca = rs.getInt("carBrand_id");
                 String nombreMarca = rs.getString("brandName");
@@ -364,8 +370,13 @@ public class FactoryDB_Connection extends DB_Connection{
                 String fechaPedido = rs.getString("order_date");
                 String fechaEntrega = rs.getString("delivery_date");
                 String detalles = rs.getString("details");
-                ReturnList.add(new PedidoVehiculo(idPedido, idSucursal, idFabrica, nombreFabrica, idCliente, nombreCliente, idCarro, new Marca(idMarca, nombreMarca),
-                modelo, fechaPedido, fechaEntrega, detalles));
+                String telefonoCliente = rs.getString("phone");
+                String emailCliente = rs.getString("email");
+
+                Vehiculo vehiculo = new Vehiculo(idCarro, new Marca(idMarca, nombreMarca), modelo);
+                Usuario usuario = new Usuario(idCliente, nombreCliente, apellidoCliente, telefonoCliente, emailCliente);
+                Fabrica fabrica = new Fabrica(idFabrica, nombreFabrica);
+                ReturnList.add(new PedidoVehiculo(idPedido, vehiculo, usuario, fabrica, idSucursal, fechaPedido, fechaEntrega, detalles));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -374,15 +385,37 @@ public class FactoryDB_Connection extends DB_Connection{
             return ReturnList;
         }
     }
-    public void enviarVehiculoPedido(String fechaEntrega, int idPedido){
+
+    public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?)}");
-            callableStatement.setInt(1, idPedido);
-            callableStatement.setNString(2, fechaEntrega);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderInsert](?,?,?,?,?,?)}");
+            callableStatement.setInt(1, pedidoVehiculo.getIdSucursal());
+            callableStatement.setInt(2, pedidoVehiculo.getFabrica().getID());
+            callableStatement.setInt(3, pedidoVehiculo.getUsuarioSolicitante().getIdUsuario());
+            callableStatement.setInt(4, pedidoVehiculo.getVehiculoPedido().getID());
+            callableStatement.setInt(5, 1);
+            callableStatement.setNString(6, pedidoVehiculo.getDetalles());
+            callableStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
+
+    public void enviarPedidoVehiculo(PedidoVehiculo pedidoVehiculo){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?,?)}");
+            callableStatement.setInt(1, pedidoVehiculo.getIdPedido());
+            callableStatement.setNString(2, pedidoVehiculo.getFechaEntrega());
             callableStatement.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

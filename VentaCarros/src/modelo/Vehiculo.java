@@ -29,6 +29,15 @@ public class Vehiculo {
     private ImageView imagen;
 
 
+
+    public Vehiculo(int ID, Marca marca, String modelo){
+        this.ID = ID;
+        this.nombre_carro = marca.getNombre() + " " + modelo;
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+
+
     public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas,
                     TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica, int idFabrica,
                     String fechaProduccion) {
