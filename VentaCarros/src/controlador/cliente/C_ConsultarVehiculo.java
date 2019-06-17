@@ -221,6 +221,7 @@ public class C_ConsultarVehiculo {
             return false;
         }
     }
+
     private VehiculoComprado componerVehiculoCompra(Usuario usuario){
         VehiculoComprado vehiculoComprado = GetVehiculoComprado();
         vehiculoComprado.setUsuario(usuario);
@@ -288,33 +289,6 @@ public class C_ConsultarVehiculo {
 
             //System.out.println("Your name: " + result.get());
         }
-
-        /*JFXDialogLayout content= new JFXDialogLayout();
-        JFXTextField tf_cedula = new JFXTextField();
-        content.setHeading(new Text(encabezado));
-        content.setBody(new Text(cuerpo), tf_cedula);
-        JFXDialog dialog =new JFXDialog(sp_dialogs, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton btn_ingresar = new JFXButton("Ingresar");
-        btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event) {
-                // validar la cedula
-                // obtener el usuario de la cedula y meter dentro del objeto Usuario
-                GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
-                //FXRouter.goTo("Abonos_cliente", usuario);
-
-            }
-        });
-        JFXButton btn_cancelar = new JFXButton("Cancelar");
-        btn_cancelar.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event){
-                dialog.close();
-            }
-        });
-
-        content.setActions(btn_ingresar, btn_cancelar);
-        dialog.show();*/
     }
 
     private void solicitarCredito_facturador() {
@@ -338,37 +312,6 @@ public class C_ConsultarVehiculo {
             }
             //System.out.println("Your name: " + result.get());
         }
-
-        /*JFXDialogLayout content= new JFXDialogLayout();
-        JFXTextField tf_correo = new JFXTextField();
-        content.setHeading(new Text(encabezado));
-        content.setBody(new Text(cuerpo), tf_correo);
-        JFXDialog dialog =new JFXDialog(sp_dialogs, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton btn_ingresar = new JFXButton("Ingresar");
-        btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event){
-                try {
-                    int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(tf_correo.getText());
-                    Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
-
-                    // añadir al objeto PedidoVehiculo el tipo de pago
-                    FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuario));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        JFXButton btn_cancelar = new JFXButton("Cancelar");
-        btn_cancelar.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event){
-                dialog.close();
-            }
-        });
-
-        content.setActions(btn_ingresar, btn_cancelar);
-        dialog.show();*/
     }
 
     private boolean validarEdad(){

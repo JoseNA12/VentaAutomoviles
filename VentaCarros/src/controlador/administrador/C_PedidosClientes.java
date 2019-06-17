@@ -13,6 +13,8 @@ import modelo.*;
 import java.io.IOException;
 import java.security.acl.Group;
 
+import static modelo.Alerts.informationDialog;
+
 public class C_PedidosClientes {
 
     @FXML JFXButton btn_atras;
@@ -72,6 +74,8 @@ public class C_PedidosClientes {
             pedidos_pendientes_ObservableList = FXCollections.observableArrayList();
             pedidos_pendientes_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Pendientes");
             listView_pedidos_pendientes.setItems(pedidos_pendientes_ObservableList);
+
+            informationDialog("Atención", "Vehículo enviado!", "Se ha enviado el pedido del vehículo a la fabrica");
         }
     }
 
