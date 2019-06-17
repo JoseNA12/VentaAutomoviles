@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import modelo.*;
 
 import java.io.IOException;
+import java.security.acl.Group;
 
 public class C_PedidosClientes {
 
@@ -38,6 +39,7 @@ public class C_PedidosClientes {
     }
 
     private void init_listView_pedidos() {
+
         pedidos_ObservableList = FXCollections.observableArrayList();
 
         // -------------------- query a la base consultando pedidos actuales
@@ -50,13 +52,16 @@ public class C_PedidosClientes {
         // -------------------------------------------------------------------
 
         listView_pedidos.setItems(pedidos_ObservableList);
+
+        listView_pedidos.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
+
         listView_pedidos.setCellFactory(miLista -> new PedidoListViewCell());
     }
 
     private void handle_btn_enviar_a_produccion(ActionEvent event) {
         pedidoVehiculo = (PedidoVehiculo) listView_pedidos.getSelectionModel().getSelectedItem();
         if (pedidoVehiculo != null && dt_fecha_de_entrega.getValue() != null) {
-            // mandar a "fabricar" el pedido
+           // GroupDBConnection.getDBInstance().enviarVehiculo(pedidoVehiculo);
         }
     }
 

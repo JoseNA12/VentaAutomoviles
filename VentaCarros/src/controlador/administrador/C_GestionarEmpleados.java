@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import modelo.Empleado;
 import modelo.GroupDBConnection;
@@ -20,6 +21,7 @@ import modelo.Sucursal;
 
 import java.io.IOException;
 
+import static modelo.Alerts.errorDialog;
 import static modelo.TipoUsuario.FACTURADOR;
 
 public class C_GestionarEmpleados {
@@ -34,6 +36,11 @@ public class C_GestionarEmpleados {
     private ObservableList<Empleado> empleadosObservableList;
     private ObservableList<Sucursal> sucursalesObservablelist;
 
+    @FXML Label lb_titulo_ventana;
+
+    private Boolean esCliente = false;
+
+
     public void initialize(){
         initComponentes();
         init_ListView_Empleados();
@@ -43,6 +50,13 @@ public class C_GestionarEmpleados {
                 filtrarEmpleadosXSucursal();
             }
         });
+
+        if (esCliente) {
+            btn_InsertEmpleado.setVisible(false);
+            btn_DeleteEmpleado.setVisible(false);
+            btn_UpdateEmpleado.setVisible(false);
+            lb_titulo_ventana.setText("Sucursales y empleados registrados");
+        }
     }
 
     private void init_cbx_Sucursal() {
@@ -60,6 +74,7 @@ public class C_GestionarEmpleados {
     }
 
     private void initComponentes(){
+        esCliente = (Boolean) FXRouter.getData();
         btn_InsertEmpleado.setOnAction(this::handle_btn_InsertEmpleado);
         btn_DeleteEmpleado.setOnAction(this::handle_btn_DeleteEmpleado);
         btn_UpdateEmpleado.setOnAction(this::handle_btn_UpdateEmpleado);
@@ -80,8 +95,8 @@ public class C_GestionarEmpleados {
             Empleado empSeleccionado = ListView_Empleados.getSelectionModel().getSelectedItem();
             GroupDBConnection.getDBInstance().DeleteEmpleado(empSeleccionado);
             init_ListView_Empleados();
-        }else{
-            System.out.println("nada seleccionado");
+        } else {
+            errorDialog("Error", "Empleado no selecionado", "Debe seleccionar un empleado para continuar");
         }
     }
     private void handle_btn_UpdateEmpleado(ActionEvent event){
@@ -92,13 +107,18 @@ public class C_GestionarEmpleados {
                 e.printStackTrace();
             }
         }
-        else{
-            //MENSAJE DE QUE SELECCIONE EMPLEADO
+        else {
+            errorDialog("Error", "Empleado no selecionado", "Debe seleccionar un empleado para continuar");
         }
     }
     private void handle_btn_Atras(ActionEvent event) {
-        try{
-            FXRouter.goTo("Menu_administrador");
+        try {
+            if (esCliente) {
+                FXRouter.goTo("Menu_cliente");
+            } else {
+                FXRouter.goTo("Menu_administrador");
+            }
+
         }catch (IOException e) {
             e.printStackTrace();
         }

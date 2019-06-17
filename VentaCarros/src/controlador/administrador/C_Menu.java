@@ -25,6 +25,8 @@ public class C_Menu {
 
     public void initialize() throws Exception {
         initComponentes();
+        System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
@@ -40,7 +42,7 @@ public class C_Menu {
 
     private void handle_btn_empleados(ActionEvent event) {
         try {
-            FXRouter.goTo("Empleados_administrador");
+            FXRouter.goTo("Empleados_administrador", false); // false: no es cliente
         } catch (IOException e) {
             e.printStackTrace();
         }

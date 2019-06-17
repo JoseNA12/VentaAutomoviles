@@ -125,4 +125,25 @@ AS
 GO
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
+exec usp_reduceCarStock 1, 1
 
+IF OBJECT_ID('[dbo].usp_reduceCarStock') IS NOT NULL
+BEGIN 
+    DROP PROC [dbo].usp_reduceCarStock 
+END 
+GO
+CREATE PROC [dbo].usp_reduceCarStock 
+    @office_id int,
+    @car_id int
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	DECLARE @stockID int;
+	SET @stockID = (SELECT stock_id FROM Stock WHERE office_id = @office_id);
+	BEGIN TRAN
+	UPDATE [dbo].[Car-Stock]
+	SET    [quantity] = [quantity] - 1
+	WHERE  (car_id = @car_id) AND (stock_id = @stockID)
+	COMMIT
+GO

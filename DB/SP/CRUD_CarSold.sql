@@ -26,7 +26,8 @@ BEGIN
 END 
 GO
 CREATE PROC [dbo].[usp_CarSoldInsert] 
-    @car_id int
+    @car_id int,
+	@office_id int
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
@@ -35,15 +36,18 @@ AS
 	
 	INSERT INTO [dbo].[CarSold] ([car_id])
 	SELECT @car_id
-	
+	COMMIT
+
+	EXEC usp_reduceCarStock @office_id, @car_id
+
 	-- Begin Return Select <- do not remove
 	SELECT [car_sold_id], [car_id]
 	FROM   [dbo].[CarSold]
 	WHERE  [car_sold_id] = SCOPE_IDENTITY()
 	-- End Return Select <- do not remove
-               
-	COMMIT
+              
 GO
+
 IF OBJECT_ID('[dbo].[usp_CarSoldUpdate]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_CarSoldUpdate] 

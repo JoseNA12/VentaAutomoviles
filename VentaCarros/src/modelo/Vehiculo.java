@@ -1,5 +1,7 @@
 package modelo;
 
+import javafx.scene.image.ImageView;
+
 import java.io.FileInputStream;
 
 public class Vehiculo {
@@ -17,17 +19,21 @@ public class Vehiculo {
     private String aceleracion;
     private String vel_maxima;
     private String precio;
-    private String cantidad_en_fabrica;
+    private int cantidad_en_fabrica;
     private int idFabrica;
     private String fechaProduccion;
 
-    private FileInputStream imagen;
-    private int file_length; // para la imagen
+    private FileInputStream fis; // para la imagen
+    private int file_length;
     private byte[] bytes_imagen;
+    private ImageView imagen;
 
 
-    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas, TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica, int idFabrica, String fechaProduccion) {
+    public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros, TipoVehiculo tipoVehiculo, String motor, String puertas,
+                    TipoCombustible tipoCombustible, String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica, int idFabrica,
+                    String fechaProduccion) {
         this.ID = ID;
+        this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
@@ -64,7 +70,7 @@ public class Vehiculo {
 
     public Vehiculo(int ID, Marca marca, String modelo, String anio, String num_pasajeros,
                     TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
-                    String aceleracion, String vel_maxima, String precio, String cantidad_en_fabrica) {
+                    String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica) {
         this.ID = ID;
         this.nombre_carro = marca.getNombre() + " " + modelo;
         this.marca = marca;
@@ -200,11 +206,11 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    public String getCantidad_en_fabrica() {
+    public int getCantidad_en_fabrica() {
         return cantidad_en_fabrica;
     }
 
-    public void setCantidad_en_fabrica(String cantidad_en_fabrica) {
+    public void setCantidad_en_fabrica(int cantidad_en_fabrica) {
         this.cantidad_en_fabrica = cantidad_en_fabrica;
     }
 
@@ -224,12 +230,12 @@ public class Vehiculo {
         this.fechaProduccion = fechaProduccion;
     }
 
-    public FileInputStream getImagen() {
-        return imagen;
+    public FileInputStream getFis() {
+        return fis;
     }
 
-    public void setImagen(FileInputStream imagen, int file_length) {
-        this.imagen = imagen;
+    public void setFis(FileInputStream fis, int file_length) {
+        this.fis = fis;
         this.file_length = file_length;
     }
 
@@ -243,5 +249,13 @@ public class Vehiculo {
 
     public void setBytes_imagen(byte[] bytes_imagen) {
         this.bytes_imagen = bytes_imagen;
+    }
+
+    public ImageView getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(ImageView imagen) {
+        this.imagen = imagen;
     }
 }

@@ -13,9 +13,14 @@ import javafx.scene.text.Text;
 import modelo.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 import static controlador.C_InicioSesion.usuarioActual;
+import static modelo.Alerts.errorDialog;
+import static modelo.Alerts.informationDialog;
 
 public class C_Abono {
 
@@ -86,6 +91,7 @@ public class C_Abono {
         abonosObservableList = GroupDBConnection.getDBInstance().SelectAbonoXUsuario(usuarioActual);
         if(abonosObservableList.isEmpty()){
             lb_fecha_pago.setText("No posee deudas");
+            btn_realizar_abono.setDisable(true);
         }
         else {
             lb_fecha_pago.setText(abonosObservableList.get(abonosObservableList.size() - 1).getfechaProximoPago());
@@ -96,13 +102,37 @@ public class C_Abono {
     }
 
     private void handle_btn_realizar_abono(ActionEvent event) {
-        if (!tf_monto_a_pagar.getText().trim().equals("")){
-            MetodoPago MetodoPagoAux = (MetodoPago) cb_metodo_pago.getSelectionModel().getSelectedItem();
-            GroupDBConnection.getDBInstance().InsertAbono(IdCreditoActual,Float.parseFloat(tf_monto_a_pagar.getText()),MetodoPagoAux.getIdMethod());
-        }
-        else{
+        Boolean esCorrecto = false;
+        String monto = tf_monto_a_pagar.getText().trim();
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+        LocalDate localDate = LocalDate.now();
+
+        if (localDate.toString().equals(lb_fecha_pago.getText())) {
+            if (!monto.equals("")) {
+                if (monto.matches("[0-9]+")) {
+                    if (planDePago.getPago_por_mes() <= Float.valueOf(monto)) {
+                        MetodoPago MetodoPagoAux = (MetodoPago) cb_metodo_pago.getSelectionModel().getSelectedItem();
+                        GroupDBConnection.getDBInstance().InsertAbono(IdCreditoActual, Float.parseFloat(tf_monto_a_pagar.getText()), MetodoPagoAux.getIdMethod());
+
+                        informationDialog("Atención", "Pago realizado exitosamente", "Gracias por confiar en Autos Jx3-L");
+                    } else {
+                        errorDialog("Error", "Monto inváñido",
+                                "Debe de introducir un monto válido acorde al plan de crédito establecido. Este valor puede ser igual o mayor al pago por mes");
+                    }
+                } else {
+                    errorDialog("Error", "Caracteres inválidos",
+                            "Debe de introducir solo caracteres numéricos en el campo de monto a pagar");
+                }
+            } else {
+                errorDialog("Error", "Campo de monto a pagar vacio",
+                        "Debe de introducir una cantidad para continuar");
+            }
+        } else {
+            errorDialog("Error", "Aún no es la fecha del abono",
+                    "Debe esperar hasta el día del abono para realizar un pago!");
         }
+
     }
 
     private void handle_btn_atras(ActionEvent event) {

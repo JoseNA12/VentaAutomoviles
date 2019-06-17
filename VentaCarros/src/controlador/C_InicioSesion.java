@@ -18,6 +18,8 @@ import modelo.GroupDBConnection;
 
 import java.io.IOException;
 
+import static modelo.Alerts.errorDialog;
+
 public class C_InicioSesion {
 
     @FXML AnchorPane ap_pane;
@@ -59,7 +61,7 @@ public class C_InicioSesion {
                 GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
                 usuarioActual = GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
                 if(usuarioActual == null)
-                    System.out.println("Error");
+                    errorDialog("Error", "La cuenta no existe", "Por favor, verifique las credenciales ingresadas!");
                 else{
                     switch (usuarioActual.getTipoUsuario()) {
                         case ADMINISTRADOR:
@@ -79,7 +81,7 @@ public class C_InicioSesion {
             }
         }
         else {
-            mostrarMensaje("Datos incompletos", "Por favor, ingrese un correo electrónico y una contraseña!");
+            errorDialog("Error", "Datos incompletos", "Por favor, ingrese un correo electrónico y una contraseña!");
         }
     }
 

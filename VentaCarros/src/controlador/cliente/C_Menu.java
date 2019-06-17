@@ -62,7 +62,7 @@ public class C_Menu {
 
     private void handle_btn_sucursales(ActionEvent event) {
         try {
-            FXRouter.goTo("Sucursal_cliente");
+            FXRouter.goTo("Empleados_administrador", true); // true: soy cliente
         } catch (IOException e) {
             e.printStackTrace();
         }

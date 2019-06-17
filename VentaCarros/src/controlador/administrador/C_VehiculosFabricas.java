@@ -50,12 +50,14 @@ public class C_VehiculosFabricas {
     private void init_cb_filtrar_por_fabrica() {
         cb_filtrar_por_fabrica.setItems(GroupDBConnection.getDBInstance().getFactory());
         // listener del combo box, cuando se selecciona un elemento hacer un trigger con una accion
+        cb_filtrar_por_fabrica.getSelectionModel().selectFirst();
         cb_filtrar_por_fabrica.setOnAction(this::handle_cb_filtrar_por_fabrica);
     }
 
     private void init_listView() {
-        catalogoObservableList = GroupDBConnection.getDBInstance().getCarrosDeFabrica();
-        listView_catalogo.setItems(catalogoObservableList);
+        //catalogoObservableList = FXCollections.observableArrayList();
+        //listView_catalogo.setItems(catalogoObservableList);
+        listView_catalogo.setItems(GroupDBConnection.getDBInstance().getCarrosDeFabrica());
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell(TipoUsuario.ADMINISTRADOR));
 
         // listener del listview de los planes

@@ -12,6 +12,9 @@ import modelo.GroupDBConnection;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import static modelo.Alerts.errorDialog;
+import static modelo.Alerts.informationDialog;
+
 public class C_CrearCuenta {
 
     @FXML StackPane st_dialogs;
@@ -45,16 +48,16 @@ public class C_CrearCuenta {
 
             if(GroupDBConnection.getDBInstance().signIn(tf_nombre.getText(), tf_apellidos.getText(), tf_fecha_nacimiento.getValue(),
                     tf_cedula.getText(), tf_telefono.getText(), tf_zip_code.getText(), tf_correo.getText(), tf_contrasenia.getText())) {
-                mostrarMensaje("Usuario registrado con éxito", "Usuario registrado correctamente");
+                informationDialog("Atención", "Usuario registrado con éxito", "Usuario registrado correctamente");
             }else{
-                mostrarMensaje("Error", "El correo indicado ya se encuentra registrado en el sistema");
+                errorDialog("Error", "Correo electrónico en uso", "El correo electrónico indicado ya se encuentra registrado en el sistema");
             }
 
 
             //System.out.println(localDate);
         }
         else {
-            mostrarMensaje("Datos incompletos", "Por favor, todos los campos son requeridos para el registro!");
+            errorDialog("Error", "Datos incompletos", "Por favor, todos los campos son requeridos para el registro!");
         }
     }
 
@@ -64,21 +67,5 @@ public class C_CrearCuenta {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void mostrarMensaje(String encabezado, String cuerpo) {
-        JFXDialogLayout content= new JFXDialogLayout();
-        content.setHeading(new Text(encabezado));
-        content.setBody(new Text(cuerpo));
-        JFXDialog dialog =new JFXDialog(st_dialogs, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton button=new JFXButton("Cerrar");
-        button.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event){
-                dialog.close();
-            }
-        });
-        content.setActions(button);
-        dialog.show();
     }
 }

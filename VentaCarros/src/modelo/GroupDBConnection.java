@@ -36,7 +36,7 @@ public class GroupDBConnection {
 
     public ObservableList<MetodoPago> getPaymentMethods(){return BOfficeDBInstance.getPaymentMethods();}
 
-    public ObservableList<PlanDePago> getCreditPlan(PedidoVehiculo pedidoVehiculo){return BOfficeDBInstance.getCreditPlan(pedidoVehiculo);}
+    public ObservableList<PlanDePago> getCreditPlan(VehiculoComprado vehiculoComprado){return BOfficeDBInstance.getCreditPlan(vehiculoComprado);}
 
     public ObservableList<Marca>  getCarBrands() {return FactoryDBInstance.getCarBrands();}
 
@@ -46,17 +46,17 @@ public class GroupDBConnection {
 
     public ObservableList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
 
-    public void comprarPorCredito(PedidoVehiculo pedidoVehiculo, int idSucursal, PlanDePago planDePago){
-        int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), planDePago.getPrima(), 1);
-        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);
-        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
+    public void comprarPorCredito(VehiculoComprado vehiculoComprado, int idSucursal, PlanDePago planDePago){
+        int idCompra = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), planDePago.getPrima(), 1);
+        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(vehiculoComprado, idSucursal);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idCompra);
         BOfficeDBInstance.generarCredito(idCompra, planDePago);
     }
 
-    public void comprarVehiculo(PedidoVehiculo pedidoVehiculo, int idSucursal){
-        int idCompra = BOfficeDBInstance.generarCompra(pedidoVehiculo.getUsuario(), pedidoVehiculo.getMetodoPago(), idSucursal, (int)pedidoVehiculo.getPrecioTotal(), (int)pedidoVehiculo.getPrecioTotal(), 2);
-        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(pedidoVehiculo);
-        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, pedidoVehiculo.getPrecioTotal(), idCompra);
+    public void comprarVehiculo(VehiculoComprado vehiculoComprado, int idSucursal){
+        int idCompra = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), (int)vehiculoComprado.getPrecioTotal(), 2);
+        int idCarroVendido = BOfficeDBInstance.generarCarroVendido(vehiculoComprado, idSucursal);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idCompra);
     }
 
     public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}
@@ -100,7 +100,9 @@ public class GroupDBConnection {
         BOfficeDBInstance.agregarCarroEnSucursal(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos);
     }
 
-    public ObservableList<Vehiculo> getCarrosDeFabrica(){ return FactoryDB_Connection.getFactoryDBInstance().getCarrosDeFabricas();}
+    public ObservableList<Vehiculo> getCarrosDeFabrica(){ return FactoryDBInstance.getCarrosDeFabricas();}
+
+    public ObservableList<PedidoVehiculo> getPedidoVehiculos(){ return FactoryDBInstance.getPedidoVehiculos();}
 
     public void DeleteEmpleado(Empleado empleado){HSDBInstance.DeleteEmpleado(empleado);}
 
@@ -108,8 +110,12 @@ public class GroupDBConnection {
 
     public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
 
+
     public ObservableList<Pais> SelectPaises(){return BOfficeDBInstance.SelectPaises();}
 
     public ObservableList<Venta> SelectInfoVentas(int sucursal, int tipoCar, int pais, String fecha1, String fecha2, int metodoPago){return BOfficeDBInstance.SelectInfoVentas(sucursal,tipoCar,pais,fecha1,fecha2,metodoPago);}
+
+    //public void enviarVehiculo(PedidoVehiculo pedidoVehiculo){BOfficeDBInstance.enviarVehiculoPedido(pedid);}
+
 
 }
