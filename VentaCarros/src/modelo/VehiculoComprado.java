@@ -20,6 +20,7 @@ public class VehiculoComprado {
     public VehiculoComprado(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
         extrasVehiculo = new ArrayList<ExtraVehiculo>();
+        precioTotal = Float.parseFloat(vehiculo.getPrecio());
     }
 
     public Vehiculo getVehiculo() {
@@ -64,7 +65,6 @@ public class VehiculoComprado {
 
     public void addExtra(ExtraVehiculo extraVehiculo) {
         this.precioTotal += Float.parseFloat(extraVehiculo.getPrecio());
-        System.out.println(extraVehiculo.getPrecio());
         this.extrasVehiculo.add(extraVehiculo);
     }
 }

@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROC [dbo].[usp_SelectMasDemandaAll] 
+CREATE PROC [dbo].[usp_SelectMasDemandaAll] 
     --@office_id int = NULL
 AS 
 	SET NOCOUNT ON 

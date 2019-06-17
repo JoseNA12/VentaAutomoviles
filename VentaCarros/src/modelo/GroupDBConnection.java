@@ -47,16 +47,16 @@ public class GroupDBConnection {
     public ObservableList<Fabrica> getFactory() {return FactoryDBInstance.getFactory();}
 
     public void comprarPorCredito(VehiculoComprado vehiculoComprado, int idSucursal, PlanDePago planDePago){
-        int idCompra = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), planDePago.getPrima(), 1);
+        int idVenta = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), planDePago.getPrima(), 1);
         int idCarroVendido = BOfficeDBInstance.generarCarroVendido(vehiculoComprado, idSucursal);
-        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idCompra);
-        BOfficeDBInstance.generarCredito(idCompra, planDePago);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idVenta);
+        BOfficeDBInstance.generarCredito(idVenta, planDePago, vehiculoComprado.getMetodoPago().getIdMethod());
     }
 
     public void comprarVehiculo(VehiculoComprado vehiculoComprado, int idSucursal){
-        int idCompra = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), (int)vehiculoComprado.getPrecioTotal(), 2);
+        int idVenta = BOfficeDBInstance.generarCompra(vehiculoComprado.getUsuario(), vehiculoComprado.getMetodoPago(), idSucursal, (int)vehiculoComprado.getPrecioTotal(), (int)vehiculoComprado.getPrecioTotal(), 2);
         int idCarroVendido = BOfficeDBInstance.generarCarroVendido(vehiculoComprado, idSucursal);
-        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idCompra);
+        BOfficeDBInstance.agregarProductoACompra(idCarroVendido, vehiculoComprado.getPrecioTotal(), idVenta);
     }
 
     public ObservableList<Sucursal> getSucursales(){return BOfficeDBInstance.getSucursales();}

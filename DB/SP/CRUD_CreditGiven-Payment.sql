@@ -41,7 +41,7 @@ AS
 	DECLARE @next_payment date;
 	SET @next_payment = (SELECT dateadd(m, 1, getdate()));
 
-	EXEC [usp_CreditGivenUpdateNextPayment] @credit_id = 1, @nextPayment_date = @next_payment;
+	EXEC [usp_CreditGivenUpdateNextPayment] @credit_id, @next_payment;
 
 	-- Begin Return Select <- do not remove
 	SELECT [payment_id], [credit_id], [payment], [date], [paymentMethod_id]
