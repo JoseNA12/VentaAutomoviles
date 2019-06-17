@@ -120,4 +120,6 @@ public class GroupDBConnection {
 
     //public void enviarVehiculo(PedidoVehiculo pedidoVehiculo){BOfficeDBInstance.enviarVehiculoPedido(pedid);}
 
+    public int SelectIDCustomerByEmail(String email){return HSDBInstance.SelectIDCustomerByEmail(email);}
+
 }

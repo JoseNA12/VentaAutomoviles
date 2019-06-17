@@ -128,7 +128,7 @@ public class C_ConsultarVehiculo {
             case CLIENTE:
                 // TODO: Cambiar ID Sucursal
                 if (validarEdad()) {
-                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(), 1);
+                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
                 }else {
                     Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!","No cuenta con la edad suficiente para comprar un vehículo");
                     //FXRouter.goTo("Abonos_cliente");
@@ -146,7 +146,7 @@ public class C_ConsultarVehiculo {
                         solicitarCedula_credito("Atención", "Ingrese el número de cédula\n\n\n");
                         break;
                     case CLIENTE:
-                        FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra());
+                        FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuarioActual));
                         break;
                 }
             } catch (IOException e) {
@@ -155,9 +155,9 @@ public class C_ConsultarVehiculo {
         }
     }
 
-    private VehiculoComprado componerVehiculoCompra(){
+    private VehiculoComprado componerVehiculoCompra(Usuario usuario){
         VehiculoComprado vehiculoComprado = GetVehiculoComprado();
-        vehiculoComprado.setUsuario(usuarioActual);
+        vehiculoComprado.setUsuario(usuario);
         vehiculoComprado.setMetodoPago(cb_metodo_pago.getSelectionModel().getSelectedItem());
         return vehiculoComprado;
     }
@@ -215,7 +215,7 @@ public class C_ConsultarVehiculo {
             public void handle(ActionEvent event){
                     // validar la cedula
                     // obtener el usuario de la cedula y meter dentro del objeto Usuario
-                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(),1);
+                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual),1);
                     //FXRouter.goTo("Abonos_cliente", usuario);
 
             }
@@ -246,15 +246,11 @@ public class C_ConsultarVehiculo {
                     // validar la cedula
                     // obtener el usuario de la cedula y meter dentro del objeto Usuario
                     // ------------- Query
-
-                    Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
+                    int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(tf_cedula.getText());
+                    Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
 
                     // añadir al objeto PedidoVehiculo el tipo de pago
-
-                    VehiculoComprado vehiculoComprado = GetVehiculoComprado();
-                    vehiculoComprado.setUsuario(usuario);
-
-                    FXRouter.goTo("SolicitarCredito_cliente", vehiculoComprado);
+                    FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuario));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

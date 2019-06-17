@@ -221,7 +221,7 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement ps = null;
-        try {
+        try{
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call [dbo].[usp_EmployeeUpdate](?,?,?,?,?,?,?)}");
             ps.setInt(1, empleado.getIdEmpleado());
@@ -240,11 +240,11 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         }
     }
 
-    public String SelectIDCustomerByEmail(String email){
+    public int SelectIDCustomerByEmail(String email){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement ps = null;
-        String ReturnStr = null;
+        int idCliente = 0;
         try{
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call [dbo].[usp_SelectIDCustomerByMail](?)}");
@@ -252,13 +252,14 @@ public class HumanResourcesDB_Connection extends DB_Connection{
             ps.executeQuery();
             rs = ps.getResultSet();
             while (rs.next()) {
-                ReturnStr = rs.getString("customer_id");
+                idCliente = rs.getInt("customer_id");
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             closeJDBCResources(connection, ps, rs);
+            return idCliente;
         }
-        return ReturnStr;
     }
+
 }
