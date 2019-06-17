@@ -13,9 +13,11 @@ import javafx.scene.text.Text;
 import modelo.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 
 import static controlador.C_InicioSesion.usuarioActual;
@@ -108,12 +110,24 @@ public class C_Abono {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
         LocalDate localDate = LocalDate.now();
 
-        if (localDate.toString().equals(lb_fecha_pago.getText())) {
+        Calendar fechaActual = Calendar.getInstance();
+        Calendar fecha_abono = Calendar.getInstance();
+
+        try {
+            fecha_abono.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(lb_fecha_pago.getText()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (fechaActual.compareTo(fecha_abono) == 0) {
             if (!monto.equals("")) {
                 if (monto.matches("[0-9]+")) {
                     if (planDePago.getPago_por_mes() <= Float.valueOf(monto)) {
                         MetodoPago MetodoPagoAux = (MetodoPago) cb_metodo_pago.getSelectionModel().getSelectedItem();
                         GroupDBConnection.getDBInstance().InsertAbono(IdCreditoActual, Float.parseFloat(tf_monto_a_pagar.getText()), MetodoPagoAux.getIdMethod());
+
+                        SendEmail sendEmail_ = new SendEmail();
+                        sendEmail_.sendEmail(usuarioActual.getCorreo(), "");
 
                         informationDialog("Atención", "Pago realizado exitosamente", "Gracias por confiar en Autos Jx3-L");
                     } else {
@@ -133,6 +147,18 @@ public class C_Abono {
                     "Debe esperar hasta el día del abono para realizar un pago!");
         }
 
+    }
+
+    private boolean validarEdad(){
+        Calendar fechaNacimiento = Calendar.getInstance();
+        Calendar fechaActual = Calendar.getInstance();
+        try{
+            fechaNacimiento.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(usuarioActual.getFechaNacimiento()));
+
+            if(fechaNacimiento.compareTo(fechaActual) > 0)
+                return false;
+        }catch (ParseException e){}
+        return true;
     }
 
     private void handle_btn_atras(ActionEvent event) {
