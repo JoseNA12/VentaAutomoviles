@@ -126,8 +126,8 @@ public class C_Abono {
                         MetodoPago MetodoPagoAux = (MetodoPago) cb_metodo_pago.getSelectionModel().getSelectedItem();
                         GroupDBConnection.getDBInstance().InsertAbono(IdCreditoActual, Float.parseFloat(tf_monto_a_pagar.getText()), MetodoPagoAux.getIdMethod());
 
-                        SendEmail sendEmail_ = new SendEmail();
-                        sendEmail_.sendEmail(usuarioActual.getCorreo(), "");
+                        SendEmail.sendEmail(usuarioActual.getCorreo(),
+                                SendEmail.getCuerpo(usuarioActual,tf_monto_a_pagar.getText(), MetodoPagoAux.getName(), fecha_abono.toString()));
 
                         informationDialog("Atención", "Pago realizado exitosamente", "Gracias por confiar en Autos Jx3-L");
                     } else {

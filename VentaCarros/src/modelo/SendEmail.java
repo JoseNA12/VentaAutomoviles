@@ -16,7 +16,10 @@ import javax.mail.internet.MimeMessage;
  */
 
 public class SendEmail {
-    public Boolean sendEmail(String destinatario, String cuerpo) {
+
+    private static int no_factura = 0;
+
+    public static Boolean sendEmail(String destinatario, String cuerpo) {
         // Put recipient’s address
         String to = destinatario;
 
@@ -69,5 +72,15 @@ public class SendEmail {
             //throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public static String getCuerpo(Usuario usuario, String monto, String metodoPago, String fecha) {
+        no_factura += 1;
+        return "Autos Jx3-L - Informe de factura\n" +
+                "Factura electrónica No. " + String.valueOf(no_factura) + "\n\n" +
+                "- Información de cliente: \n" + usuario.getNombre() + usuario.getApellidos() + "\n" +
+                usuario.getCorreo() + "\n" + usuario.getTelefono() + "\n\n" + "- Información del pago: \n" +
+                "Monto: " + monto + "\n" + "Método de pago: " + metodoPago + "\n" + "Fecha emitida: " + fecha + "\n\n" +
+                "Gracias por usar nuestros servicios!";
     }
 }
