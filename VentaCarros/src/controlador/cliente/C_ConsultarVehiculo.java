@@ -10,10 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import modelo.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +27,9 @@ import static controlador.C_InicioSesion.usuarioActual;
 import static modelo.Alerts.informationDialog;
 
 public class C_ConsultarVehiculo {
+
+    @FXML
+    ImageView iv_foto_vehiculo;
 
     @FXML Label lb_nombre_carro;
     @FXML Label lb_marca;
@@ -92,6 +98,13 @@ public class C_ConsultarVehiculo {
         montoTotal = Double.parseDouble(vehiculo_seleccionado.getPrecio());
         lb_precio_total.setText(String.valueOf(montoTotal));
         lb_total_extras.setText("0.0");
+
+        try {
+            String path = System.getProperty("user.dir") + "\\src\\vista\\images\\temp\\" + vehiculo_seleccionado.getNombre_carro() + ".jpg";
+            File file = new File(path);
+            Image image = new Image(file.toURI().toString());
+            iv_foto_vehiculo.setImage(image);
+        } catch (Exception e) {}
     }
 
     private void init_listView_extras() {
