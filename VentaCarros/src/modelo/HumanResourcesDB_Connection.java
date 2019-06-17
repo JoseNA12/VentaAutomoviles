@@ -240,4 +240,26 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         }
     }
 
+    public int SelectIDCustomerByEmail(String email){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement ps = null;
+        int idCliente = 0;
+        try{
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            ps = connection.prepareCall("{call [dbo].[usp_SelectIDCustomerByMail](?)}");
+            ps.setNString(1, email);
+            ps.executeQuery();
+            rs = ps.getResultSet();
+            while (rs.next()) {
+                idCliente = rs.getInt("customer_id");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, ps, rs);
+            return idCliente;
+        }
+    }
+
 }
