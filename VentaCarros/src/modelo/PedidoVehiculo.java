@@ -30,6 +30,11 @@ public class PedidoVehiculo {
         this.detalles = detalles;
     }
 
+    public PedidoVehiculo(String marca, String modelo, String precio, String nombre, String apellido, String telefono, String correo){
+        this.vehiculoPedido = new Vehiculo(marca,modelo,precio);
+        this.usuarioSolicitante = new Usuario(nombre,apellido,telefono,correo);
+    }
+
     public int getIdPedido() {
         return idPedido;
     }
