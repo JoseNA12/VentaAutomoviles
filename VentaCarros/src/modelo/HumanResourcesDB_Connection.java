@@ -42,7 +42,6 @@ public class HumanResourcesDB_Connection extends DB_Connection{
                     String phone = rs.getString("phone");
                     String email = rs.getString("email");
                     int zip_code = rs.getInt("zip_code");
-//                    int userID = rs.getInt("user_id");
                     String userType_id = rs.getString("userType_id");
                     String userTypeName = rs.getString("userTypeName");
                     if(userTypeName.equals("Cliente")){
@@ -68,18 +67,6 @@ public class HumanResourcesDB_Connection extends DB_Connection{
         }
     }
 
-    /*
-
-        @name nvarchar(50),
-	@lastname nvarchar(50),
-	@birthDate date,
-    @phone nvarchar(50),
-    @email nvarchar(50),
-    @zip_code int,
-	@password nvarchar(50),
-	@identificationCard nvarchar(50)
-
-     */
     public boolean signIn(String name, String lastname, String birthDate, String idCard, String phone, int zip_code, String email, String password){
         Connection connection = null;
         CallableStatement  ps = null;
@@ -160,7 +147,7 @@ public class HumanResourcesDB_Connection extends DB_Connection{
     }
 
     public int InsertEmpleado(Empleado empleado){
-        int ReturnInt = 1;//
+        int ReturnInt = 1;
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement ps = null;
@@ -208,8 +195,6 @@ public class HumanResourcesDB_Connection extends DB_Connection{
             ps = connection.prepareCall("{call [dbo].[usp_EmployeeDelete](?)}");
             ps.setNString(1, empleado.getCorreo());
             ps.executeQuery();
-            rs = ps.getResultSet();
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {

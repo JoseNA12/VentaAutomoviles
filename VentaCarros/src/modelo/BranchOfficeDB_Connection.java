@@ -153,8 +153,13 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                 String vel_maxima = rs.getString("maximum_speed");
                 String precio = rs.getString("price");
                 int cantidad = rs.getInt("quantity");
-                ReturnList.add(new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
-                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad));
+
+                Vehiculo miVehiculo = new Vehiculo(id, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
+                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad);
+
+                miVehiculo.setBytes_imagen(rs.getBytes("photo"));
+
+                ReturnList.add(miVehiculo);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -444,22 +449,28 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
     }
 
-    public void agregarCarroEnSucursal(int idVehiculo, int idSucursal, int cantidadVehiculos){
+    public int agregarCarroEnSucursal(int idVehiculo, int idSucursal, int cantidadVehiculos, int idFabrica){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
+        int car_stock_id = 0;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
-            callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockInsert](?,?,?)}");
+            callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockInsert](?,?,?,?)}");
             callableStatement.setInt(1, idVehiculo);
             callableStatement.setInt(2, idSucursal);
             callableStatement.setInt(3, cantidadVehiculos);
+            callableStatement.setInt(4, idFabrica);
             callableStatement.executeQuery();
-
+            rs = callableStatement.getResultSet();
+            while (rs.next()) {
+                car_stock_id = rs.getInt("car_stock_id");
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             closeJDBCResources(connection, callableStatement, rs);
+            return car_stock_id;
         }
     }
 
@@ -470,7 +481,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanInsert](?,?,?)}");
-            callableStatement.setFloat(1, plan.getPrima());
+            callableStatement.setFloat(1, plan.getPorcentaje_prima());
             callableStatement.setFloat(2, plan.getInteres());
             callableStatement.setFloat(3, plan.getPlazo());
             callableStatement.executeQuery();
@@ -512,8 +523,6 @@ public class BranchOfficeDB_Connection extends DB_Connection{
     }
 
     //public void enviarVehiculoPedido(String fechaEntrega, int idPedido){
-
-
 
     public ObservableList<Venta> SelectInfoVentas(int sucursal, int tipoCar, int pais, String fecha1, String fecha2, int metodoPago){
         ObservableList<Venta> ReturnList = FXCollections.observableArrayList();

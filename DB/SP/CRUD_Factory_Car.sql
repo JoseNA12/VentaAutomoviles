@@ -128,3 +128,27 @@ AS
                
 	COMMIT
 GO
+
+
+IF OBJECT_ID('[dbo].[usp_reduceCarsInFactory]') IS NOT NULL
+BEGIN 
+    DROP PROC [dbo].usp_reduceCarsInFactory 
+END 
+GO
+CREATE PROC [dbo].usp_reduceCarsInFactory 
+    @car_id int = NULL,
+    @factory_id int = NULL,
+    @quantity int = NULL
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+
+	DECLARE @currentQuantity int
+	SET @currentQuantity = (SELECT [quantity] FROM [dbo].[Factory-Car] WHERE (@car_id = car_id) AND (@factory_id = factory_id))
+
+	BEGIN TRAN
+	UPDATE [dbo].[Factory-Car]
+	SET    [quantity] = @currentQuantity - @quantity
+	WHERE  (@car_id = car_id) AND (@factory_id = factory_id)
+	COMMIT
+GO

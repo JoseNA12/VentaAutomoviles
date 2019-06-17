@@ -7,10 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import modelo.GroupDBConnection;
-import modelo.Sucursal;
-import modelo.TipoUsuario;
-import modelo.Vehiculo;
+import modelo.*;
 
 import java.io.IOException;
 
@@ -58,10 +55,13 @@ public class C_IngresarVehiculoSucursal {
     }
 
     private void handle_btn_enviar(ActionEvent event) {
-        GroupDBConnection.getDBInstance().enviarCarroASucursal(vehiculo_seleccionado,
-                cb_sucursal.getSelectionModel().getSelectedItem(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
-
-        informationDialog("Atención", "Vehículo enviado", "Se ha enviado el vehículo a la sucursal" + cb_sucursal.getSelectionModel().getSelectedItem().getNombreSucursal());
+        if(GroupDBConnection.getDBInstance().enviarCarroASucursal(vehiculo_seleccionado,
+                cb_sucursal.getSelectionModel().getSelectedItem(), Integer.parseInt(tf_cantidad_vehiculos.getText()))==0) {
+            Alerts.errorDialog("Error", "Error en el envío", "Ha ocurrido un error inesperado, inténtelo de nuevo!");
+        }else {
+            Alerts.informationDialog("Atención", "Vehículo enviado", "Se ha enviado el vehículo a la sucursal" + cb_sucursal.getSelectionModel().getSelectedItem().getNombreSucursal());
+            handle_btn_atras(null);
+        }
     }
 
     private void handle_btn_atras(ActionEvent event) {

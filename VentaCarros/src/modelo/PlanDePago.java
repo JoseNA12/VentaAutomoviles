@@ -36,6 +36,7 @@ public class PlanDePago {
         this.interes = interes;
         calcularCuotaMensual();
     }
+
     public PlanDePago(float porcentaje_prima, float interes, float plazo){
         this.porcentaje_prima = porcentaje_prima;
         this.interes = interes;

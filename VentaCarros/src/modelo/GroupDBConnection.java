@@ -95,10 +95,7 @@ public class GroupDBConnection {
 
     public int InsertEmpleado(Empleado empleado){return HSDBInstance.InsertEmpleado(empleado);}
 
-    public void enviarCarroASucursal(Vehiculo vehiculo, Sucursal sucursal, int cantidadVehiculos){
-        FactoryDBInstance.generarOrdenEnvio(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos, vehiculo.getIdFabrica());
-        BOfficeDBInstance.agregarCarroEnSucursal(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos);
-    }
+    public int enviarCarroASucursal(Vehiculo vehiculo, Sucursal sucursal, int cantidadVehiculos){ return BOfficeDBInstance.agregarCarroEnSucursal(vehiculo.getID(), sucursal.getIdSucursal(), cantidadVehiculos, vehiculo.getIdFabrica()); }
 
     public ObservableList<Vehiculo> getCarrosDeFabrica(){ return FactoryDBInstance.getCarrosDeFabricas();}
 

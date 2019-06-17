@@ -115,7 +115,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER procedure [dbo].[usp_SelectIDCustomerByMail] (@mail nvarchar(50))
+create procedure [dbo].[usp_SelectIDCustomerByMail] (@mail nvarchar(50))
 AS
 	
 	SELECT [c].[customer_id]

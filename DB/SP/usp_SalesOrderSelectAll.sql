@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-alter PROC [dbo].[usp_SalesOrderSelectAll] 
+create PROC [dbo].[usp_SalesOrderSelectAll] 
     @office_id int = NULL,
 	@carType int = NULL,
 	@country int = NULL,
