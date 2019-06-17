@@ -272,9 +272,6 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         CallableStatement ps = null;
         try {
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
-            ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?)}");
-            ps.setInt(1, pedidoVehiculo.getVehiculo().getID());
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?,?)}");
             ps.setInt(1, vehiculoComprado.getVehiculo().getID());
             ps.setInt(2, idSucursal);
