@@ -492,7 +492,6 @@ public class BranchOfficeDB_Connection extends DB_Connection{
             callableStatement.setFloat(2, plan.getInteres());
             callableStatement.setFloat(3, plan.getPlazo());
             callableStatement.executeQuery();
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -507,7 +506,6 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CountrySelect]}");
             callableStatement.executeQuery();
@@ -712,4 +710,6 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
         return ReturnList;
     }
+
+
 }

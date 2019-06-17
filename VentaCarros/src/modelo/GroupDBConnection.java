@@ -123,4 +123,6 @@ public class GroupDBConnection {
 
     public ObservableList<Vehiculo> SelectVehiculosNoVendidos(int sucursal){return BOfficeDBInstance.SelectVehiculosNoVendidos(sucursal);}
 
+    public ObservableList<PedidoVehiculo> SelectMiPedido(int idCliente){return FactoryDBInstance.SelectMiPedido(idCliente);}
+
 }

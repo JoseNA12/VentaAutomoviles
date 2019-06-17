@@ -443,5 +443,35 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
         }
     }*/
 
+    public ObservableList<PedidoVehiculo> SelectMiPedido(int idCliente){
+        ObservableList<PedidoVehiculo> ReturnList = FXCollections.observableArrayList();
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMiPedido](?)}");
+            callableStatement.setInt(1, idCliente);
+            callableStatement.executeQuery();
+            rs = callableStatement.getResultSet();
+            while(rs.next()){
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                Float precio = rs.getFloat("precio");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String telefono = rs.getString("telefono");
+                String estatus = rs.getString("estatus");
+                PedidoVehiculo nuevoPedido = new PedidoVehiculo(marca,modelo,Float.toString(precio),nombre,apellido,telefono,correo,estatus);
+                ReturnList.add(nuevoPedido);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+        return ReturnList;
+    }
 
 }

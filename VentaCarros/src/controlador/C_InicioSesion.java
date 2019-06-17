@@ -9,11 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-import modelo.BranchOfficeDB_Connection;
-import modelo.TipoUsuario;
-import modelo.Usuario;
-
-import modelo.GroupDBConnection;
+import modelo.*;
 
 
 import java.io.IOException;
