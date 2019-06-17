@@ -38,7 +38,7 @@
         </AnchorPane>
       <AnchorPane layoutX="92.0" layoutY="107.0" prefHeight="553.0" prefWidth="1097.0">
          <children>
-            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="iv_foto_vehiculo" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/picture.png" />
                </image>
