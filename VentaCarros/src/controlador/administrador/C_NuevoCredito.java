@@ -10,6 +10,8 @@ import modelo.PlanDePago;
 
 import java.io.IOException;
 
+import static modelo.Alerts.informationDialog;
+
 public class C_NuevoCredito {
 
     @FXML JFXButton btn_atras;
@@ -49,6 +51,8 @@ public class C_NuevoCredito {
                     !tf_plazo.getText().trim().equals("")) {
                 PlanDePago nuevoPlan = new PlanDePago(Float.parseFloat(tf_porcentaje_prima.getText()),Float.parseFloat(tf_interes.getText()),Float.parseFloat(tf_plazo.getText()));
                 GroupDBConnection.getDBInstance().InsertNuevoPlan(nuevoPlan);
+
+                informationDialog("Atención", "Plan creado", "Se ha creado el plan de crédito satisfactoriamente!");
                 try {
                     FXRouter.goTo("PlanesCredito_administrador");
                 } catch (IOException e) {

@@ -18,6 +18,8 @@ import modelo.TipoUsuario;
 
 import java.io.IOException;
 
+import static modelo.Alerts.errorDialog;
+
 public class C_ActualizarEmpleado {
 
     @FXML private JFXComboBox<Sucursal> cbx_sucursal;
@@ -51,8 +53,8 @@ public class C_ActualizarEmpleado {
                     this.empleado.setTipoUsuario(TipoUsuario.FACTURADOR);
                     break;
             }
-        }else{
-            System.out.println("No actualiza");
+        } else{
+            errorDialog("Error", "Campos vacios", "Por favor, debe seleccionar una sucursal y un tipo de usuario");
         }
     }
 
