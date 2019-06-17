@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -16,8 +18,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Optional;
 
 import static controlador.C_InicioSesion.usuarioActual;
+import static modelo.Alerts.informationDialog;
 
 public class C_ConsultarVehiculo {
 
@@ -126,14 +130,40 @@ public class C_ConsultarVehiculo {
                 this.solicitarCedula_compra_directa("Atención", "Ingrese el número de cédula\n\n\n");
                 break;
             case CLIENTE:
-                // TODO: Cambiar ID Sucursal
-                if (validarEdad()) {
-                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
-                }else {
-                    Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!","No cuenta con la edad suficiente para comprar un vehículo");
-                    //FXRouter.goTo("Abonos_cliente");
+                if (vehiculo_seleccionado.getCantidad_en_fabrica() > 0) { // existe
+                    // TODO: Cambiar ID Sucursal
+                    if (validarEdad()) {
+                        GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
+                    }else {
+                        Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!","No cuenta con la edad suficiente para comprar un vehículo");
+                        //FXRouter.goTo("Abonos_cliente");
+                    }
+                    break;
                 }
-                break;
+                else { // no existe
+                    Boolean hacerPeidido = msgNoExisteEnSucursal();
+
+                    // ----------------------------------------
+                    // componerVehiculoCompra(usuarioActual)
+                    // ----------------------------------------
+
+                    informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                }
+        }
+    }
+
+    private Boolean msgNoExisteEnSucursal() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Atención");
+        alert.setHeaderText("Vehículo no disponible");
+        alert.setContentText("Su vehículo no se encuentra en las sucursales, ¿desea hacer un pedido a fábrica?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            return true;
+        } else {
+            return false;
         }
     }
 
