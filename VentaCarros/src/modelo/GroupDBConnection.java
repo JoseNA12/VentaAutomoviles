@@ -119,4 +119,8 @@ public class GroupDBConnection {
 
     public int SelectIDCustomerByEmail(String email){return HSDBInstance.SelectIDCustomerByEmail(email);}
 
+    public ObservableList<Vehiculo> SelectVehiculosDemanda(int sucursal){return BOfficeDBInstance.SelectVehiculosDemanda(sucursal);}
+
+    public ObservableList<Vehiculo> SelectVehiculosNoVendidos(int sucursal){return BOfficeDBInstance.SelectVehiculosNoVendidos(sucursal);}
+
 }

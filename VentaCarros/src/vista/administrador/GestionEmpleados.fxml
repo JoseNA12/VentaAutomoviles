@@ -29,29 +29,35 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
+            <JFXComboBox fx:id="cbx_Sucursal" focusColor="#d81e5b" labelFloat="true" layoutX="679.0" layoutY="3.0" prefHeight="37.0" prefWidth="283.0" promptText="Sucursales" style="-fx-font: 18px system;" />
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="615.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/calendar.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btn_horarios" layoutX="615.0" layoutY="6.0" prefHeight="35.0" prefWidth="35.0" text=" " />
          </children>
       </AnchorPane>
 
-      <JFXListView fx:id="ListView_Empleados" layoutX="92.0" layoutY="153.0" prefHeight="459.0" prefWidth="1097.0" />
-      <JFXComboBox fx:id="cbx_Sucursal" focusColor="#d81e5b" labelFloat="true" layoutX="906.0" layoutY="114.0" prefHeight="37.0" prefWidth="283.0" promptText="Sucurales" style="-fx-font: 18px system;" />
+      <JFXListView fx:id="ListView_Empleados" layoutX="92.0" layoutY="104.0" prefHeight="508.0" prefWidth="1097.0" />
       <ToolBar layoutX="92.0" layoutY="612.0" prefHeight="49.0" prefWidth="1097.0">
          <items>
       
             <JFXButton fx:id="btn_InsertEmpleado" prefHeight="39.0" prefWidth="355.0" style="-fx-background-color: #d81e5b;" text="Agregar Empleado" textFill="#fdf0d5">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
       
-            <JFXButton fx:id="btn_UpdateEmpleado" prefHeight="39.0" prefWidth="355.0" style="-fx-background-color: #d81e5b;" text="Actualizar" textFill="#fdf0d5">
+            <JFXButton fx:id="btn_UpdateEmpleado" prefHeight="39.0" prefWidth="350.0" style="-fx-background-color: #d81e5b;" text="Actualizar" textFill="#fdf0d5">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
       
             <JFXButton fx:id="btn_DeleteEmpleado" prefHeight="39.0" prefWidth="355.0" style="-fx-background-color: #d81e5b;" text="Remover" textFill="#fdf0d5">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
          </items>

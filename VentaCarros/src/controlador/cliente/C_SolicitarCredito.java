@@ -67,6 +67,7 @@ public class C_SolicitarCredito {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
+
         GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
     }
 
