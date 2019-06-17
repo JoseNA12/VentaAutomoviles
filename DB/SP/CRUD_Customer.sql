@@ -107,3 +107,18 @@ GO
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 
+
+USE [HumanResourcesDB]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_SelectIDCustomerByMail]    Script Date: 16/06/2019 18:47:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[usp_SelectIDCustomerByMail] (@mail nvarchar(50))
+AS
+	
+	SELECT [c].[customer_id]
+	FROM   [dbo].[Customer] c
+	inner join [dbo].[User] u on [c].[user_id] = [u].[user_id]
+	WHERE  ([u].[email] = @mail)
