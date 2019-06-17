@@ -15,42 +15,32 @@
    <children>
       <AnchorPane fx:id="ap_pane" layoutX="714.0" layoutY="68.0" prefHeight="566.0" prefWidth="479.0" style="-fx-background-color: #ff8c42;">
          <children>
-            <JFXTextField fx:id="tf_correo" focusColor="WHITE" layoutX="76.0" layoutY="169.0" prefHeight="25.0" prefWidth="328.0" promptText="correo@dominio.com" style="-fx-text-fill: WHITE; -fx-prompt-text-fill: #f9c784;" unFocusColor="#f9c784">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </JFXTextField>
-            <JFXPasswordField fx:id="tf_contrasenia" focusColor="WHITE" layoutX="76.0" layoutY="283.0" prefHeight="37.0" prefWidth="328.0" promptText="*************" style="-fx-text-fill: WHITE; -fx-prompt-text-fill: #f9c784;" unFocusColor="#f9c784">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </JFXPasswordField>
-            <Text fill="WHITE" layoutX="76.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico">
+            <JFXTextField fx:id="tf_correo" focusColor="WHITE" labelFloat="true" layoutX="75.0" layoutY="163.0" prefHeight="25.0" prefWidth="328.0" promptText="Correo electrónico" style="-fx-text-fill: WHITE; -fx-prompt-text-fill: #f9c784;" unFocusColor="#f9c784">
                <font>
                   <Font size="18.0" />
                </font>
-            </Text>
+            </JFXTextField>
+            <JFXPasswordField fx:id="tf_contrasenia" focusColor="WHITE" labelFloat="true" layoutX="75.0" layoutY="264.0" prefHeight="37.0" prefWidth="328.0" promptText="Contraseña" style="-fx-text-fill: WHITE; -fx-prompt-text-fill: #f9c784;" unFocusColor="#f9c784">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXPasswordField>
             <Text fill="WHITE" layoutX="147.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Sesión">
                <font>
                   <Font size="32.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="76.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <JFXButton fx:id="btn_ingresar" buttonType="RAISED" layoutX="76.0" layoutY="371.0" prefHeight="49.0" prefWidth="328.0" style="-fx-background-color: #4e598c;" text="Ingresar" textFill="WHITE">
+            <JFXButton fx:id="btn_ingresar" buttonType="RAISED" layoutX="75.0" layoutY="372.0" prefHeight="49.0" prefWidth="328.0" style="-fx-background-color: #4e598c;" text="Ingresar" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_crear_cuenta" buttonType="RAISED" layoutX="160.0" layoutY="471.0" style="-fx-background-color: #fcaf58;" text="Crear cuenta cliente" textFill="WHITE">
+            <JFXButton fx:id="btn_crear_cuenta" buttonType="RAISED" layoutX="159.0" layoutY="472.0" style="-fx-background-color: #fcaf58;" text="Crear cuenta cliente" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="16.0" />
                </font>
             </JFXButton>
-            <Separator layoutX="141.0" layoutY="444.0" prefWidth="200.0" />
+            <Separator layoutX="140.0" layoutY="444.0" prefWidth="200.0" />
             <StackPane fx:id="st_dialogs" layoutX="18.0" layoutY="229.0" prefHeight="24.0" prefWidth="441.0" />
          </children></AnchorPane>
       <ImageView fitHeight="507.0" fitWidth="518.0" layoutX="103.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">

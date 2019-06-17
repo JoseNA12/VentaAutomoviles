@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import java.util.Optional;
 
 import static controlador.C_InicioSesion.usuarioActual;
+import static modelo.Alerts.errorDialog;
 import static modelo.Alerts.informationDialog;
 
 public class C_ConsultarVehiculo {
@@ -139,29 +141,69 @@ public class C_ConsultarVehiculo {
     private void handle_btn_comprar(ActionEvent event) {
         switch (usuarioActual.getTipoUsuario()) {
             case FACTURADOR:
-                // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
-                this.solicitarCedula_compra_directa("Atención", "Ingrese el número de cédula\n\n\n");
+                if (vehiculo_seleccionado.getCantidad_en_fabrica() > 0) {
+                    compraDirecta_facturador();
+                } else { // no esta en stock
+                    Boolean hacerPedido = msgNoExisteEnSucursal();
+
+                    if (hacerPedido) {
+                        // ----------------------------------------
+                        // TODO: componerVehiculoCompra(usuarioActual)
+                        // ----------------------------------------
+                        informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                    } else {
+
+                    }
+                }
                 break;
             case CLIENTE:
                 if (vehiculo_seleccionado.getCantidad_en_fabrica() > 0) { // existe
                     // TODO: Cambiar ID Sucursal
                     if (validarEdad()) {
                         GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
-                    }else {
-                        Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!","No cuenta con la edad suficiente para comprar un vehículo");
-                        //FXRouter.goTo("Abonos_cliente");
+                    } else {
+                        Alerts.errorDialog("Cliente no autorizado", "Cliente no autorizado!", "No cuenta con la edad suficiente para comprar un vehículo");
                     }
                     break;
-                }
-                else { // no existe
-                    Boolean hacerPeidido = msgNoExisteEnSucursal();
+                } else { // no esta en stock
+                    Boolean hacerPedido = msgNoExisteEnSucursal();
 
-                    // ----------------------------------------
-                    // componerVehiculoCompra(usuarioActual)
-                    // ----------------------------------------
+                    if (hacerPedido) {
+                        // ----------------------------------------
+                        // TODO: componerVehiculoCompra(usuarioActual)
+                        // ----------------------------------------
 
-                    informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                        informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                    } else {
+
+                    }
                 }
+        }
+    }
+
+    private void handle_btn_solicitar_credito(ActionEvent event) {
+        if (vehiculo_seleccionado != null) {
+            if (vehiculo_seleccionado.getCantidad_en_fabrica() > 0) {
+                try {
+                    switch (usuarioActual.getTipoUsuario()) {
+                        case FACTURADOR:
+                            // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
+                            solicitarCredito_facturador();
+                            break;
+                        case CLIENTE:
+                            FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuarioActual));
+                            break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                errorDialog("Atención!", "Vehículo no disponible",
+                    "Para poder tramitar un plan de pago por créditos el vehículo debe estar disponible en la sucursal actual. " +
+                            "Por tanto, debe esperar hasta la producción de nuevos vehículos o bien, tramitar una compra directa del mismo, " +
+                            "por lo cual se efecturaria un pedido a fabrica.");
+            }
+
         }
     }
 
@@ -169,7 +211,7 @@ public class C_ConsultarVehiculo {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Atención");
         alert.setHeaderText("Vehículo no disponible");
-        alert.setContentText("Su vehículo no se encuentra en las sucursales, ¿desea hacer un pedido a fábrica?");
+        alert.setContentText("Su vehículo no se encuentra en la sucursal, ¿desea hacer un pedido a fábrica?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
@@ -179,25 +221,6 @@ public class C_ConsultarVehiculo {
             return false;
         }
     }
-
-    private void handle_btn_solicitar_credito(ActionEvent event) {
-        if (vehiculo_seleccionado != null) {
-            try {
-                switch (usuarioActual.getTipoUsuario()) {
-                    case FACTURADOR:
-                        // solicitarCedula hace la consulta a la bd y redirigue a la pantalla
-                        solicitarCedula_credito("Atención", "Ingrese el número de cédula\n\n\n");
-                        break;
-                    case CLIENTE:
-                        FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuarioActual));
-                        break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private VehiculoComprado componerVehiculoCompra(Usuario usuario){
         VehiculoComprado vehiculoComprado = GetVehiculoComprado();
         vehiculoComprado.setUsuario(usuario);
@@ -246,8 +269,27 @@ public class C_ConsultarVehiculo {
         }
     }
 
-    private void solicitarCedula_compra_directa(String encabezado, String cuerpo) {
-        JFXDialogLayout content= new JFXDialogLayout();
+    private void compraDirecta_facturador() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Atención");
+        dialog.setHeaderText("Solicitud de correo electrónico");
+        dialog.setContentText("Ingrese el correo electrónico del cliente:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+
+            // TODO: Validar ID correo
+            int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
+            Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+
+            GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), 1);
+
+            //System.out.println("Your name: " + result.get());
+        }
+
+        /*JFXDialogLayout content= new JFXDialogLayout();
         JFXTextField tf_cedula = new JFXTextField();
         content.setHeading(new Text(encabezado));
         content.setBody(new Text(cuerpo), tf_cedula);
@@ -255,11 +297,11 @@ public class C_ConsultarVehiculo {
         JFXButton btn_ingresar = new JFXButton("Ingresar");
         btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
             @Override
-            public void handle(ActionEvent event){
-                    // validar la cedula
-                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
-                    GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual),1);
-                    //FXRouter.goTo("Abonos_cliente", usuario);
+            public void handle(ActionEvent event) {
+                // validar la cedula
+                // obtener el usuario de la cedula y meter dentro del objeto Usuario
+                GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
+                //FXRouter.goTo("Abonos_cliente", usuario);
 
             }
         });
@@ -272,24 +314,42 @@ public class C_ConsultarVehiculo {
         });
 
         content.setActions(btn_ingresar, btn_cancelar);
-        dialog.show();
+        dialog.show();*/
     }
 
-    private void solicitarCedula_credito(String encabezado, String cuerpo) {
-        JFXDialogLayout content= new JFXDialogLayout();
-        JFXTextField tf_cedula = new JFXTextField();
+    private void solicitarCredito_facturador() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Atención");
+        dialog.setHeaderText("Solicitud de correo electrónico");
+        dialog.setContentText("Ingrese el correo electrónico del cliente:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            try {
+                // TODO: validar usuario
+                int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
+                Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+
+                FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuario));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println("Your name: " + result.get());
+        }
+
+        /*JFXDialogLayout content= new JFXDialogLayout();
+        JFXTextField tf_correo = new JFXTextField();
         content.setHeading(new Text(encabezado));
-        content.setBody(new Text(cuerpo), tf_cedula);
+        content.setBody(new Text(cuerpo), tf_correo);
         JFXDialog dialog =new JFXDialog(sp_dialogs, content, JFXDialog.DialogTransition.CENTER);
         JFXButton btn_ingresar = new JFXButton("Ingresar");
         btn_ingresar.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
                 try {
-                    // validar la cedula
-                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
-                    // ------------- Query
-                    int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(tf_cedula.getText());
+                    int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(tf_correo.getText());
                     Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
 
                     // añadir al objeto PedidoVehiculo el tipo de pago
@@ -308,7 +368,7 @@ public class C_ConsultarVehiculo {
         });
 
         content.setActions(btn_ingresar, btn_cancelar);
-        dialog.show();
+        dialog.show();*/
     }
 
     private boolean validarEdad(){
