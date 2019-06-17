@@ -120,6 +120,7 @@ public class Vehiculo {
 
     public Vehiculo(String marca,String modelo,String precio){
         this.marca = new Marca(marca);
+        this.nombre_carro = marca + " " + modelo;
         this.modelo = modelo;
         this.precio = precio;
     }

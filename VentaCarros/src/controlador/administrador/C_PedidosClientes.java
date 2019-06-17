@@ -33,7 +33,7 @@ public class C_PedidosClientes {
     public void initialize() throws Exception {
         initComponentes();
         init_listView_pedidos_pendientes();
-        //init_listView_pedidos_atendidos();
+        init_listView_pedidos_atendidos();
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
@@ -49,17 +49,17 @@ public class C_PedidosClientes {
         // TODO: PENDIENTES
 
         listView_pedidos_pendientes.setItems(pedidos_pendientes_ObservableList);
-        listView_pedidos_pendientes.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
+        //listView_pedidos_pendientes.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
         listView_pedidos_pendientes.setCellFactory(miLista -> new PedidoListViewCell());
     }
 
     private void init_listView_pedidos_atendidos() {
         pedidos_atendidos_ObservableList = FXCollections.observableArrayList();
-        pedidos_atendidos_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Pendientes");
+        pedidos_atendidos_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Atendidos");
         // TODO: ATENDIDOS
 
         listView_pedidos_atendidos.setItems(pedidos_atendidos_ObservableList);
-        listView_pedidos_atendidos.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
+        //listView_pedidos_atendidos.setItems(GroupDBConnection.getDBInstance().getPedidoVehiculos());
         listView_pedidos_atendidos.setCellFactory(miLista -> new PedidoListViewCell());
     }
 
@@ -68,6 +68,10 @@ public class C_PedidosClientes {
         if (pedidoVehiculo != null && dt_fecha_de_entrega.getValue() != null) {
             pedidoVehiculo.setFechaEntrega(dt_fecha_de_entrega.getValue().toString());
             GroupDBConnection.getDBInstance().enviarPedidoVehiculo(pedidoVehiculo);
+            pedidos_pendientes_ObservableList.clear();
+            pedidos_pendientes_ObservableList = FXCollections.observableArrayList();
+            pedidos_pendientes_ObservableList= GroupDBConnection.getDBInstance().SelectPedidosPendientes("Pendientes");
+            listView_pedidos_pendientes.setItems(pedidos_pendientes_ObservableList);
         }
     }
 

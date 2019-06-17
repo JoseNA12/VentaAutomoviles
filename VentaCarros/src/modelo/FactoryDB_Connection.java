@@ -412,11 +412,13 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
+            System.out.println(pedidoVehiculo.getIdPedido());
+            System.out.println(pedidoVehiculo.getFechaEntrega());
             connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
-            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?,?)}");
+            callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdateEnviado](?,?)}");
             callableStatement.setInt(1, pedidoVehiculo.getIdPedido());
             callableStatement.setNString(2, pedidoVehiculo.getFechaEntrega());
-            callableStatement.executeQuery();
+            callableStatement.execute();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -490,6 +492,7 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
             while(rs.next()){
+                int idOrden = rs.getInt("idOrden");
                 String marca = rs.getString("marca");
                 String modelo = rs.getString("modelo");
                 Float precio = rs.getFloat("precio");
@@ -497,7 +500,7 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
                 String apellido = rs.getString("apellido");
                 String correo = rs.getString("correo");
                 String telefono = rs.getString("telefono");
-                PedidoVehiculo nuevoPedido = new PedidoVehiculo(marca,modelo,Float.toString(precio),nombre,apellido,telefono,correo);
+                PedidoVehiculo nuevoPedido = new PedidoVehiculo(idOrden,marca,modelo,Float.toString(precio),nombre,apellido,telefono,correo);
                 ReturnList.add(nuevoPedido);
             }
         } catch (SQLException | ClassNotFoundException e) {
