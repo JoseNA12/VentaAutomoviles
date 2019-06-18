@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
-    private static final String DEFAULT_URLBO1 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
-    private static final String DEFAULT_URLBO2 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
-    private static final String DEFAULT_URLBO3 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
+    private static String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+    //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+    //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
+    //private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
     private static BranchOfficeDB_Connection DBInstance;
-
     public static BranchOfficeDB_Connection getHSDBInstance(){
         if (DBInstance == null){
             DBInstance = new BranchOfficeDB_Connection();
@@ -23,19 +22,19 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return DBInstance;
     }
 
-   /* public void getSucursal(int idSucursal){
+   public static void getSucursal(int idSucursal){
         switch (idSucursal){
             case 1:
-                DEFAULT_URL
+                DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
                 break;
             case 2:
-                DEFAULT_URL
+                DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
                 break;
             case 3:
-                DEFAULT_URL
+                DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
                 break;
         }
-    }*/
+    }
 
 
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){
@@ -44,7 +43,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGiven-PaymentSelect](?)}");
             callableStatement.setInt(1, usuario.getIdUsuario());
             callableStatement.executeQuery();
@@ -71,7 +70,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditGivenPlanInfo](?)}");
             callableStatement.setInt(1, credit_id);
             callableStatement.executeQuery();
@@ -99,7 +98,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -125,7 +124,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -148,7 +147,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockSelect](?)}");
             callableStatement.setInt(1, idSucursal);
             callableStatement.executeQuery();
@@ -193,7 +192,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_PaymentMethodSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -216,7 +215,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanSelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -242,7 +241,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_SalesOrderInsert](?, ?, ?, ?, ?, ?)}");
             ps.setInt(1, usuario.getIdUsuario());
             ps.setInt(2, metodoPago.getIdMethod());
@@ -272,7 +271,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_SalesOrderDetailsInsert](?,?,?,?)}");
             ps.setInt(1, ordenCompra);
             ps.setInt(2, idCarroVendido);
@@ -297,7 +296,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CarSoldInsert](?,?)}");
             ps.setInt(1, vehiculoComprado.getVehiculo().getID());
             ps.setInt(2, idSucursal);
@@ -322,7 +321,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CarSold-AccessoryInsert](?,?)}");
             ps.setInt(1, idCarroVendido);
             ps.setInt(2, extraVehiculo.getIdExtra());
@@ -345,7 +344,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenInsert](?,?,?,?,?,?)}");
             ps.setInt(1, idCompra);
             ps.setInt(2, planDePago.getPlanID());
@@ -372,7 +371,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call [dbo].[usp_BranchOfficeSelectAll]}");
             ps.executeQuery();
             rs = ps.getResultSet();
@@ -398,7 +397,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CreditGiven-PaymentInsert](?,?,?)}");
             ps.setInt(1, credit_id);
             ps.setFloat(2, payment);
@@ -416,7 +415,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CreditPlanUpdate](?,?)}");
             ps.setInt(1, idPlanDeCredito);
             ps.setFloat(2, tazaInteres);
@@ -435,7 +434,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         CallableStatement ps = null;
         PlanDePago p;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenSelectByPlan](?)}");
             ps.setInt(1, idPlanDeCredito);
             ps.executeQuery();
@@ -460,7 +459,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement ps = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             ps = connection.prepareCall("{call dbo.[usp_CreditGivenUpdateMensualPayment](?,?)}");
             ps.setInt(1, idCreditoOtorgado);
             ps.setFloat(2, cuotaMensual);
@@ -478,7 +477,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         CallableStatement callableStatement = null;
         int car_stock_id = 0;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_Car-StockInsert](?,?,?,?)}");
             callableStatement.setInt(1, idVehiculo);
             callableStatement.setInt(2, idSucursal);
@@ -502,7 +501,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanInsert](?,?,?)}");
             callableStatement.setFloat(1, plan.getPorcentaje_prima());
             callableStatement.setFloat(2, plan.getInteres());
@@ -522,7 +521,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CountrySelect]}");
             callableStatement.executeQuery();
             rs = callableStatement.getResultSet();
@@ -553,19 +552,19 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         try {
             switch (sucursal){
                 case 1:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
                     break;
                 case 2:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
                     break;
                 case 3:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelect](?,?,?,?,?,?)}");
                     break;
                 default:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SalesOrderSelectAll](?,?,?,?,?,?)}");
                     break;
             }
@@ -626,7 +625,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                         fecha);
                 ReturnList.add(ventaAux);
             }
-            /*connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            /*connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_OrderUpdate](?)}");
             callableStatement.setInt(1, idPedido);
             callableStatement.setNString(2, fechaEntrega);
@@ -647,19 +646,19 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         try{
             switch (idSucursal){
                 case 1:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
                     break;
                 case 2:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
                     break;
                 case 3:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemanda]}");
                     break;
                 default:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SelectMasDemandaAll]}");
                     break;
             }
@@ -691,19 +690,19 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         try{
             switch (idSucursal){
                 case 1:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
                     break;
                 case 2:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO2);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
                     break;
                 case 3:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO3);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[SelectVehiculosNoVendidos]}");
                     break;
                 default:
-                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+                    connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
                     callableStatement = connection.prepareCall("{call [dbo].[usp_SelectVehiculosNoVendidosAll]}");
                     break;
             }
@@ -732,7 +731,7 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         ResultSet rs = null;
         CallableStatement callableStatement = null;
         try {
-            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URL);
             callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanDelete](?)}");
             callableStatement.setInt(1, idCreditPlan);
             callableStatement.executeQuery();

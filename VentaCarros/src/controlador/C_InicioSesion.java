@@ -56,6 +56,7 @@ public class C_InicioSesion {
             try {
                 GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
                 usuarioActual = GroupDBConnection.getDBInstance().loginDB(tf_correo.getText(), tf_contrasenia.getText());
+                //BranchOfficeDB_Connection.getSucursal(usuarioActual.get);
                 if(usuarioActual == null)
                     errorDialog("Error", "La cuenta no existe", "Por favor, verifique las credenciales ingresadas!");
                 else{
