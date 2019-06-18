@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import modelo.BranchOfficeDB_Connection;
 import modelo.GroupDBConnection;
 import modelo.Sucursal;
 import modelo.Usuario;
@@ -44,7 +45,8 @@ public class C_Menu {
         cmb_sucursal_actual.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
             public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
-                idSucursalActual = newValue.getIdSucursal();
+                //idSucursalActual = newValue.getIdSucursal();
+                BranchOfficeDB_Connection.getSucursal(idSucursalActual);
             }
         });
     }

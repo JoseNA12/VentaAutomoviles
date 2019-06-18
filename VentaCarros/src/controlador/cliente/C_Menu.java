@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import modelo.BranchOfficeDB_Connection;
 import modelo.GroupDBConnection;
 import modelo.Sucursal;
 import static controlador.C_InicioSesion.idSucursalActual;
@@ -34,7 +35,20 @@ public class C_Menu {
 
     private Boolean label_atencion = false;
 
-
+/*
+* public void getSucursal(int idSucursal){
+        switch (idSucursal){
+            case 1:
+                DEFAULT_URL = "jdbc:sqlserver://localhost\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
+                break;
+            case 2:
+                DEFAULT_URL = "jdbc:sqlserver://localhost\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
+                break;
+            case 3:
+                DEFAULT_URL = "jdbc:sqlserver://localhost\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
+                break;
+        }
+    }*/
     public void initialize() throws Exception {
         initComponentes();
         //getSucursales
@@ -43,9 +57,11 @@ public class C_Menu {
         cmb_sucursal_actual.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
             public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
-                idSucursalActual = newValue.getIdSucursal();
+                //idSucursalActual = newValue.getIdSucursal();
+                BranchOfficeDB_Connection.getSucursal(idSucursalActual);
             }
         });
+        //System.out.println(idSucursalActual);
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
