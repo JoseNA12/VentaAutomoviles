@@ -147,10 +147,17 @@ public class C_ConsultarVehiculo {
                     Boolean hacerPedido = msgNoExisteEnSucursal();
 
                     if (hacerPedido) {
-                        // ----------------------------------------
-                        // TODO: componerVehiculoCompra(usuarioActual)
-                        // ----------------------------------------
-                        informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                        int idUsuario = solicitarCorreo_facturador();
+
+                        if (idUsuario != -1) {
+                            // ----------------------------------------
+                            // TODO: componerVehiculoCompra(usuarioActual)
+                            // ----------------------------------------
+                            informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
+                        } else {
+                            errorDialog("Error", "Correo inválido", "La cuenta de correo ingresada es incorrecta o inválida");
+                        }
+
                     } else {
 
                     }
@@ -283,6 +290,28 @@ public class C_ConsultarVehiculo {
         }
     }
 
+    private int solicitarCorreo_facturador() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Atención");
+        dialog.setHeaderText("Solicitud de correo electrónico");
+        dialog.setContentText("Ingrese el correo electrónico del cliente:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        int idUsuario = 0;
+
+        if (result.isPresent()) {
+            idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
+
+            if (idUsuario == 0) {
+                return -1;
+            }
+            Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+            return usuario.getIdUsuario();
+        }
+        return idUsuario;
+    }
+
     private void compraDirecta_facturador() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Atención");
@@ -292,26 +321,30 @@ public class C_ConsultarVehiculo {
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
 
+        int idUsuario = 0;
+
         if (result.isPresent()) {
+            idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
 
-            // TODO: Validar ID correo
-            int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
-            Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+            if (idUsuario != 0) {
+                Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+                GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), 1);
+                informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
 
-            GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), 1);
-
-            informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
-
-            try {
-                FXRouter.goTo("Menu_facturador");
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    FXRouter.goTo("Menu_facturador");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                errorDialog("Error", "Correo inválido", "La cuenta de correo ingresada es incorrecta o inválida");
             }
             //System.out.println("Your name: " + result.get());
         }
     }
 
-    private void solicitarCredito_facturador() {
+    private int solicitarCredito_facturador() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Atención");
         dialog.setHeaderText("Solicitud de correo electrónico");
@@ -319,19 +352,25 @@ public class C_ConsultarVehiculo {
 
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
+        int idUsuario = 0;
 
         if (result.isPresent()) {
             try {
-                // TODO: validar usuario
-                int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
-                Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+                idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
 
-                FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuario));
+                if (idUsuario != 0) {
+                    Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+                    FXRouter.goTo("SolicitarCredito_cliente", componerVehiculoCompra(usuario));
+                }
+                else {
+                    errorDialog("Error", "Correo inválido", "La cuenta de correo ingresada es incorrecta o inválida");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             //System.out.println("Your name: " + result.get());
         }
+        return idUsuario;
     }
 
     private boolean validarEdad(){
