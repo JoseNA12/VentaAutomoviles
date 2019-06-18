@@ -47,8 +47,8 @@ AS
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-	INSERT INTO [dbo].[Order] ([branchOffice], [factory_id], [customer_id], [car_id], [quantity])
-	SELECT @branchOffice, @factory_id, @customer_id, @car_id, @quantity
+	INSERT INTO [dbo].[Order] ([branchOffice], [factory_id], [customer_id], [car_id], [quantity], [orderStatus])
+	SELECT @branchOffice, @factory_id, @customer_id, @car_id, @quantity, 2
 	COMMIT
 
 	DECLARE @lastID int;
@@ -75,7 +75,11 @@ CREATE PROC [dbo].[usp_OrderUpdate]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	
+	BEGIN TRAN
+	UPDATE [dbo].[Order]
+	SET    [orderStatus] = 1
+	WHERE  [order_id] = @order_id
+	COMMIT
 	EXEC [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.[usp_OrderUpdate] @order_id, @delivery_date
 
 GO

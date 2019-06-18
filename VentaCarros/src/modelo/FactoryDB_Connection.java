@@ -240,7 +240,7 @@ public class FactoryDB_Connection extends DB_Connection{
         }
     }
 
-    public void generarOrdenEnvio(int idVehiculo, int idSucursal, int cantidadVehiculo, int idFabrica){
+    public void solicitarPedidoCarro(int idVehiculo, int idSucursal, int cantidadVehiculo, int idFabrica, int idCliente){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
@@ -250,9 +250,9 @@ public class FactoryDB_Connection extends DB_Connection{
             callableStatement = connection.prepareCall("{call [dbo].[usp_OrderInsert](?,?,?,?,?)}");
             callableStatement.setInt(1, idSucursal);
             callableStatement.setInt(2, idFabrica);
-            callableStatement.setNull(3, Types.NULL);
+            callableStatement.setNull(3, idCliente);
             callableStatement.setInt(4, idVehiculo);
-            callableStatement.setInt(5, 1);
+            callableStatement.setInt(5, cantidadVehiculo);
             //callableStatement.setNull(6, Types.NULL);
             callableStatement.executeQuery();
 

@@ -127,4 +127,7 @@ public class GroupDBConnection {
 
     public ObservableList<PedidoVehiculo> SelectPedidosPendientes(String aCargar){return FactoryDBInstance.SelectVentanaPedidosAdministrador(aCargar);}
 
+    public void solicitarPedidoVehiculo(int idVehiculo, int idSucursal, int idFabrica, int idCliente){FactoryDBInstance.solicitarPedidoCarro(idVehiculo, idSucursal, 1, idFabrica, idCliente);}
+
+    public void deleteCreditPlan(int idCreditPlan){BOfficeDBInstance.deleteCreditPlan(idCreditPlan);}
 }

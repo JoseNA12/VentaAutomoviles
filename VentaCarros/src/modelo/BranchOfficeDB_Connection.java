@@ -711,5 +711,21 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         return ReturnList;
     }
 
+    public void deleteCreditPlan(int idCreditPlan){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanDelete](?)}");
+            callableStatement.setInt(1, idCreditPlan);
+            callableStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
+
 
 }
