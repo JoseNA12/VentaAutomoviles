@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import static controlador.C_InicioSesion.usuarioActual;
-
+import static controlador.C_InicioSesion.idSucursalActual;
 public class C_SolicitarCredito {
 
     @FXML JFXListView listView_planes;
@@ -69,7 +69,7 @@ public class C_SolicitarCredito {
     }
 
     private void handle_btn_comprar(ActionEvent event) {
-        GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
+        GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, idSucursalActual, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
         Alerts.informationDialog("Crédito brindado!","Crédito dado","Se le ha brindado el crédito en la compra");
         try {
             SendEmail.sendEmail(vehiculoComprado.getUsuario().getCorreo(),

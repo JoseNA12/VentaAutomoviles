@@ -16,18 +16,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import modelo.*;
-
+import static controlador.C_InicioSesion.idSucursalActual;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
-
+import static controlador.C_InicioSesion.idSucursalActual;
 import static controlador.C_InicioSesion.usuarioActual;
 import static modelo.Alerts.errorDialog;
 import static modelo.Alerts.informationDialog;
-
+import static controlador.C_InicioSesion.idSucursalActual;
 public class C_ConsultarVehiculo {
 
     @FXML
@@ -168,7 +168,7 @@ public class C_ConsultarVehiculo {
                     // TODO: Cambiar ID Sucursal
                     if (validarEdad()) {
                         VehiculoComprado vehiculoComprado = componerVehiculoCompra(usuarioActual);
-                        GroupDBConnection.getDBInstance().comprarVehiculo(vehiculoComprado, 1);
+                        GroupDBConnection.getDBInstance().comprarVehiculo(vehiculoComprado, idSucursalActual);
 
                         informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
 
@@ -188,7 +188,7 @@ public class C_ConsultarVehiculo {
                 } else { // no esta en stock
                     Boolean hacerPedido = msgNoExisteEnSucursal();
                     if (hacerPedido) {
-                        GroupDBConnection.getDBInstance().solicitarPedidoVehiculo(vehiculo_seleccionado.getID(), 1, vehiculo_seleccionado.getIdFabrica(), usuarioActual.getIdUsuario());
+                        GroupDBConnection.getDBInstance().solicitarPedidoVehiculo(vehiculo_seleccionado.getID(), idSucursalActual, vehiculo_seleccionado.getIdFabrica(), usuarioActual.getIdUsuario());
                         informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
                     } else {
 
@@ -324,7 +324,7 @@ public class C_ConsultarVehiculo {
 
             if (idUsuario != 0) {
                 Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
-                GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), 1);
+                GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuario), idSucursalActual);
                 informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
 
                 try {
