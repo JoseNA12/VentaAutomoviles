@@ -187,12 +187,8 @@ public class C_ConsultarVehiculo {
                     break;
                 } else { // no esta en stock
                     Boolean hacerPedido = msgNoExisteEnSucursal();
-
                     if (hacerPedido) {
-                        // ----------------------------------------
-                        // TODO: componerVehiculoCompra(usuarioActual)
-                        // ----------------------------------------
-
+                        GroupDBConnection.getDBInstance().solicitarPedidoVehiculo(vehiculo_seleccionado.getID(), 1, vehiculo_seleccionado.getIdFabrica(), usuarioActual.getIdUsuario());
                         informationDialog("Atención", "Pedido realizado", "Su pedido se ha realizado, ahora puede consultar su pedido en el menú principal (Mi pedido)");
                     } else {
 

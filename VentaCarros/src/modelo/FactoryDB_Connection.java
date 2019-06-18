@@ -240,7 +240,7 @@ public class FactoryDB_Connection extends DB_Connection{
         }
     }
 
-    public void generarOrdenEnvio(int idVehiculo, int idSucursal, int cantidadVehiculo, int idFabrica){
+    public void solicitarPedidoCarro(int idVehiculo, int idSucursal, int cantidadVehiculo, int idFabrica, int idCliente){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
@@ -250,9 +250,9 @@ public class FactoryDB_Connection extends DB_Connection{
             callableStatement = connection.prepareCall("{call [dbo].[usp_OrderInsert](?,?,?,?,?)}");
             callableStatement.setInt(1, idSucursal);
             callableStatement.setInt(2, idFabrica);
-            callableStatement.setNull(3, Types.NULL);
+            callableStatement.setInt(3, idCliente);
             callableStatement.setInt(4, idVehiculo);
-            callableStatement.setInt(5, 1);
+            callableStatement.setInt(5, cantidadVehiculo);
             //callableStatement.setNull(6, Types.NULL);
             callableStatement.executeQuery();
 
@@ -339,12 +339,7 @@ public class FactoryDB_Connection extends DB_Connection{
             closeJDBCResources(connection, callableStatement, rs);
         }
     }
-/*
-o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[customer_id], cu.name as customerName, cu.lastname, cu.phone, u.email,
-	o.[car_id], c.carBrand_id, cb.name as brandName, c.model,o.[quantity], c.engine, c.seats, c2.doors, c2.fuelType_id, c.year, c2.acceleration, c2.maximum_speed,
-	c2.price, c2.photo, o2.order_date, o2.delivery_date, o2.details, o.orderStatus, os.statusName
 
- */
     public ObservableList<PedidoVehiculo> getPedidoVehiculos(){
         ObservableList<PedidoVehiculo> ReturnList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -386,7 +381,7 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
         }
     }
 
-    public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){
+   /* public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){
         Connection connection = null;
         ResultSet rs = null;
         CallableStatement callableStatement = null;
@@ -405,7 +400,7 @@ o.[order_id], o.[branchOffice], o.[factory_id], f.name as factoryName, o.[custom
         } finally {
             closeJDBCResources(connection, callableStatement, rs);
         }
-    }
+    }*/
 
     public void enviarPedidoVehiculo(PedidoVehiculo pedidoVehiculo){
         Connection connection = null;

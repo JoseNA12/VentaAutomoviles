@@ -29,7 +29,8 @@ AS
 	inner join OrderStatus os on os.orderStatus_id = o.orderStatus
 	WHERE  (o.[order_id] = @order_id OR @order_id IS NULL) 
 GO
-
+-- The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Order_Factory". The conflict occurred in database "FactoryDB", 
+-- table "dbo.Factory", column 'factory_id'
 IF OBJECT_ID('[dbo].[usp_OrderInsert]') IS NOT NULL
 BEGIN 
     DROP PROC [dbo].[usp_OrderInsert] 
@@ -45,10 +46,10 @@ CREATE PROC [dbo].[usp_OrderInsert]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	
+
 	BEGIN TRAN
-	INSERT INTO [dbo].[Order] ([branchOffice], [factory_id], [customer_id], [car_id], [quantity])
-	SELECT @branchOffice, @factory_id, @customer_id, @car_id, @quantity
+	INSERT INTO [dbo].[Order] ([branchOffice], [factory_id], [customer_id], [car_id], [quantity], [orderStatus])
+	SELECT @branchOffice, @factory_id, @customer_id, @car_id, @quantity, 2
 	COMMIT
 
 	DECLARE @lastID int;
@@ -75,7 +76,11 @@ CREATE PROC [dbo].[usp_OrderUpdate]
 AS 
 	SET NOCOUNT ON 
 	SET XACT_ABORT ON  
-	
+	BEGIN TRAN
+	UPDATE [dbo].[Order]
+	SET    [orderStatus] = 1
+	WHERE  [order_id] = @order_id
+	COMMIT
 	EXEC [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.[usp_OrderUpdate] @order_id, @delivery_date
 
 GO

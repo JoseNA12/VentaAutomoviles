@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO1 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO2 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO3 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
@@ -21,6 +22,20 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
         return DBInstance;
     }
+
+   /* public void getSucursal(int idSucursal){
+        switch (idSucursal){
+            case 1:
+                DEFAULT_URL
+                break;
+            case 2:
+                DEFAULT_URL
+                break;
+            case 3:
+                DEFAULT_URL
+                break;
+        }
+    }*/
 
 
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){
@@ -155,9 +170,10 @@ public class BranchOfficeDB_Connection extends DB_Connection{
                 String vel_maxima = rs.getString("maximum_speed");
                 String precio = rs.getString("price");
                 int cantidad = rs.getInt("quantity");
+                int idFabrica = rs.getInt("factory_id");
 
                 Vehiculo miVehiculo = new Vehiculo(idCarroEnFabrica, new Marca(idMarca, nombreMarca), modelo, annio, num_pasajeros, new TipoVehiculo(idTipo, nombreTipo),
-                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad);
+                        motor, puertas,new TipoCombustible(idFuel, nombreCombustible), aceleracion, vel_maxima, precio, cantidad, idFabrica);
 
                 miVehiculo.setBytes_imagen(rs.getBytes("photo"));
 
@@ -710,6 +726,24 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
         return ReturnList;
     }
+
+    public void deleteCreditPlan(int idCreditPlan){
+        Connection connection = null;
+        ResultSet rs = null;
+        CallableStatement callableStatement = null;
+        try {
+            connection = getConnection(DEFAULT_DRIVER_CLASS, DEFAULT_URLBO1);
+            callableStatement = connection.prepareCall("{call [dbo].[usp_CreditPlanDelete](?)}");
+            callableStatement.setInt(1, idCreditPlan);
+            callableStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeJDBCResources(connection, callableStatement, rs);
+        }
+    }
+
+
 
 
 }

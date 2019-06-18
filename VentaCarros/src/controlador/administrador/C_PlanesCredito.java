@@ -66,13 +66,10 @@ public class C_PlanesCredito {
     private void handle_btn_eliminar_credito(ActionEvent event) {
         planDePago = (PlanDePago) listView_planes_pago.getSelectionModel().getSelectedItem();
         if (planDePago != null) {
-
-            // --------------------------------------------------
-            // query
-            // --------------------------------------------------
-
-            planesObservableList.remove(planDePago);
-            listView_planes_pago.setItems(planesObservableList);
+            GroupDBConnection.getDBInstance().deleteCreditPlan(planDePago.getPlanID());
+           /* planesObservableList.remove(planDePago);
+            listView_planes_pago.setItems(planesObservableList);*/
+            listView_planes_pago.getItems().remove(planDePago);
         }
     }
 

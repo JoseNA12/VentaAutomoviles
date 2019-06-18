@@ -196,7 +196,7 @@ public class C_IngresarVehiculoFabrica {
         int idVehiculo = vehiculoSeleccionado.getID();
         vehiculoSeleccionado = new Vehiculo(idVehiculo, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
                 tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),
-                cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+                cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()), vehiculoSeleccionado.getIdFabrica());
         if (GroupDBConnection.getDBInstance().updateVehiculo(vehiculoSeleccionado, cb_fabrica.getSelectionModel().getSelectedItem(), listView_extras.getItems()) == 0){
             Alerts.errorDialog("Error","Error en la inserción","Ha ocurrido un error inesperado, inténtelo de nuevo!");
             limpiarCampos();
@@ -212,7 +212,7 @@ public class C_IngresarVehiculoFabrica {
 
     private void ingresarNuevoVehiculo(){
         vehiculoSeleccionado = new Vehiculo(0, cb_marca.getSelectionModel().getSelectedItem(), tf_modelo.getText(), tf_anio.getText(),
-                tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()));
+                tf_num_pasajeros.getText(), cb_tipo.getSelectionModel().getSelectedItem(), tf_motor.getText(), tf_puertas.getText(),cb_gasolina.getSelectionModel().getSelectedItem(), tf_aceleracion.getText(), tf_vel_maxima.getText(), tf_precio.getText(), Integer.parseInt(tf_cantidad_vehiculos.getText()), 0);
         if (file_imagen != null) { // se escogio una imagen
             try {
                 vehiculoSeleccionado.setFis(new FileInputStream(file_imagen), (int) file_imagen.length());

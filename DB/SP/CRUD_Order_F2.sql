@@ -32,7 +32,6 @@ AS
 	SET XACT_ABORT ON  
 	
 	BEGIN TRAN
-	
 	INSERT INTO [dbo].[Order] ([order_id], [order_date], [delivery_date], [details])
 	SELECT @order_id, GETDATE(), @delivery_date, @details
 
