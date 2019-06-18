@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -75,6 +76,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <JFXComboBox fx:id="cmb_sucursal_actual" focusColor="BLACK" labelFloat="true" layoutX="386.0" layoutY="2.0" prefHeight="37.0" prefWidth="231.0" promptText="Sucursal actual" style="-fx-font: 16px system;" unFocusColor="BLACK" />
             </children>
         </AnchorPane>
       <Separator layoutX="475.0" layoutY="159.0" orientation="VERTICAL" prefHeight="350.0" />
