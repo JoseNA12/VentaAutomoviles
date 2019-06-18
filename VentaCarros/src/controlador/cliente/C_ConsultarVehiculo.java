@@ -160,11 +160,16 @@ public class C_ConsultarVehiculo {
                 if (vehiculo_seleccionado.getCantidad_en_fabrica() > 0) { // existe
                     // TODO: Cambiar ID Sucursal
                     if (validarEdad()) {
-                        GroupDBConnection.getDBInstance().comprarVehiculo(componerVehiculoCompra(usuarioActual), 1);
+                        VehiculoComprado vehiculoComprado = componerVehiculoCompra(usuarioActual);
+                        GroupDBConnection.getDBInstance().comprarVehiculo(vehiculoComprado, 1);
 
                         informationDialog("Atención", "Compra realizada", "Se ha comprado el vehículo. Muchas gracias por confiar en nosotros");
 
                         try {
+                            SendEmail.sendEmail(vehiculoComprado.getUsuario().getCorreo(),
+                                    SendEmail.getCuerpo(vehiculoComprado.getUsuario(), String.valueOf(vehiculoComprado.getPrecioTotal()),
+                                            vehiculoComprado.getMetodoPago().getName(), Calendar.getInstance().toString()));
+
                             FXRouter.goTo("Menu_cliente");
                         } catch (IOException e) {
                             e.printStackTrace();

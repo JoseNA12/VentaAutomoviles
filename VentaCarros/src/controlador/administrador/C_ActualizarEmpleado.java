@@ -19,6 +19,7 @@ import modelo.TipoUsuario;
 import java.io.IOException;
 
 import static modelo.Alerts.errorDialog;
+import static modelo.Alerts.informationDialog;
 
 public class C_ActualizarEmpleado {
 
@@ -96,6 +97,7 @@ public class C_ActualizarEmpleado {
     private void handle_btn_actualizar(ActionEvent actionEvent) {
         actualizarEmpleado();
         GroupDBConnection.getDBInstance().UpdateEmpleado(this.empleado);
+        informationDialog("Atención", "Empleado actualizado", "Se han actualizado los registros del empleado!");
         try{
             FXRouter.goTo("Empleados_administrador");
         }catch (IOException e) {

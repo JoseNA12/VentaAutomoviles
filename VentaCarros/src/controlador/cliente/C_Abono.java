@@ -107,9 +107,6 @@ public class C_Abono {
         Boolean esCorrecto = false;
         String monto = tf_monto_a_pagar.getText().trim();
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-        LocalDate localDate = LocalDate.now();
-
         Calendar fechaActual = Calendar.getInstance();
         Calendar fecha_abono = Calendar.getInstance();
 

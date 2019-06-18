@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import modelo.*;
 
 import java.io.IOException;
+import java.util.Calendar;
+
 import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_SolicitarCredito {
@@ -70,6 +72,10 @@ public class C_SolicitarCredito {
         GroupDBConnection.getDBInstance().comprarPorCredito(vehiculoComprado, 1, (PlanDePago) listView_planes.getSelectionModel().getSelectedItem());
         Alerts.informationDialog("Crédito brindado!","Crédito dado","Se le ha brindado el crédito en la compra");
         try {
+            SendEmail.sendEmail(vehiculoComprado.getUsuario().getCorreo(),
+                    SendEmail.getCuerpo(vehiculoComprado.getUsuario(), String.valueOf(vehiculoComprado.getPrecioTotal()),
+                            vehiculoComprado.getMetodoPago().getName(), Calendar.getInstance().toString()));
+
             switch (usuarioActual.getTipoUsuario()) {
                 case FACTURADOR:
                     FXRouter.goTo("Menu_facturador");

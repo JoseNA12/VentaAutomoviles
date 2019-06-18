@@ -11,6 +11,9 @@ import modelo.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import static modelo.Alerts.errorDialog;
+import static modelo.Alerts.informationDialog;
+
 public class C_AgregarEmpleado {
 
     @FXML private JFXComboBox<Sucursal> cbx_sucursal;
@@ -82,8 +85,9 @@ public class C_AgregarEmpleado {
             int result = GroupDBConnection.getDBInstance().InsertEmpleado(newEmployee);
 
             if(result == 0){
-                System.out.println("Éxito");
+                //System.out.println("Éxito");
                 try{
+                    informationDialog("Atención", "Empleado registrado", "Se ha registrado el nuevo empleado");
                     FXRouter.goTo("Empleados_administrador");
                 }catch (IOException e) {
                     e.printStackTrace();
@@ -94,6 +98,7 @@ public class C_AgregarEmpleado {
             }
 
         }else{
+            errorDialog("Error","Campos vacios", "Por favor, complete todos los campos para continuar");
             //MOSTRAR MENSAJE DE ERROR POR CAMPOS VACIOS
             System.out.println("Llenar todos los campos");
         }
