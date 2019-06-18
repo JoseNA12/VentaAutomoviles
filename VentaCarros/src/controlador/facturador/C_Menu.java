@@ -6,11 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import modelo.GroupDBConnection;
 import modelo.Usuario;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static controlador.C_InicioSesion.usuarioActual;
 
@@ -47,7 +50,8 @@ public class C_Menu {
     }
 
     private void handle_btn_abono(ActionEvent event) {
-        solicitarCedula("Atención", "Ingrese el número de cédula\n\n\n");
+        solicitarCedula("Atención", "Ingrese el correo electrónico del cliente\n\n\n");
+
     }
 
     private void handle_btn_salir(ActionEvent event) {
@@ -59,7 +63,21 @@ public class C_Menu {
     }
 
     private void solicitarCedula(String encabezado, String cuerpo) {
-        JFXDialogLayout content= new JFXDialogLayout();
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Atención");
+        dialog.setHeaderText("Solicitud de correo electrónico");
+        dialog.setContentText("Ingrese el correo electrónico del cliente:");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
+            Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
+            try{
+                FXRouter.goTo("Abonos_cliente", usuario);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+       /* JFXDialogLayout content= new JFXDialogLayout();
         JFXTextField tf_cedula = new JFXTextField();
         content.setHeading(new Text(encabezado));
         content.setBody(new Text(cuerpo), tf_cedula);
@@ -69,11 +87,8 @@ public class C_Menu {
             @Override
             public void handle(ActionEvent event){
                 try {
-                    // validar la cedula
-                    // obtener el usuario de la cedula y meter dentro del objeto Usuario
-                    // ------------- Query
-
-                    Usuario usuario = new Usuario(12, "", "", "", "", "", "", 1, null);
+                    int idUsuario = GroupDBConnection.getDBInstance().SelectIDCustomerByEmail(result.get());
+                    Usuario usuario = new Usuario(idUsuario, "", "", "", "", "", "", 1, null);
 
 
                     FXRouter.goTo("Abonos_cliente", usuario);
@@ -91,6 +106,6 @@ public class C_Menu {
         });
 
         content.setActions(btn_ingresar, btn_cancelar);
-        dialog.show();
+        dialog.show();*/
     }
 }

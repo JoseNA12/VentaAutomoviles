@@ -81,7 +81,7 @@ public class Vehiculo {
 
     public Vehiculo(int idCarroEnFabrica, Marca marca, String modelo, String anio, String num_pasajeros,
                     TipoVehiculo tipo, String motor, String puertas, TipoCombustible combustible,
-                    String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica) {
+                    String aceleracion, String vel_maxima, String precio, int cantidad_en_fabrica, int idFabrica) {
         this.idCarroEnFabrica = idCarroEnFabrica;
         this.idCarroEnInventario = idCarroEnInventario;
         this.nombre_carro = marca.getNombre() + " " + modelo;
@@ -97,6 +97,7 @@ public class Vehiculo {
         this.vel_maxima = vel_maxima;
         this.precio = precio;
         this.cantidad_en_fabrica = cantidad_en_fabrica;
+        this.idFabrica = idFabrica;
     }
 
     public Vehiculo(String marca, String modelo, String anio, String num_pasajeros,

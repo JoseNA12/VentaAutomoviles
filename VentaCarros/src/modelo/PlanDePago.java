@@ -44,6 +44,7 @@ public class PlanDePago {
     }
 
     private void calcularCuotaMensual(){
+        interes = interes/12;
         this.pago_por_mes = (float) (total_a_pagar * ((interes * Math.pow((1 + interes), (plazo * 12))) / (Math.pow((1 + interes), (plazo * 12)) - 1)));
     }
 

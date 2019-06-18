@@ -14,7 +14,7 @@ AS
 	SET XACT_ABORT ON  
 	IF EXISTS(SELECT branchOffice_id FROM BranchOffice WHERE branchOffice_id = @office_id)
 		SELECT cs.[car_stock_id], cs.[stock_id], cs.[quantity], c.car_id, c.carBrand_id, cb.name as "brand", c.carType_id, ct.name as typeName, c.model, 
-		c.engine, c.year, c.seats, c2.doors, c2.fuelType_id, cf.name as "fuel", c2.acceleration, c2.maximum_speed, c2.price, c2.photo, c2.production_date
+		c.engine, c.year, c.seats, c2.doors, c2.fuelType_id, cf.name as "fuel", c2.acceleration, c2.maximum_speed, c2.price, c2.photo, c2.production_date, fc.factory_id
 		FROM [Car-Stock] cs 
 		inner join Stock s on s.stock_id = cs.stock_id
 		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.Car c on c.car_id = cs.car_id
@@ -22,6 +22,7 @@ AS
 		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarBrands cb on cb.carBrand_id = c.carBrand_id
 		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.CarType ct on ct.carType_id = c.carType_id
 		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE2].FactoryDB.dbo.FuelType cf on cf.fuelType_id = c2.fuelType_id
+		inner join [DESKTOP-3N2P4FH\FACTORYINSTANCE].FactoryDB.dbo.[Factory-Car] fc on fc.car_id = c.car_id
 		WHERE (s.office_id = @office_id OR @office_id IS NULL)
 	ELSE
 		SELECT 1 as exit_status, 'La sucursal ingresada no existe' as result

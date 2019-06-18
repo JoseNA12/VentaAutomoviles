@@ -107,8 +107,6 @@ public class GroupDBConnection {
 
     public void InsertNuevoPlan(PlanDePago plan){BOfficeDBInstance.InsertNuevoPlan(plan);}
 
-    public void pedirVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.pedirVehiculo(pedidoVehiculo);}
-
     public void enviarPedidoVehiculo(PedidoVehiculo pedidoVehiculo){FactoryDBInstance.enviarPedidoVehiculo(pedidoVehiculo);}
 
     public ObservableList<Pais> SelectPaises(){return BOfficeDBInstance.SelectPaises();}
