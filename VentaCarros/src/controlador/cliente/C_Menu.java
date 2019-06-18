@@ -39,6 +39,7 @@ public class C_Menu {
         initComponentes();
         //getSucursales
         cmb_sucursal_actual.setItems(GroupDBConnection.getDBInstance().getSucursales());
+        cmb_sucursal_actual.getSelectionModel().selectFirst();
         cmb_sucursal_actual.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
             public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {

@@ -29,7 +29,7 @@ public class C_InicioSesion {
     @FXML JFXPasswordField tf_contrasenia;
 
     public static Usuario usuarioActual;
-    public static int idSucursalActual;
+    public static int idSucursalActual = 1;
     //public static TipoUsuario tipoUsuarioActual;
 
 
