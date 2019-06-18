@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 import static controlador.C_InicioSesion.usuarioActual;
-
+import static controlador.C_InicioSesion.idSucursalActual;
 public class C_Catalogo {
 
     @FXML JFXListView listView_catalogo;
@@ -38,7 +38,7 @@ public class C_Catalogo {
 
     private void init_listView() {
         //TODO: CAMBIAR IDSUCURSAL POR VARIABLE
-        listView_catalogo.setItems(GroupDBConnection.getDBInstance().SelectAutosXSucursal(1));
+        listView_catalogo.setItems(GroupDBConnection.getDBInstance().SelectAutosXSucursal(idSucursalActual));
         listView_catalogo.setCellFactory(studentListView -> new VehiculoListViewCell());
     }
 
