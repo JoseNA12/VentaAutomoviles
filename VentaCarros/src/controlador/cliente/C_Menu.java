@@ -2,10 +2,16 @@ package controlador.cliente;
 
 import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import modelo.GroupDBConnection;
+import modelo.Sucursal;
+import static controlador.C_InicioSesion.idSucursalActual;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -24,11 +30,22 @@ public class C_Menu {
     @FXML Label lb_usuario_actual;
     @FXML Label lb_msg_atencion;
 
+    @FXML JFXComboBox cmb_sucursal_actual;
+
     private Boolean label_atencion = false;
 
 
     public void initialize() throws Exception {
         initComponentes();
+        //getSucursales
+        cmb_sucursal_actual.setItems(GroupDBConnection.getDBInstance().getSucursales());
+        cmb_sucursal_actual.getSelectionModel().selectFirst();
+        cmb_sucursal_actual.valueProperty().addListener(new ChangeListener<Sucursal>(){
+            @Override
+            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
+                idSucursalActual = newValue.getIdSucursal();
+            }
+        });
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
@@ -42,6 +59,10 @@ public class C_Menu {
 
         lb_usuario_actual.setText(usuarioActual.getNombre() + " " + usuarioActual.getApellidos());
         lb_msg_atencion.setVisible(label_atencion);
+    }
+
+    private void init_cmb_sucursal_actual() {
+
     }
 
     private void handle_btn_catalogo(ActionEvent event) {

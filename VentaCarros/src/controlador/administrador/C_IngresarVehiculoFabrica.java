@@ -252,6 +252,7 @@ public class C_IngresarVehiculoFabrica {
         ExtraVehiculo seleccion = (ExtraVehiculo) listView_extras.getSelectionModel().getSelectedItem();
 
         if (seleccion != null) {
+            System.out.println(seleccion.getNombre());
             extrasVehiculoObservableList.remove(seleccion); // elimino el item de la lista observable
             listView_extras.setItems(extrasVehiculoObservableList); // actualizao la lista
         }

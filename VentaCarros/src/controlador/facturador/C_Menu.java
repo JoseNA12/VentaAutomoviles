@@ -2,6 +2,8 @@ package controlador.facturador;
 
 import com.github.fxrouter.FXRouter;
 import com.jfoenix.controls.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,11 +12,13 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import modelo.GroupDBConnection;
+import modelo.Sucursal;
 import modelo.Usuario;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import static controlador.C_InicioSesion.idSucursalActual;
 import static controlador.C_InicioSesion.usuarioActual;
 
 public class C_Menu {
@@ -27,9 +31,22 @@ public class C_Menu {
 
     @FXML StackPane sp_dialogs;
 
+    @FXML JFXComboBox cb_filtrar_por_fabrica;
+
+    @FXML JFXComboBox cmb_sucursal_actual;
+
 
     public void initialize() throws Exception {
         initComponentes();
+
+        cmb_sucursal_actual.setItems(GroupDBConnection.getDBInstance().getSucursales());
+        cmb_sucursal_actual.getSelectionModel().selectFirst();
+        cmb_sucursal_actual.valueProperty().addListener(new ChangeListener<Sucursal>(){
+            @Override
+            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
+                idSucursalActual = newValue.getIdSucursal();
+            }
+        });
     }
 
     // Inicializar las referecias de los handlers de los componentes de la UI
