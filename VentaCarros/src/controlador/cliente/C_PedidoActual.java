@@ -37,8 +37,10 @@ public class C_PedidoActual {
         ObservableList<PedidoVehiculo> MiPedido = GroupDBConnection.getDBInstance().SelectMiPedido(usuarioActual.getIdUsuario());
         if(!MiPedido.isEmpty()) {
             PedidoVehiculo pedido = MiPedido.get(0);
+           // System.out.println(pedido.getVehiculoPedido().getModelo());
             switch (pedido.getDetalles()) { //Enviado
                 case "Enviado": // pedido realizado y aprobado, esperando hasta la fecha
+                    System.out.println(pedido.getVehiculoPedido().getModelo());
                     gp_info_pedido.setVisible(true);
                     lb_nombre_vehiculo.setText(pedido.getVehiculoPedido().getMarca() + " " + pedido.getVehiculoPedido().getModelo());
                     lb_monto_total.setText(pedido.getVehiculoPedido().getPrecio());
@@ -47,10 +49,12 @@ public class C_PedidoActual {
                     lb_telefono_cliente.setText(pedido.getUsuarioSolicitante().getTelefono());
                     break;
                 case "Pendiente": // pedido realizado pero no aprobado por el admin Pendiente
+                    System.out.println(pedido.getVehiculoPedido().getModelo());
                     lb_info.setVisible(true);
                     lb_info.setText(msg_2);
                     break;
                 case "Entregado": // no tiene ningun pedido, no tiene del todo o ya paso la fecha del pedido previo (ya tiene el carro) Entregado
+                    System.out.println(pedido.getVehiculoPedido().getModelo());
                     lb_info.setVisible(true);
                     lb_info.setText(msg_1);
                     break;

@@ -37,7 +37,7 @@ public class PedidoListViewCell extends JFXListCell<PedidoVehiculo> {
                 }
             }
             lb_nombre_vehiculo.setText(pedidoVehiculo.getVehiculoPedido().getNombre_carro());
-            // lb_precio_total.setText(String.valueOf(pedidoVehiculo.getPrecioTotal()));
+            //lb_precio_total.setText(String.valueOf(pedidoVehiculo.getP));
             lb_nombre_cliente.setText(pedidoVehiculo.getUsuarioSolicitante().getNombre() + " " + pedidoVehiculo.getUsuarioSolicitante().getApellidos());
             lb_telefono_cliente.setText(pedidoVehiculo.getUsuarioSolicitante().getTelefono());
             lb_correo_cliente.setText(pedidoVehiculo.getUsuarioSolicitante().getCorreo());

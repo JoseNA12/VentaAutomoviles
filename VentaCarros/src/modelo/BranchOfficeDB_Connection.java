@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class BranchOfficeDB_Connection extends DB_Connection{
     private static final String DEFAULT_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String DEFAULT_URL = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO1 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE:50449;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO2 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE2:57352;database=BranchOfficeDB;user=sa;password=123";
     private static final String DEFAULT_URLBO3 = "jdbc:sqlserver://localhost\\BOFFICE_INSTANCE3:57348;database=BranchOfficeDB;user=sa;password=123";
@@ -21,6 +22,20 @@ public class BranchOfficeDB_Connection extends DB_Connection{
         }
         return DBInstance;
     }
+
+   /* public void getSucursal(int idSucursal){
+        switch (idSucursal){
+            case 1:
+                DEFAULT_URL
+                break;
+            case 2:
+                DEFAULT_URL
+                break;
+            case 3:
+                DEFAULT_URL
+                break;
+        }
+    }*/
 
 
     public ObservableList<Abono> SelectAbonoXUsuario(Usuario usuario){
